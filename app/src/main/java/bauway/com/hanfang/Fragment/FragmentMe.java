@@ -11,12 +11,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.blankj.utilcode.util.ToastUtils;
 import com.f2prateek.rx.preferences2.RxSharedPreferences;
 
 import bauway.com.hanfang.App.Constants;
+import bauway.com.hanfang.MyApplication;
+import bauway.com.hanfang.activity.LoginActivity;
 import bauway.com.hanfang.activity.LoginActivity2;
 import bauway.com.hanfang.activity.PersonInfoActivity;
 import bauway.com.hanfang.R;
+import bauway.com.hanfang.interfaces.DialogCallback;
+import bauway.com.hanfang.util.DialogUtil;
+import bauway.com.hanfang.util.PreferencesUtils;
+import cn.bmob.v3.BmobUser;
 
 /**
  * Created by shun8 on 2017/12/28.
@@ -32,6 +40,7 @@ public class FragmentMe extends Fragment implements View.OnClickListener {
     private LinearLayout ll_fragme_accountinfo;
     private TextView tv_account_name;
     public RxSharedPreferences userRxPreferences;
+    public MyApplication myApplication;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -78,6 +87,26 @@ public class FragmentMe extends Fragment implements View.OnClickListener {
     }
 
     public void jumpLogin() {
+//        csintent = new Intent(context, LoginActivity2.class)
+//                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
+//                        | Intent.FLAG_ACTIVITY_NEW_TASK);
+//        startActivity(csintent);
+        DialogUtil.defaultDialog(context, getString(R.string.confirm_log_out_app), null, null, new
+                DialogCallback() {
+
+                    @Override
+                    public void execute(Object dialog, Object content) {
+                        //确认退出
+                        exitApp();
+                    }
+                });
+    }
+
+    private void exitApp() {
+        BmobUser.logOut();
+        PreferencesUtils.clearEntity(context);
+        ToastUtils.cancel();
+//        myApplication.exit();
         csintent = new Intent(context, LoginActivity2.class)
                 .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
                         | Intent.FLAG_ACTIVITY_NEW_TASK);

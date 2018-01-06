@@ -75,7 +75,6 @@ public class LoginActivity2 extends BaseActivity implements View.OnClickListener
 
     @Override
     protected void initView() {
-
     }
 
     @Override
@@ -115,7 +114,7 @@ public class LoginActivity2 extends BaseActivity implements View.OnClickListener
     private void login() {
         final String email = username.getText().toString().trim();
         if (TextUtils.isEmpty(email)) {
-            ToastUtil.showShortToast(this, getString(R.string.plz_input_email));
+            ToastUtil.showShortToast(this, getString(R.string.plz_input_phone));
             return;
         }
         final String pwd = et_pwd.getText().toString().trim();
