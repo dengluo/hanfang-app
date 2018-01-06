@@ -47,7 +47,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import bauway.com.hanfang.App.Constants;
-import bauway.com.haofang.R;
+import bauway.com.hanfang.R;
 
 /**
  * 工具类

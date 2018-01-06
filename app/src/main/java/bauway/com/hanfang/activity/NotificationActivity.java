@@ -15,7 +15,7 @@ import com.bestmafen.smablelib.component.SmaManager;
 
 import java.util.Calendar;
 
-import bauway.com.haofang.R;
+import bauway.com.hanfang.R;
 import bauway.com.hanfang.base.BaseActivity;
 import bauway.com.hanfang.bean.ChargeEntity;
 import bauway.com.hanfang.bean.CleanEntity;

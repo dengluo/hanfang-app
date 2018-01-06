@@ -9,7 +9,7 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import bauway.com.haofang.R;
+import bauway.com.hanfang.R;
 import bauway.com.hanfang.base.BaseActivity;
 import bauway.com.hanfang.common.MyConstants2;
 import butterknife.BindView;

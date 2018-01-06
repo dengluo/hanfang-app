@@ -12,7 +12,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import bauway.com.haofang.R;
+import bauway.com.hanfang.R;
 
 /**
  * Created by Administrator on 2017/8/21.

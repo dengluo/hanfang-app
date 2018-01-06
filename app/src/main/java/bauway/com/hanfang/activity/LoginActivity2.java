@@ -18,7 +18,7 @@ import android.widget.TextView;
 
 import bauway.com.hanfang.App.Constants;
 import bauway.com.hanfang.util.ToastUtil;
-import bauway.com.haofang.R;
+import bauway.com.hanfang.R;
 import bauway.com.hanfang.base.BaseActivity;
 import bauway.com.hanfang.bean.User;
 import bauway.com.hanfang.util.DialogUtil;

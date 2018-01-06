@@ -7,7 +7,7 @@ package bauway.com.hanfang.common;
 public class DBConfig {
 
     /**
-     * @see bauway.com.haofang.bean.UserInfo
+     * @see bauway.com.hanfang.bean.UserInfo
      *
      */
     public static class UserInfo {

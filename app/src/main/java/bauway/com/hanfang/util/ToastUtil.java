@@ -26,7 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import bauway.com.hanfang.App.Constants;
-import bauway.com.haofang.R;
+import bauway.com.hanfang.R;
 
 
 /**

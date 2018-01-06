@@ -17,7 +17,7 @@ import java.util.Date;
 
 import bauway.com.hanfang.base.BaseActivity;
 import bauway.com.hanfang.common.MyConstants2;
-import bauway.com.haofang.R;
+import bauway.com.hanfang.R;
 import butterknife.BindView;
 import butterknife.OnClick;
 

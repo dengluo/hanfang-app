@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 
-import bauway.com.haofang.R;
+import bauway.com.hanfang.R;
 import bauway.com.hanfang.base.BaseActivity;
 import bauway.com.hanfang.bean.FeedBackInfo;
 import bauway.com.hanfang.bean.User;

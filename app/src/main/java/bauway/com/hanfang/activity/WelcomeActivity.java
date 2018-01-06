@@ -9,7 +9,7 @@ import android.support.annotation.Nullable;
 import android.view.Window;
 import android.view.WindowManager;
 
-import bauway.com.haofang.R;
+import bauway.com.hanfang.R;
 
 
 public class WelcomeActivity extends Activity {

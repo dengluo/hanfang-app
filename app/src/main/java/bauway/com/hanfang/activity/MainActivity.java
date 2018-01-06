@@ -23,8 +23,8 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 
-import bauway.com.haofang.BuildConfig;
-import bauway.com.haofang.R;
+import bauway.com.hanfang.BuildConfig;
+import bauway.com.hanfang.R;
 import bauway.com.hanfang.base.BaseActivity;
 import bauway.com.hanfang.interfaces.DialogCallback;
 import bauway.com.hanfang.util.DialogUtil;

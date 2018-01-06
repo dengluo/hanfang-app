@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import bauway.com.haofang.R;
+import bauway.com.hanfang.R;
 
 /**
  * Created by zhaotaotao on 2017/8/12.

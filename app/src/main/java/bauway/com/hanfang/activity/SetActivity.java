@@ -22,7 +22,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import bauway.com.hanfang.adapter.SpinnerAdapter;
 import bauway.com.hanfang.base.BaseActivity;
 import bauway.com.hanfang.common.MyConstants2;
-import bauway.com.haofang.R;
+import bauway.com.hanfang.R;
 import butterknife.BindArray;
 import butterknife.BindView;
 import butterknife.OnClick;

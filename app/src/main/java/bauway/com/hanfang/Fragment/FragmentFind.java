@@ -17,7 +17,7 @@ import com.f2prateek.rx.preferences2.RxSharedPreferences;
 
 import bauway.com.hanfang.App.Constants;
 import bauway.com.hanfang.activity.DeviceSettingActivity;
-import bauway.com.haofang.R;
+import bauway.com.hanfang.R;
 
 /**
  * Created by shun8 on 2017/12/28.

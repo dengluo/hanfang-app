@@ -21,10 +21,10 @@ import com.wx.wheelview.widget.WheelView;
 import java.util.ArrayList;
 
 import bauway.com.hanfang.App.Constants;
+import bauway.com.hanfang.BuildConfig;
+import bauway.com.hanfang.R;
 import bauway.com.hanfang.base.BaseActivity;
 import bauway.com.hanfang.interfaces.DialogCallback;
-import bauway.com.haofang.BuildConfig;
-import bauway.com.haofang.R;
 import bauway.com.hanfang.util.DialogUtil;
 import butterknife.BindView;
 import butterknife.OnClick;

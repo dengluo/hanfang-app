@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import bauway.com.haofang.R;
+import bauway.com.hanfang.R;
 
 /**
  * Created by zhaotaotao on 2017/6/28.

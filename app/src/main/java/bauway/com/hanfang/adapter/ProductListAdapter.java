@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bauway.com.hanfang.interfaces.OnRecyclerViewItemClickListener;
-import bauway.com.haofang.R;
+import bauway.com.hanfang.R;
 import bauway.com.hanfang.bean.Product;
 import butterknife.BindView;
 import butterknife.ButterKnife;

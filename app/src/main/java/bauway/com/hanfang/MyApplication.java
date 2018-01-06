@@ -107,7 +107,7 @@ public class MyApplication extends MultiDexApplication {
                 .setGlobalTag(MyConstants2.LOG_TAG)
                 .setLog2FileSwitch(false)
                 .setBorderSwitch(true);
-        ToastUtils.setBgResource(bauway.com.haofang.R.drawable.shape_toast_blue_bg);
+        ToastUtils.setBgResource(bauway.com.hanfang.R.drawable.shape_toast_blue_bg);
     }
 
     public static MyApplication getInstance() {

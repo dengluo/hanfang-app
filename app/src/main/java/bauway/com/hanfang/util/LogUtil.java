@@ -18,7 +18,7 @@ package bauway.com.hanfang.util;
 
 import android.util.Log;
 
-import bauway.com.haofang.BuildConfig;
+import bauway.com.hanfang.BuildConfig;
 
 
 /**

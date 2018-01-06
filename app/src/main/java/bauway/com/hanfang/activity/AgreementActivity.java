@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import bauway.com.hanfang.App.Constants;
-import bauway.com.haofang.R;
+import bauway.com.hanfang.R;
 import bauway.com.hanfang.base.BaseActivity;
 import butterknife.BindView;
 import butterknife.OnClick;

@@ -15,7 +15,7 @@ import com.blankj.utilcode.util.ToastUtils;
 
 import bauway.com.hanfang.base.BaseActivity;
 import bauway.com.hanfang.common.MyConstants2;
-import bauway.com.haofang.R;
+import bauway.com.hanfang.R;
 import bauway.com.hanfang.bean.User;
 import bauway.com.hanfang.util.DateUtils;
 import bauway.com.hanfang.util.DialogUtil;

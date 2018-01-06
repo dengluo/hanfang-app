@@ -38,13 +38,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import bauway.com.haofang.R;
+import bauway.com.hanfang.R;
 import bauway.com.hanfang.base.BaseActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static bauway.com.haofang.R.id.lv;
+import static bauway.com.hanfang.R.id.lv;
 
 /**
  * Created by zhaotaotao on 2017/8/10.

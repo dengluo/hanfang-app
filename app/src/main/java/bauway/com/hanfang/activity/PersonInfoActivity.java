@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 
 import bauway.com.hanfang.App.Constants;
 import bauway.com.hanfang.base.BaseActivity;
-import bauway.com.haofang.R;
+import bauway.com.hanfang.R;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.bmob.sms.BmobSMS;

@@ -7,7 +7,7 @@ import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.widget.TextView;
 
-import bauway.com.haofang.R;
+import bauway.com.hanfang.R;
 
 /**
  * Created by king on 2017/12/9.

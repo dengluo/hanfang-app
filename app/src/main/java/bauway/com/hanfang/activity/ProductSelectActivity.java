@@ -16,9 +16,9 @@ import bauway.com.hanfang.adapter.ProductListAdapter;
 import bauway.com.hanfang.base.BaseActivity;
 import bauway.com.hanfang.common.MyConstants2;
 import bauway.com.hanfang.interfaces.OnRecyclerViewItemClickListener;
-import bauway.com.haofang.R;
+import bauway.com.hanfang.R;
 import bauway.com.hanfang.bean.Product;
-import bauway.com.haofang.common.MyConstants;
+import bauway.com.hanfang.common.MyConstants;
 import butterknife.BindView;
 import butterknife.OnClick;
 

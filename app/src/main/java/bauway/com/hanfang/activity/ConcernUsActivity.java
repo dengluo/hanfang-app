@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import bauway.com.hanfang.base.BaseActivity;
-import bauway.com.haofang.R;
+import bauway.com.hanfang.R;
 import butterknife.BindView;
 import butterknife.OnClick;
 

@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import bauway.com.hanfang.interfaces.DialogCallback;
-import bauway.com.haofang.R;
+import bauway.com.hanfang.R;
 
 
 /**

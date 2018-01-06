@@ -10,7 +10,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import bauway.com.haofang.R;
+import bauway.com.hanfang.R;
 
 /**
  * Created by shun8 on 2017/12/28.

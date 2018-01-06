@@ -7,7 +7,7 @@ import android.widget.RadioGroup;
 
 import java.util.List;
 
-import bauway.com.haofang.R;
+import bauway.com.hanfang.R;
 
 /**
  * FragmentTabAdapter Author: xavi
