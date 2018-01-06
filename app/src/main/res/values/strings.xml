@@ -1,10 +1,7 @@
 <resources>
-    <string name="app_name">浩方</string>
-    <string name="and" translatable="false"><![CDATA[&]]></string>
+    <string name="app_name">瀚方</string>
+    <string name="version">1.1.3</string>
     <string name="loading">正在加载…</string>
-    <string name="please_enable_the_bluetooth">请打开蓝牙</string>
-    <string name="device_not_connected">请先连接设备</string>
-    <string name="already_bind">已经绑定了设备</string>
 
     <string name="just_now">刚刚</string>
     <string name="sec_before">%d秒前</string>
@@ -13,21 +10,14 @@
     <string name="yesterday">昨天%tR</string>
     <string name="mill" translatable="false">%tc</string>
 
-    <string name="login">登入</string>
-    <string name="register">注册</string>
-    <string name="forget_pwd">忘记密码？</string>
-    <string name="plz_input_email">请输入邮箱</string>
-    <string name="plz_input_pwd">请输入密码</string>
     <string name="plz_input_pwd_again">请再次输入密码</string>
     <string name="pwd_input_diff">两次输入的密码不一致</string>
     <string name="no_set">未设置</string>
     <string name="cancel">取消</string>
-    <string name="confirm">确认</string>
     <string name="email_already_register">邮箱已被注册</string>
     <string name="register_failure">注册失败</string>
     <string name="register_success_plz_check_email">注册成功，请注意查收验证邮件</string>
     <string name="register_now">正在注册…</string>
-    <string name="login_now">正在登录…</string>
     <string name="email_pwd_input_err">邮箱／密码错误</string>
     <string name="email_need_check">邮箱未验证，请验证邮箱后登录</string>
     <string name="reset_password">重置密码</string>
@@ -35,9 +25,6 @@
     <string name="already_send_reset_email">已发送验证邮件到您的邮箱，根据邮箱提示操作即可</string>
     <string name="email_address_err">邮箱信息校验出错</string>
     <string name="search">搜寻</string>
-    <string name="searching">正在搜索…</string>
-    <string name="search_again">重试</string>
-    <string name="selected_device">选择设备</string>
     <string name="concern_us">关注我们</string>
     <string name="count_number">口数</string>
     <string name="notes">备注</string>
@@ -61,7 +48,6 @@
     <string name="dcv">电压</string>
     <string name="ota">固件升级</string>
     <string name="app_user_info">账户信息</string>
-    <string name="change_pwd">变更密码</string>
     <string name="plz_input_new_pwd_again">请再次输入新密码</string>
     <string name="plz_input_new_pwd">请输入新密码</string>
     <string name="plz_input_old_pwd">请输入旧密码</string>
@@ -130,10 +116,99 @@
     <string name="log_out">注销登录</string>
     <string name="confirm_log_out_app">确定退出当前登录账号？</string>
     <string name="unbind_device">解绑设备</string>
-    <string name="confirm_unbind_device">确认解绑当前设备？</string>
     <string name="usd">美元</string>
     <string name="rmb">人民币</string>
     <string name="hk">港币</string>
+
+    <string name="telphone">电话号码</string>
+    <string name="forget_pwd">忘记密码</string>
+    <string name="login">登陆</string>
+    <string name="register">注册</string>
+    <string name="grregister">个人注册</string>
+    <string name="jgregister">机构注册</string>
+    <string name="text_agreement_tips">我已阅读并接受浩方</string>
+    <string name="text_agreement"> 《服务条款》 </string>
+    <string name="text_user_agreement"> 服务条款 </string>
+
+    <string name="fragme_personinfo">个人信息</string>
+    <string name="fragme_device">设备</string>
+    <string name="account_info">账号信息</string>
+    <string name="fragme_data">数据</string>
+    <string name="fragme_about">关于</string>
+    <string name="fragme_exit">退出登录</string>
+
+    <string name="organization_name">机构名称</string>
+    <string name="legal_representative">法人代表</string>
+    <string name="personinfo_head">负责人</string>
+    <string name="registration_mark">登记号</string>
+    <string name="address">地址</string>
+    <string name="change_pwd">更改密码</string>
+    <string name="change">修改</string>
+    <string name="device_setting">设置</string>
+    <string name="selected_device">选择设备</string>
+    <string name="please_enable_the_bluetooth">请打开蓝牙</string>
+    <string name="device_not_connected">请先连接设备</string>
+    <string name="already_bind">已经绑定了设备</string>
+    <string name="searching">正在搜索…</string>
+    <string name="search_again">重试</string>
+    <string name="confirm_unbind_device">确认解绑当前设备？</string>
+    <string name="connect_device">连接设备</string>
+    <string name="scan">扫描</string>
+
+    <string name="menu_scan">Scan</string>
+    <string name="menu_stop">Stop</string>
+    <string name="menu_connect">Connect</string>
+    <string name="menu_disconnect">Disconnect</string>
+    <string name="plz_input_phone">请输入手机号码</string>
+    <string name="plz_input_email">请输入邮箱</string>
+    <string name="plz_input_pwd">请输入密码</string>
+    <string name="plz_input_oldpwd">请输入旧密码</string>
+    <string name="plz_input_newpwd">请输入新密码</string>
+    <string name="plz_error_oldpwd">旧密码输入错误</string>
+    <string name="login_now">正在登录…</string>
+    <string name="confirm">确认</string>
+    <string name="input_pwd">密码(6-12位数字字母组合)</string>
+    <string name="input_new_pwd">新密码(6-12位字母和数字组合)</string>
+    <string name="confirm_pwd">确认密码</string>
+    <string name="register_success_plz_check_phone">注册成功</string>
+    <string name="phone_already_register">手机已被注册</string>
+    <string name="and" translatable="false"><![CDATA[&]]></string>
+    <string name="pwd_again">确认新密码</string>
+    <string name="pwd_new">新密码</string>
+    <string name="pwd_old">旧密码</string>
+    <string name="username_reset">需要重置密码的账号</string>
+    <string name="pwd_reset">重置密码</string>
+    <string name="receive_code">收到的验证码</string>
+    <string name="reset_password_now">正在重置密码</string>
+    <string name="reset_success_password">密码重置成功</string>
+    <string name="reset_failure">密码重置失败</string>
+    <string name="change_password_now">正在修改密码</string>
+    <string name="change_success_password">密码修改成功</string>
+    <string name="change_failure">密码修改失败</string>
+    <string name="find_bluetooth">发现蓝牙</string>
+    <string name="ble_not_supported">BLE is not supported</string>
+    <string name="pwd">密码</string>
+    <string name="error_bluetooth_not_supported">error_bluetooth_not_supported</string>
+    <string name="unknown_device">未知设备</string>
+    <string name="tips_yonghuxieyi">
+  一、特别提示  \n
+在此特别提醒您（用户）在注册成为幸孕儿-上门服务技师端用户之前，请认真阅读本《用户服务协议》（以下简称“协议”），确保您充分理解本协议中各条款。请您审慎阅读并选择接受或不接受本协议。除非您接受本协议所有条款，否则您无权注册、登录或使用本协议所涉服务。您的注册、登录、使用等行为将视为对本协议的接受，并同意接受本协议各项条款的约束。  本协议约定幸孕儿-上门服务技师端平台与用户之间关于“幸孕儿-上门服务技师端”服务（以下简称“服务”）的权利义务。“用户”是指注册、登录、使用本服务的个人。本协议可由幸孕儿-上门服务技师端随时更新，更新后的协议条款一旦公布即代替原来的协议条款，恕不再另行通知，用户可在本APP中查阅最新版协议条款。在修改协议条款后，如果用户不接受修改后的条款，请立即停止使用幸孕儿上门服务提供的服务，用户继续使用平台提供的服务将被视为接受修改后的协议。  \n
+二、账号注册\n
+1、用户在使用本服务前需要注册一个“幸孕儿-上门服务技师端”账号。“幸孕儿-上门服务技师端”账号应当使用手机号码绑定注册，请用户使用尚未与“幸孕儿-上门服务技师端”账号绑定的手机号码，以及未被幸孕儿上门服务技师端平台封禁的手机号码注册“幸孕儿-上门服务技师端”账号。幸孕儿-上门服务技师端可以根据用户需求或产品需要对账号注册和绑定的方式进行变更，而无须事先通知用户。  \n
+2、如果注册申请者有被幸孕儿-上门服务技师端封禁的先例或涉嫌虚假注册及滥用他人名义注册，及其他不能得到许可的理由， 幸孕儿-上门服务技师端将拒绝其注册申请。  \n
+3、鉴于“幸孕儿-上门服务技师端”账号的绑定注册方式，您同意幸孕儿-上门服务技师端在注册时将允许您的手机号码及手机设备识别码等信息用于注册。  \n
+4、在用户注册及使用本服务时，幸孕儿-上门服务技师端需要搜集能识别用户身份的个人信息以便幸孕儿-上门服务技师端可以在必要时联系用户，或为用户提供更好的使用体验。幸孕儿-上门服务技师端搜集的信息包括但不限于用户的姓名、地址；幸孕儿-上门服务技师端同意对这些信息的使用将受限于第三条用户个人隐私信息保护的约束。  \n
+三、账户安全  \n
+1、用户一旦注册成功，成为幸孕儿-上门服务技师端的用户，将得到一个用户名和密码，并有权利使用自己的用户名及密码随时登陆幸孕儿-上门服务技师端。 \n
+2、用户对用户名和密码的安全负全部责任，同时对以其用户名进行的所有活动和事件负全责。  \n
+3、用户不得以任何形式擅自转让或授权他人使用自己的幸孕儿-上门服务技师端的用户名。  \n
+4、如果用户泄漏了密码，有可能导致不利的法律后果，因此不管任何原因导致用户的密码安全受到威胁，应该立即和幸孕儿客服人员取得联系，否则后果自负。  \n
+四、用户声明与保证  \n
+1、用户承诺其为具有完全民事行为能力的民事主体，且具有达成交易履行其义务的能力。  \n
+2、用户有义务在注册时提供自己的真实资料，并保证诸如手机号码、姓名、所在地区等内容的有效性及安全性，保证幸孕儿工作人员可以通过上述联系方式与用户取得联系。同时，用户也有义务在相关资料实际变更时及时更新有关注册资料。  \n
+3、用户通过使用幸孕儿-上门服务技师端的过程中所制作、上载、复制、发布、传播的任何内容，包括但不限于账号头像、名称、用户说明等注册信息及认证资料，或文字、语音、图片、视频、图文等发送、回复和相关链接页面，以及其他使用账号或本服务所产生的内容，不得违反国家相关法律制度，包含但不限于如下原则：  （1）反对宪法所确定的基本原则的；  （2）危害国家安全，泄露国家秘密，颠覆国家政权，破坏国家统一的； （3）损害国家荣誉和利益的；  （4）煽动民族仇恨、民族歧视，破坏民族团结的； （5）破坏国家宗教政策，宣扬邪教和封建迷信的； （6）散布谣言，扰乱社会秩序，破坏社会稳定的；  （7）散布淫秽、色情、赌博、暴力、凶杀、恐怖或者教唆犯罪的； （8）侮辱或者诽谤他人，侵害他人合法权益的； （9）含有法律、行政法规禁止的其他内容的。  \n
+4、用户不得利用“幸孕儿-上门服务技师端”账号或本服务制作、上载、复制、发布、传播下干扰“幸孕儿-上门服务技师端”正常运营，以及侵犯其他用户或第三方合法权益的内容：  （1）含有任何性或性暗示的； （2）含有辱骂、恐吓、威胁内容的；  （3）含有骚扰、垃圾广告、恶意信息、诱骗信息的。\n</string>
+
 
 
 </resources>

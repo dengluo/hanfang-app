@@ -10,6 +10,13 @@
         <item name="colorSwitchThumbNormal">@color/black_2</item>
     </style>
 
+    <style name="register_ll_height">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">12dp</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
     <style name="launch_app_theme" parent="AppTheme">
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowBackground">@color/black_1</item>

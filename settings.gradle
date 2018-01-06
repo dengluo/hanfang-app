@@ -1,1 +1,1 @@
-include ':app', ':easeblelib', ':smablelib', ':stetho', ':alarm'
+include ':app', ':easeblelib', ':smablelib', ':stetho', ':wheelview'

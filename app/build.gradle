@@ -28,6 +28,7 @@ android {
     buildTypes {
 
         debug {
+            buildConfigField "boolean", "LOG_DEBUG", "true"
             versionNameSuffix "-debug"
             //是否打开debuggable开关
             debuggable true
@@ -90,6 +91,7 @@ dependencies {
     compile 'com.tencent.bugly:crashreport:latest.release'
     //bmob-sdk：Bmob的android sdk包，包含了Bmob的数据存储、文件等服务，以下是最新的bmob-sdk:
     compile 'cn.bmob.android:bmob-sdk:3.5.5'
+    compile 'cn.bmob.android:bmob-sms:1.0.1'
     //如果你想应用能够兼容Android6.0，请添加此依赖(org.apache.http.legacy.jar)
     compile 'cn.bmob.android:http-legacy:1.0'
     //butterknife
@@ -101,4 +103,5 @@ dependencies {
     compile 'com.f2prateek.rx.preferences2:rx-preferences:2.0.0-RC1'
     //util
     compile 'com.blankj:utilcode:1.8.4'
+    compile project(path: ':wheelview')
 }

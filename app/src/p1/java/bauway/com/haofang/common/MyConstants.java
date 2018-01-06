@@ -1,4 +1,4 @@
-package bauway.com.haofang.common;
+package bauway.com.hanfang.common;
 
 /**
  * Created by zhaotaotao on 2017/8/9.
