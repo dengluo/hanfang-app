@@ -145,6 +145,7 @@
     <string name="change_pwd">更改密码</string>
     <string name="change">修改</string>
     <string name="device_setting">设置</string>
+    <string name="device_save">保存</string>
     <string name="selected_device">选择设备</string>
     <string name="please_enable_the_bluetooth">请打开蓝牙</string>
     <string name="device_not_connected">请先连接设备</string>

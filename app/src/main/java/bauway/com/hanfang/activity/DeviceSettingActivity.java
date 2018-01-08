@@ -11,7 +11,9 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.bestmafen.easeblelib.util.L;
 import com.bestmafen.smablelib.component.SimpleSmaCallback;
 import com.bestmafen.smablelib.component.SmaManager;
 import com.blankj.utilcode.util.ToastUtils;
@@ -43,8 +45,15 @@ public class DeviceSettingActivity extends BaseActivity {
     WheelView mWvWendu;
     @BindView(R.id.ll_device_connect_state)
     LinearLayout ll_device_connect_state;
+    @BindView(R.id.tv_device_setting_save)
+    TextView mTvSave;
+    @BindView(R.id.tv_account_name)
+    TextView mTvName;
+    @BindView(R.id.tv_is_connected)
+    TextView mTvIsconnect;
 
     private SmaManager mSmaManager;
+    private String mStrDevicename;
 
     @Override
     protected int getLayoutRes() {
@@ -110,6 +119,18 @@ public class DeviceSettingActivity extends BaseActivity {
         super.onResume();
 //        mBtUnbind.setVisibility(TextUtils.isEmpty(mSmaManager.getNameAndAddress()[0]) ? View.GONE :
 //                View.VISIBLE);
+        if (mSmaManager.getNameAndAddress()[0] == null && mSmaManager.getNameAndAddress()[0] == "") {
+            mTvName.setText("未连接");
+            mTvIsconnect.setText("未连接");
+            L.e("1111");
+        } else {
+            L.e("2222");
+            SharedPreferences sharedPreferences = this.getSharedPreferences(
+                    "DEVICE", Activity.MODE_PRIVATE);
+            mStrDevicename = sharedPreferences.getString("deviceName1", "");
+            mTvName.setText(mStrDevicename);
+            mTvIsconnect.setText("已绑定");
+        }
     }
 
     @Override
@@ -183,11 +204,14 @@ public class DeviceSettingActivity extends BaseActivity {
         return list;
     }
 
-    @OnClick({R.id.iv_return,R.id.ll_device_connect_state})
+    @OnClick({R.id.iv_return, R.id.ll_device_connect_state, R.id.tv_device_setting_save})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_return:
                 this.finish();
+                break;
+            case R.id.tv_device_setting_save:
+
                 break;
             case R.id.ll_device_connect_state:
                 if (!TextUtils.isEmpty(SmaManager.getInstance().getNameAndAddress()[1])) {
@@ -200,7 +224,7 @@ public class DeviceSettingActivity extends BaseActivity {
                                     //确认解绑
                                     SmaManager.getInstance().unbind();
 //                                mBtUnbind.setVisibility(View.GONE);
-                                    Context ctx =DeviceSettingActivity.this;
+                                    Context ctx = DeviceSettingActivity.this;
                                     SharedPreferences sp = ctx.getSharedPreferences("DEVICE",
                                             Activity.MODE_PRIVATE);
                                     SharedPreferences.Editor editor = sp.edit();

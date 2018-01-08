@@ -1,6 +1,7 @@
 package bauway.com.hanfang.Fragment;
 
 import android.app.Activity;
+import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,9 +14,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bestmafen.easeblelib.util.L;
+import com.bestmafen.smablelib.component.SimpleSmaCallback;
+import com.bestmafen.smablelib.component.SmaManager;
 import com.f2prateek.rx.preferences2.RxSharedPreferences;
 
 import bauway.com.hanfang.App.Constants;
+import bauway.com.hanfang.BuildConfig;
 import bauway.com.hanfang.activity.DeviceSettingActivity;
 import bauway.com.hanfang.R;
 
@@ -33,11 +38,39 @@ public class FragmentFind extends Fragment implements View.OnClickListener{
     private ImageView iv_device_state;
     private TextView tv_device_name1;
     private String mStrDevicename1;
+    private SmaManager mSmaManager;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         context = this.getActivity();
+        mSmaManager = SmaManager.getInstance().init(context).addSmaCallback(new SimpleSmaCallback() {
+
+            @Override
+            public void onConnected(BluetoothDevice device, boolean isConnected) {
+                if (BuildConfig.DEBUG) {
+
+                }
+            }
+
+            @Override
+            public void onWrite(byte[] data) {
+                if (BuildConfig.DEBUG) {
+
+                }
+            }
+
+            @Override
+            public void onRead(byte[] data) {
+                if (BuildConfig.DEBUG) {
+
+                }
+            }
+        });
+        mSmaManager.connect(true);
+        if (BuildConfig.DEBUG) {
+//            mDebugViewManager = new DebugViewManager(this);
+        }
         inintView();
         initDate();
         return view_main;
@@ -62,13 +95,29 @@ public class FragmentFind extends Fragment implements View.OnClickListener{
         Log.e(TAG, accountname+"//"+pwd);
     }
 
+    private synchronized void append(final String value) {
+
+    }
+
+    @Override
+    public void onDestroy() {
+        mSmaManager.exit();
+        super.onDestroy();
+    }
+
     @Override
     public void onResume() {
         super.onResume();
-        SharedPreferences sharedPreferences = context.getSharedPreferences(
-                "DEVICE", Activity.MODE_PRIVATE);
-        mStrDevicename1 = sharedPreferences.getString("deviceName1", "");
-        tv_device_name1.setText(mStrDevicename1);
+        if (mSmaManager.getNameAndAddress()[0] == null && mSmaManager.getNameAndAddress()[0] == ""){
+            tv_device_name1.setText("未连接");
+            L.e("1111");
+        }else {
+            L.e("2222");
+            SharedPreferences sharedPreferences = context.getSharedPreferences(
+                    "DEVICE", Activity.MODE_PRIVATE);
+            mStrDevicename1 = sharedPreferences.getString("deviceName1", "");
+            tv_device_name1.setText(mStrDevicename1);
+        }
     }
 
     @Override
