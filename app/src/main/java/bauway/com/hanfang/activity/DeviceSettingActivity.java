@@ -28,6 +28,7 @@ import bauway.com.hanfang.R;
 import bauway.com.hanfang.base.BaseActivity;
 import bauway.com.hanfang.interfaces.DialogCallback;
 import bauway.com.hanfang.util.DialogUtil;
+import bauway.com.hanfang.util.ToastUtil;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.bmob.sms.BmobSMS;
@@ -54,6 +55,11 @@ public class DeviceSettingActivity extends BaseActivity {
 
     private SmaManager mSmaManager;
     private String mStrDevicename;
+    private String mWendu1 = "";
+    private String mFengsu1 = "";
+    private String mTime1 = "";
+    private Context ctx;
+    private int time,fengsu,wendu;
 
     @Override
     protected int getLayoutRes() {
@@ -78,6 +84,10 @@ public class DeviceSettingActivity extends BaseActivity {
     @Override
     protected void initView() {
         String emailHistory = userRxPreferences.getString(Constants.LOGIN_PHONE).get();
+        time = getIntent().getIntExtra("time",0);
+        fengsu = getIntent().getIntExtra("fengsu",0);
+        wendu = getIntent().getIntExtra("wendu",0);
+        L.e("time"+time+"fengsu"+fengsu+"wendu"+wendu);
         initWheelTime();
         initWheelFengsu();
         initWheelWendu();
@@ -85,6 +95,7 @@ public class DeviceSettingActivity extends BaseActivity {
 
     @Override
     protected void init(Bundle savedInstanceState) {
+        ctx =DeviceSettingActivity.this;
         mSmaManager = SmaManager.getInstance().init(this).addSmaCallback(new SimpleSmaCallback() {
 
             @Override
@@ -151,9 +162,20 @@ public class DeviceSettingActivity extends BaseActivity {
         mWvTime.setWheelAdapter(new ArrayWheelAdapter(this));
 //        mWvTime.setSkin(WheelView.Skin.Common);
 //        mWvTime.setSkin(WheelView.Skin.Holo);
+        mWvTime.setLoop(true);
+        mWvTime.setWheelSize(3);
+        mWvTime.setSelection(time);
         mWvTime.setWheelData(createMinutes());
         mWvTime.setStyle(style);
         mWvTime.setExtraText("", Color.parseColor("#60212121"), 40, 70);
+        L.e("mWvTime.getWheelCount()"+mWvTime.getWheelCount());
+        mWvTime.setOnWheelItemSelectedListener(new WheelView.OnWheelItemSelectedListener() {
+            @Override
+            public void onItemSelected(int position, Object o) {
+                L.e("mWvTime.o()"+o);
+                mTime1 = o.toString();
+            }
+        });
     }
 
     private void initWheelFengsu() {
@@ -165,9 +187,17 @@ public class DeviceSettingActivity extends BaseActivity {
         mWvFengsu.setWheelAdapter(new ArrayWheelAdapter(this));
 //        mWvTime.setSkin(WheelView.Skin.Common);
 //        mWvTime.setSkin(WheelView.Skin.Holo);
+        mWvFengsu.setLoop(true);
+        mWvFengsu.setSelection(fengsu);
         mWvFengsu.setWheelData(createMinutes());
         mWvFengsu.setStyle(style);
         mWvFengsu.setExtraText("", Color.parseColor("#60212121"), 40, 70);
+        mWvFengsu.setOnWheelItemSelectedListener(new WheelView.OnWheelItemSelectedListener() {
+            @Override
+            public void onItemSelected(int position, Object o) {
+                mFengsu1 = o.toString();
+            }
+        });
     }
 
     private void initWheelWendu() {
@@ -179,9 +209,17 @@ public class DeviceSettingActivity extends BaseActivity {
         mWvWendu.setWheelAdapter(new ArrayWheelAdapter(this));
 //        mWvTime.setSkin(WheelView.Skin.Common);
 //        mWvTime.setSkin(WheelView.Skin.Holo);
+        mWvWendu.setLoop(true);
+        mWvWendu.setSelection(wendu);
         mWvWendu.setWheelData(createMinutes());
         mWvWendu.setStyle(style);
         mWvWendu.setExtraText("", Color.parseColor("#60212121"), 40, 70);
+        mWvWendu.setOnWheelItemSelectedListener(new WheelView.OnWheelItemSelectedListener() {
+            @Override
+            public void onItemSelected(int position, Object o) {
+                mWendu1 = o.toString();
+            }
+        });
     }
 
     private ArrayList<String> createMinutes() {
@@ -211,7 +249,25 @@ public class DeviceSettingActivity extends BaseActivity {
                 this.finish();
                 break;
             case R.id.tv_device_setting_save:
+                SharedPreferences sp1 = ctx.getSharedPreferences("WENDU",
+                        Activity.MODE_PRIVATE);
+                SharedPreferences.Editor editor1 = sp1.edit();
+                editor1.putString("wendu1", mWendu1);
+                editor1.commit();
 
+                SharedPreferences sp2 = ctx.getSharedPreferences("FENGSU",
+                        Activity.MODE_PRIVATE);
+                SharedPreferences.Editor editor2 = sp2.edit();
+                editor2.putString("fengsu1", mFengsu1);
+                editor2.commit();
+
+                SharedPreferences sp3 = ctx.getSharedPreferences("TIME",
+                        Activity.MODE_PRIVATE);
+                SharedPreferences.Editor editor3 = sp3.edit();
+                editor3.putString("time1", mTime1);
+                editor3.commit();
+                ToastUtil.showShortToast(ctx,this.getString(R.string.device_save_success));
+                finish();
                 break;
             case R.id.ll_device_connect_state:
                 if (!TextUtils.isEmpty(SmaManager.getInstance().getNameAndAddress()[1])) {

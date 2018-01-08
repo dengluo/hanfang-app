@@ -139,6 +139,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/tv_device_wendu1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/shape_circle_wd"
@@ -164,6 +165,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/tv_device_fengsu1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/shape_circle_fs"
@@ -189,6 +191,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/tv_device_time1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/shape_circle_sj"

@@ -36,7 +36,7 @@ public class FragmentFind extends Fragment implements View.OnClickListener{
     private View view_main;
     public RxSharedPreferences userRxPreferences;
     private ImageView iv_device_state;
-    private TextView tv_device_name1;
+    private TextView tv_device_name1,tv_device_wendu1,tv_device_fengsu1,tv_device_time1;
     private String mStrDevicename1;
     private SmaManager mSmaManager;
     @Override
@@ -81,6 +81,9 @@ public class FragmentFind extends Fragment implements View.OnClickListener{
                 R.layout.fragment_find, null);
         iv_device_state = (ImageView) view_main.findViewById(R.id.iv_device_state);
         tv_device_name1 = (TextView) view_main.findViewById(R.id.tv_device_name1);
+        tv_device_wendu1 = (TextView) view_main.findViewById(R.id.tv_device_wendu1);
+        tv_device_fengsu1 = (TextView) view_main.findViewById(R.id.tv_device_fengsu1);
+        tv_device_time1 = (TextView) view_main.findViewById(R.id.tv_device_time1);
         iv_device_state.setOnClickListener(this);
 
     }
@@ -117,6 +120,21 @@ public class FragmentFind extends Fragment implements View.OnClickListener{
                     "DEVICE", Activity.MODE_PRIVATE);
             mStrDevicename1 = sharedPreferences.getString("deviceName1", "");
             tv_device_name1.setText(mStrDevicename1);
+
+            SharedPreferences sharedPreferencesWendu1 = context.getSharedPreferences(
+                    "WENDU", Activity.MODE_PRIVATE);
+            String mStrWendu1 = sharedPreferencesWendu1.getString("wendu1", "");
+            tv_device_wendu1.setText(mStrWendu1);
+
+            SharedPreferences sharedPreferencesFengsu1 = context.getSharedPreferences(
+                    "FENGSU", Activity.MODE_PRIVATE);
+            String mStrFengsu1 = sharedPreferencesFengsu1.getString("fengsu1", "");
+            tv_device_fengsu1.setText(mStrFengsu1);
+
+            SharedPreferences sharedPreferencesTime1 = context.getSharedPreferences(
+                    "TIME", Activity.MODE_PRIVATE);
+            String mStrTime1 = sharedPreferencesTime1.getString("time1", "");
+            tv_device_time1.setText(mStrTime1);
         }
     }
 
@@ -125,6 +143,9 @@ public class FragmentFind extends Fragment implements View.OnClickListener{
         switch (view.getId()) {
             case R.id.iv_device_state:
                 Intent intent = new Intent(context, DeviceSettingActivity.class);
+                intent.putExtra("time",Integer.parseInt(tv_device_time1.getText().toString()));
+                intent.putExtra("fengsu",Integer.parseInt(tv_device_fengsu1.getText().toString()));
+                intent.putExtra("wendu",Integer.parseInt(tv_device_wendu1.getText().toString()));
                 startActivity(intent);
 //                if (TextUtils.isEmpty(mSmaManager.getNameAndAddress()[0])) {
 //                    startActivityForResult(new Intent(context, ConnectDevice.class), REQUEST_CODE_BIND);
