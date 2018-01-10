@@ -18,7 +18,6 @@ import bauway.com.hanfang.common.MyConstants2;
 import bauway.com.hanfang.interfaces.OnRecyclerViewItemClickListener;
 import bauway.com.hanfang.R;
 import bauway.com.hanfang.bean.Product;
-import bauway.com.hanfang.common.MyConstants;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -78,10 +77,10 @@ public class ProductSelectActivity extends BaseActivity {
     @Override
     protected void initView() {
         List<Product> products = new ArrayList<>();
-        products.add(new Product(MyConstants.CS_BOX, "BLE to UART_2"));
-        products.add(new Product(MyConstants.BOX_PLUS, "BLE to UART_2"));
-        products.add(new Product(MyConstants.PAD, "BLE to UART_2"));
-        products.add(new Product(MyConstants.SLIDER, "BLE to UART_2"));
+//        products.add(new Product(MyConstants2.CS_BOX, "BLE to UART_2"));
+//        products.add(new Product(MyConstants2.BOX_PLUS, "BLE to UART_2"));
+//        products.add(new Product(MyConstants2.PAD, "BLE to UART_2"));
+//        products.add(new Product(MyConstants2.SLIDER, "BLE to UART_2"));
         productListAdapter.setData(products);
 
     }
