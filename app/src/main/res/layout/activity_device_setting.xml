@@ -168,6 +168,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_device_drug_code"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:layout_marginBottom="10dp"
@@ -201,13 +202,29 @@
                         android:textSize="14dp" />
                 </LinearLayout>
 
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp10"
-                    android:text="药品码:未输入"
-                    android:textColor="@color/text_color_2"
-                    android:textSize="14dp" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp10"
+                        android:text="药品码:"
+                        android:textColor="@color/text_color_2"
+                        android:textSize="14dp" />
+
+                    <TextView
+                        android:id="@+id/tv_device_drug_code"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="未输入"
+                        android:textColor="@color/text_color_2"
+                        android:textSize="14dp" />
+
+                </LinearLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"

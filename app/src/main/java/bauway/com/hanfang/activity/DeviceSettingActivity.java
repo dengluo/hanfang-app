@@ -29,6 +29,7 @@ import bauway.com.hanfang.base.BaseActivity;
 import bauway.com.hanfang.interfaces.DialogCallback;
 import bauway.com.hanfang.util.DialogUtil;
 import bauway.com.hanfang.util.ToastUtil;
+import bauway.com.hanfang.zxing.activity.CaptureActivity;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.bmob.sms.BmobSMS;
@@ -46,6 +47,10 @@ public class DeviceSettingActivity extends BaseActivity {
     WheelView mWvWendu;
     @BindView(R.id.ll_device_connect_state)
     LinearLayout ll_device_connect_state;
+    @BindView(R.id.ll_device_drug_code)
+    LinearLayout ll_device_drug_code;
+    @BindView(R.id.tv_device_drug_code)
+    TextView tv_device_drug_code;
     @BindView(R.id.tv_device_setting_save)
     TextView mTvSave;
     @BindView(R.id.tv_account_name)
@@ -141,6 +146,11 @@ public class DeviceSettingActivity extends BaseActivity {
             mStrDevicename = sharedPreferences.getString("deviceName1", "");
             mTvName.setText(mStrDevicename);
             mTvIsconnect.setText("已绑定");
+
+            SharedPreferences sharedPreferences2 = this.getSharedPreferences(
+                    "SCAN", Activity.MODE_PRIVATE);
+            String scanResult = sharedPreferences2.getString("scanResult", "");
+            tv_device_drug_code.setText(scanResult);
         }
     }
 
@@ -242,7 +252,7 @@ public class DeviceSettingActivity extends BaseActivity {
         return list;
     }
 
-    @OnClick({R.id.iv_return, R.id.ll_device_connect_state, R.id.tv_device_setting_save})
+    @OnClick({R.id.iv_return, R.id.ll_device_connect_state,R.id.ll_device_drug_code, R.id.tv_device_setting_save})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_return:
@@ -268,6 +278,9 @@ public class DeviceSettingActivity extends BaseActivity {
                 editor3.commit();
                 ToastUtil.showShortToast(ctx,this.getString(R.string.device_save_success));
                 finish();
+                break;
+            case R.id.ll_device_drug_code:
+                startActivity(new Intent(DeviceSettingActivity.this, CaptureActivity.class));
                 break;
             case R.id.ll_device_connect_state:
                 if (!TextUtils.isEmpty(SmaManager.getInstance().getNameAndAddress()[1])) {
