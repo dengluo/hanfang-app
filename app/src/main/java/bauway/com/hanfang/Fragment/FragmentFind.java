@@ -143,9 +143,23 @@ public class FragmentFind extends Fragment implements View.OnClickListener{
         switch (view.getId()) {
             case R.id.iv_device_state:
                 Intent intent = new Intent(context, DeviceSettingActivity.class);
-                intent.putExtra("time",Integer.parseInt(tv_device_time1.getText().toString()));
-                intent.putExtra("fengsu",Integer.parseInt(tv_device_fengsu1.getText().toString()));
-                intent.putExtra("wendu",Integer.parseInt(tv_device_wendu1.getText().toString()));
+                if(tv_device_time1.getText().toString()!=""){
+                    intent.putExtra("time",Integer.parseInt(tv_device_time1.getText().toString()));
+                }else{
+                    intent.putExtra("time",30);
+                }
+                if(tv_device_fengsu1.getText().toString()!=""){
+                    intent.putExtra("fengsu",Integer.parseInt(tv_device_fengsu1.getText().toString()));
+                }else{
+                    intent.putExtra("fengsu",30);
+                }
+
+                if(tv_device_wendu1.getText().toString()!=""){
+                    intent.putExtra("wendu",Integer.parseInt(tv_device_wendu1.getText().toString()));
+                }else{
+                    intent.putExtra("wendu",30);
+                }
+
                 startActivity(intent);
 //                if (TextUtils.isEmpty(mSmaManager.getNameAndAddress()[0])) {
 //                    startActivityForResult(new Intent(context, ConnectDevice.class), REQUEST_CODE_BIND);
