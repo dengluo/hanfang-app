@@ -67,7 +67,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="设备:"
+                        android:text="1设备:"
                         android:textColor="@color/text_color_2"
                         android:textSize="12dp" />
 
@@ -94,6 +94,7 @@
                         android:textSize="12dp" />
 
                     <TextView
+                        android:id="@+id/tv_find_drug_code1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="未输入"
@@ -219,13 +220,14 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/iv_device_state"
+                        android:id="@+id/iv_device_state1"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:background="@drawable/close" />
                 </LinearLayout>
             </LinearLayout>
 
+            <!--设备2-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -251,21 +253,50 @@
                 android:paddingLeft="15dp"
                 android:paddingTop="5dp">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="设备:未连接"
-                    android:textColor="@color/text_color_2"
-                    android:textSize="12dp" />
+                    android:orientation="horizontal">
 
-                <TextView
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2设备:"
+                        android:textColor="@color/text_color_2"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:id="@+id/tv_device_name2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="未连接"
+                        android:textColor="@color/text_color_2"
+                        android:textSize="12dp" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="药品码:未输入"
-                    android:textColor="@color/text_color_2"
-                    android:textSize="12dp" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="药品码:"
+                        android:textColor="@color/text_color_2"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:id="@+id/tv_find_drug_code2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="未输入"
+                        android:textColor="@color/text_color_2"
+                        android:textSize="12dp" />
+                </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout
@@ -304,6 +335,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/tv_device_wendu2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/shape_circle_wd"
@@ -329,6 +361,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/tv_device_fengsu2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/shape_circle_fs"
@@ -354,6 +387,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/tv_device_time2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/shape_circle_sj"
@@ -381,12 +415,14 @@
                     android:orientation="vertical">
 
                     <ImageView
+                        android:id="@+id/iv_device_state2"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:background="@drawable/close" />
                 </LinearLayout>
             </LinearLayout>
 
+            <!--设备3-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -412,21 +448,50 @@
                 android:paddingLeft="15dp"
                 android:paddingTop="5dp">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="设备:未连接"
-                    android:textColor="@color/text_color_2"
-                    android:textSize="12dp" />
+                    android:orientation="horizontal">
 
-                <TextView
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3设备:"
+                        android:textColor="@color/text_color_2"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:id="@+id/tv_device_name3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="未连接"
+                        android:textColor="@color/text_color_2"
+                        android:textSize="12dp" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="药品码:未输入"
-                    android:textColor="@color/text_color_2"
-                    android:textSize="12dp" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="药品码:"
+                        android:textColor="@color/text_color_2"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:id="@+id/tv_find_drug_code3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="未输入"
+                        android:textColor="@color/text_color_2"
+                        android:textSize="12dp" />
+                </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout
@@ -465,6 +530,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/tv_device_wendu3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/shape_circle_wd"
@@ -490,6 +556,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/tv_device_fengsu3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/shape_circle_fs"
@@ -515,6 +582,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/tv_device_time3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/shape_circle_sj"
@@ -542,12 +610,14 @@
                     android:orientation="vertical">
 
                     <ImageView
+                        android:id="@+id/iv_device_state3"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:background="@drawable/close" />
                 </LinearLayout>
             </LinearLayout>
 
+            <!--设备4-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -573,21 +643,50 @@
                 android:paddingLeft="15dp"
                 android:paddingTop="5dp">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="设备:未连接"
-                    android:textColor="@color/text_color_2"
-                    android:textSize="12dp" />
+                    android:orientation="horizontal">
 
-                <TextView
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="4设备:"
+                        android:textColor="@color/text_color_2"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:id="@+id/tv_device_name4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="未连接"
+                        android:textColor="@color/text_color_2"
+                        android:textSize="12dp" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="药品码:未输入"
-                    android:textColor="@color/text_color_2"
-                    android:textSize="12dp" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="药品码:"
+                        android:textColor="@color/text_color_2"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:id="@+id/tv_find_drug_code4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="未输入"
+                        android:textColor="@color/text_color_2"
+                        android:textSize="12dp" />
+                </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout
@@ -626,6 +725,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/tv_device_wendu4"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/shape_circle_wd"
@@ -651,6 +751,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/tv_device_fengsu4"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/shape_circle_fs"
@@ -676,6 +777,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/tv_device_time4"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/shape_circle_sj"
@@ -703,12 +805,14 @@
                     android:orientation="vertical">
 
                     <ImageView
+                        android:id="@+id/iv_device_state4"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:background="@drawable/close" />
                 </LinearLayout>
             </LinearLayout>
 
+            <!--设备5-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -734,21 +838,50 @@
                 android:paddingLeft="15dp"
                 android:paddingTop="5dp">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="设备:未连接"
-                    android:textColor="@color/text_color_2"
-                    android:textSize="12dp" />
+                    android:orientation="horizontal">
 
-                <TextView
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="5设备:"
+                        android:textColor="@color/text_color_2"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:id="@+id/tv_device_name5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="未连接"
+                        android:textColor="@color/text_color_2"
+                        android:textSize="12dp" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="药品码:未输入"
-                    android:textColor="@color/text_color_2"
-                    android:textSize="12dp" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="药品码:"
+                        android:textColor="@color/text_color_2"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:id="@+id/tv_find_drug_code5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="未输入"
+                        android:textColor="@color/text_color_2"
+                        android:textSize="12dp" />
+                </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout
@@ -787,6 +920,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/tv_device_wendu5"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/shape_circle_wd"
@@ -812,6 +946,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/tv_device_fengsu5"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/shape_circle_fs"
@@ -837,6 +972,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/tv_device_time5"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/shape_circle_sj"
@@ -864,11 +1000,15 @@
                     android:orientation="vertical">
 
                     <ImageView
+                        android:id="@+id/iv_device_state5"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:background="@drawable/close" />
                 </LinearLayout>
             </LinearLayout>
+
+
+
         </LinearLayout>
     </ScrollView>
 

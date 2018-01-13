@@ -313,7 +313,20 @@ public final class CaptureActivity extends BaseActivity implements SurfaceHolder
         SharedPreferences sp = this.getSharedPreferences("SCAN",
                 Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
-        editor.putString("scanResult", scanResult);
+        String str = getIntent().getStringExtra("shebei");
+        if (str.equals("device1")){
+            editor.putString("scanResult1", scanResult);
+        }else if (str.equals("device2")){
+            editor.putString("scanResult2", scanResult);
+        }else if (str.equals("device3")){
+            editor.putString("scanResult3", scanResult);
+        }else if (str.equals("device4")){
+            editor.putString("scanResult4", scanResult);
+        }else if (str.equals("device5")){
+            editor.putString("scanResult5", scanResult);
+        }
+
+
         editor.commit();
         finish();
     }

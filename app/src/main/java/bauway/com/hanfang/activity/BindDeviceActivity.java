@@ -127,23 +127,79 @@ public class BindDeviceActivity extends BaseActivity {
     @Override
     protected void init(Bundle savedInstanceState) {
 //        mProduct = getIntent().getParcelableExtra(MyConstants2.PRODUCT);
+        final String str = getIntent().getStringExtra("shebei");
         mSmaManager = SmaManager.getInstance().addSmaCallback(mSmaCallback = new SimpleSmaCallback() {
 
             @Override
             public void onConnected(final BluetoothDevice device, boolean isConnected) {
                 L.e("______"+device.getName()+"//"+device.getAddress()+"//");
-                if (!isFailed && isConnected) {
-                    mSmaManager.setNameAndAddress(device.getName(), device.getAddress());
-                    mSmaManager.mEaseConnector.setAddress(device.getAddress());
-                    Context ctx =BindDeviceActivity.this;
-                    SharedPreferences sp = ctx.getSharedPreferences("DEVICE",
-                            Activity.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sp.edit();
-                    editor.putString("deviceName1", device.getName());
-                    editor.commit();
-                    startActivity(new Intent(mContext, MainActivity2.class));
-                    finish();
+                if (str.equals("device1")){
+                    if (!isFailed && isConnected) {
+                        mSmaManager.setNameAndAddress(device.getName(), device.getAddress());
+                        mSmaManager.mEaseConnector.setAddress(device.getAddress());
+                        Context ctx =BindDeviceActivity.this;
+                        SharedPreferences sp = ctx.getSharedPreferences("DEVICE",
+                                Activity.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.putString("deviceName1", device.getName());
+                        editor.commit();
+//                        startActivity(new Intent(mContext, MainActivity2.class));
+                        finish();
+                    }
+                }else if(str.equals("device2")){
+                    if (!isFailed && isConnected) {
+                        mSmaManager.setNameAndAddress(device.getName(), device.getAddress());
+                        mSmaManager.mEaseConnector.setAddress(device.getAddress());
+                        Context ctx =BindDeviceActivity.this;
+                        SharedPreferences sp = ctx.getSharedPreferences("DEVICE2",
+                                Activity.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.putString("deviceName2", device.getName());
+                        editor.commit();
+//                        startActivity(new Intent(mContext, MainActivity2.class));
+                        finish();
+                    }
+                }else if(str.equals("device3")){
+                    if (!isFailed && isConnected) {
+                        mSmaManager.setNameAndAddress(device.getName(), device.getAddress());
+                        mSmaManager.mEaseConnector.setAddress(device.getAddress());
+                        Context ctx =BindDeviceActivity.this;
+                        SharedPreferences sp = ctx.getSharedPreferences("DEVICE3",
+                                Activity.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.putString("deviceName3", device.getName());
+                        editor.commit();
+//                        startActivity(new Intent(mContext, MainActivity2.class));
+                        finish();
+                    }
+                }else if(str.equals("device4")){
+                    if (!isFailed && isConnected) {
+                        mSmaManager.setNameAndAddress(device.getName(), device.getAddress());
+                        mSmaManager.mEaseConnector.setAddress(device.getAddress());
+                        Context ctx =BindDeviceActivity.this;
+                        SharedPreferences sp = ctx.getSharedPreferences("DEVICE4",
+                                Activity.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.putString("deviceName4", device.getName());
+                        editor.commit();
+//                        startActivity(new Intent(mContext, MainActivity2.class));
+                        finish();
+                    }
+                }else if(str.equals("device5")){
+                    if (!isFailed && isConnected) {
+                        mSmaManager.setNameAndAddress(device.getName(), device.getAddress());
+                        mSmaManager.mEaseConnector.setAddress(device.getAddress());
+                        Context ctx =BindDeviceActivity.this;
+                        SharedPreferences sp = ctx.getSharedPreferences("DEVICE5",
+                                Activity.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.putString("deviceName5", device.getName());
+                        editor.commit();
+//                        startActivity(new Intent(mContext, MainActivity2.class));
+                        finish();
+                    }
                 }
+
             }
         });
 

@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -16,7 +15,6 @@ import android.widget.TextView;
 import com.bestmafen.easeblelib.util.L;
 import com.bestmafen.smablelib.component.SimpleSmaCallback;
 import com.bestmafen.smablelib.component.SmaManager;
-import com.blankj.utilcode.util.ToastUtils;
 import com.wx.wheelview.adapter.ArrayWheelAdapter;
 import com.wx.wheelview.widget.WheelView;
 
@@ -26,17 +24,15 @@ import bauway.com.hanfang.App.Constants;
 import bauway.com.hanfang.BuildConfig;
 import bauway.com.hanfang.R;
 import bauway.com.hanfang.base.BaseActivity;
-import bauway.com.hanfang.interfaces.DialogCallback;
-import bauway.com.hanfang.util.DialogUtil;
 import bauway.com.hanfang.util.ToastUtil;
 import bauway.com.hanfang.zxing.activity.CaptureActivity;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.bmob.sms.BmobSMS;
 
-public class DeviceSettingActivity extends BaseActivity {
+public class DeviceSettingActivity3 extends BaseActivity {
 
-    private static final String TAG = "DeviceSettingActivity";
+    private static final String TAG = "DeviceSettingActivity3";
     @BindView(R.id.iv_return)
     ImageView mIvReturn;
     @BindView(R.id.wv_time_setting)
@@ -68,7 +64,7 @@ public class DeviceSettingActivity extends BaseActivity {
 
     @Override
     protected int getLayoutRes() {
-        return R.layout.activity_device_setting;
+        return R.layout.activity_device_setting3;
     }
 
     @Override
@@ -89,10 +85,10 @@ public class DeviceSettingActivity extends BaseActivity {
     @Override
     protected void initView() {
         String emailHistory = userRxPreferences.getString(Constants.LOGIN_PHONE).get();
-        time = getIntent().getIntExtra("time",0);
-        fengsu = getIntent().getIntExtra("fengsu",0);
-        wendu = getIntent().getIntExtra("wendu",0);
-        L.e("time"+time+"fengsu"+fengsu+"wendu"+wendu);
+        time = getIntent().getIntExtra("time3",0);
+        fengsu = getIntent().getIntExtra("fengsu3",0);
+        wendu = getIntent().getIntExtra("wendu3",0);
+        L.e("time3"+time+"fengsu3"+fengsu+"wendu3"+wendu);
         initWheelTime();
         initWheelFengsu();
         initWheelWendu();
@@ -100,7 +96,7 @@ public class DeviceSettingActivity extends BaseActivity {
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        ctx =DeviceSettingActivity.this;
+        ctx =DeviceSettingActivity3.this;
         mSmaManager = SmaManager.getInstance().init(this).addSmaCallback(new SimpleSmaCallback() {
 
             @Override
@@ -133,7 +129,7 @@ public class DeviceSettingActivity extends BaseActivity {
                 Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         String str = getIntent().getStringExtra("shebei");
-        editor.putString("scanResult1", "未输入");
+        editor.putString("scanResult3", "未输入");
         editor.commit();
     }
 
@@ -149,14 +145,14 @@ public class DeviceSettingActivity extends BaseActivity {
         } else {
             L.e("2222");
             SharedPreferences sharedPreferences = this.getSharedPreferences(
-                    "DEVICE", Activity.MODE_PRIVATE);
-            mStrDevicename = sharedPreferences.getString("deviceName1", "");
+                    "DEVICE3", Activity.MODE_PRIVATE);
+            mStrDevicename = sharedPreferences.getString("deviceName3", "未连接");
             mTvName.setText(mStrDevicename);
             mTvIsconnect.setText("已绑定");
 
-            SharedPreferences sharedPreferences2 = this.getSharedPreferences(
+            SharedPreferences sharedPreferences3 = this.getSharedPreferences(
                     "SCAN", Activity.MODE_PRIVATE);
-            String scanResult = sharedPreferences2.getString("scanResult1", "");
+            String scanResult = sharedPreferences3.getString("scanResult3", "未输入");
             tv_device_drug_code.setText(scanResult);
         }
     }
@@ -266,33 +262,28 @@ public class DeviceSettingActivity extends BaseActivity {
                 this.finish();
                 break;
             case R.id.tv_device_setting_save:
-                if (mTvName.getText().toString().equals("未连接")){
-                    ToastUtil.showShortToast(ctx,this.getString(R.string.device_not_connected));
-                }else{
-                    SharedPreferences sp1 = ctx.getSharedPreferences("WENDU",
-                            Activity.MODE_PRIVATE);
-                    SharedPreferences.Editor editor1 = sp1.edit();
-                    editor1.putString("wendu1", mWendu1);
-                    editor1.commit();
+                SharedPreferences sp1 = ctx.getSharedPreferences("WENDU3",
+                        Activity.MODE_PRIVATE);
+                SharedPreferences.Editor editor1 = sp1.edit();
+                editor1.putString("wendu3", mWendu1);
+                editor1.commit();
 
-                    SharedPreferences sp2 = ctx.getSharedPreferences("FENGSU",
-                            Activity.MODE_PRIVATE);
-                    SharedPreferences.Editor editor2 = sp2.edit();
-                    editor2.putString("fengsu1", mFengsu1);
-                    editor2.commit();
+                SharedPreferences sp2 = ctx.getSharedPreferences("FENGSU3",
+                        Activity.MODE_PRIVATE);
+                SharedPreferences.Editor editor2 = sp2.edit();
+                editor2.putString("fengsu3", mFengsu1);
+                editor2.commit();
 
-                    SharedPreferences sp3 = ctx.getSharedPreferences("TIME",
-                            Activity.MODE_PRIVATE);
-                    SharedPreferences.Editor editor3 = sp3.edit();
-                    editor3.putString("time1", mTime1);
-                    editor3.commit();
-                    ToastUtil.showShortToast(ctx,this.getString(R.string.device_save_success));
-                    finish();
-                }
-
+                SharedPreferences sp3 = ctx.getSharedPreferences("TIME3",
+                        Activity.MODE_PRIVATE);
+                SharedPreferences.Editor editor3 = sp3.edit();
+                editor3.putString("time3", mTime1);
+                editor3.commit();
+                ToastUtil.showShortToast(ctx,this.getString(R.string.device_save_success));
+                finish();
                 break;
             case R.id.ll_device_drug_code:
-                startActivity(new Intent(DeviceSettingActivity.this, CaptureActivity.class).putExtra("shebei","device1"));
+                startActivity(new Intent(DeviceSettingActivity3.this, CaptureActivity.class).putExtra("shebei","device3"));
                 break;
             case R.id.ll_device_connect_state:
 //                if (!TextUtils.isEmpty(SmaManager.getInstance().getNameAndAddress()[1])) {
@@ -305,18 +296,18 @@ public class DeviceSettingActivity extends BaseActivity {
 //                                    //确认解绑
 //                                    SmaManager.getInstance().unbind();
 ////                                mBtUnbind.setVisibility(View.GONE);
-//                                    Context ctx = DeviceSettingActivity.this;
-//                                    SharedPreferences sp = ctx.getSharedPreferences("DEVICE",
+//                                    Context ctx = DeviceSettingActivity2.this;
+//                                    SharedPreferences sp = ctx.getSharedPreferences("DEVICE2",
 //                                            Activity.MODE_PRIVATE);
 //                                    SharedPreferences.Editor editor = sp.edit();
-//                                    editor.putString("deviceName1", "未连接");
+//                                    editor.putString("deviceName2", "未连接");
 //                                    editor.commit();
 //                                }
 //                            });
 //                    return;
 //                }
 
-                startActivity(new Intent(DeviceSettingActivity.this, BindDeviceActivity.class).putExtra("shebei","device1"));
+                startActivity(new Intent(DeviceSettingActivity3.this, BindDeviceActivity.class).putExtra("shebei","device3"));
                 break;
 
             default:

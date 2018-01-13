@@ -77,6 +77,10 @@
         <activity android:name=".activity.NotesActivity"/>
         <activity android:name=".activity.AppUserInfoActivity"/>
         <activity android:name=".activity.DeviceSettingActivity"/>
+        <activity android:name=".activity.DeviceSettingActivity2"/>
+        <activity android:name=".activity.DeviceSettingActivity3"/>
+        <activity android:name=".activity.DeviceSettingActivity4"/>
+        <activity android:name=".activity.DeviceSettingActivity5"/>
         <activity android:name=".activity.ChangePasswordActivity"/>
         <activity android:name=".activity.PersonInfoActivity"/>
         <activity android:name=".activity.ChangePwdActivity"/>
