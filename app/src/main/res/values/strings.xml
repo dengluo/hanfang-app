@@ -144,6 +144,13 @@
     <string name="personinfo_head">负责人</string>
     <string name="registration_mark">登记号</string>
     <string name="address">地址</string>
+
+    <string name="person_name">姓名</string>
+    <string name="person_sex">性别</string>
+    <string name="person_age">年龄</string>
+    <string name="person_height">身高</string>
+    <string name="person_weight">体重</string>
+
     <string name="change_pwd">更改密码</string>
     <string name="change">修改</string>
     <string name="device_setting">设置</string>

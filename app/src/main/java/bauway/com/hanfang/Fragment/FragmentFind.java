@@ -42,6 +42,7 @@ public class FragmentFind extends Fragment implements View.OnClickListener {
     private View view_main;
     public RxSharedPreferences userRxPreferences;
     private ImageView iv_device_state1, iv_device_state2, iv_device_state3, iv_device_state4, iv_device_state5;
+    private ImageView iv_find_play1,iv_find_play2,iv_find_play3,iv_find_play4,iv_find_play5;
     private TextView tv_device_name1, tv_device_wendu1, tv_device_fengsu1, tv_device_time1;
     private TextView tv_device_name2, tv_device_wendu2, tv_device_fengsu2, tv_device_time2;
     private TextView tv_device_name3, tv_device_wendu3, tv_device_fengsu3, tv_device_time3;
@@ -96,6 +97,17 @@ public class FragmentFind extends Fragment implements View.OnClickListener {
     private void inintView() {
         view_main = LayoutInflater.from(getActivity()).inflate(
                 R.layout.fragment_find, null);
+        iv_find_play1 = (ImageView) view_main.findViewById(R.id.iv_find_play1);
+        iv_find_play2 = (ImageView) view_main.findViewById(R.id.iv_find_play2);
+        iv_find_play3 = (ImageView) view_main.findViewById(R.id.iv_find_play3);
+        iv_find_play4 = (ImageView) view_main.findViewById(R.id.iv_find_play4);
+        iv_find_play5 = (ImageView) view_main.findViewById(R.id.iv_find_play5);
+        iv_find_play1.setOnClickListener(this);
+        iv_find_play2.setOnClickListener(this);
+        iv_find_play3.setOnClickListener(this);
+        iv_find_play4.setOnClickListener(this);
+        iv_find_play5.setOnClickListener(this);
+
         iv_device_state1 = (ImageView) view_main.findViewById(R.id.iv_device_state1);
         tv_device_name1 = (TextView) view_main.findViewById(R.id.tv_device_name1);
         tv_device_wendu1 = (TextView) view_main.findViewById(R.id.tv_device_wendu1);
@@ -155,7 +167,12 @@ public class FragmentFind extends Fragment implements View.OnClickListener {
 
     @Override
     public void onDestroy() {
-        mSmaManager.exit();
+        try {
+            mSmaManager.exit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         super.onDestroy();
     }
 
@@ -311,6 +328,21 @@ public class FragmentFind extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.iv_find_play1:
+
+                break;
+            case R.id.iv_find_play2:
+
+                break;
+            case R.id.iv_find_play3:
+
+                break;
+            case R.id.iv_find_play4:
+
+                break;
+            case R.id.iv_find_play5:
+
+                break;
             case R.id.iv_device_state1:
                 if (mStrDevicename1.equals("未连接")) {
                     Intent intent = new Intent(context, DeviceSettingActivity.class);

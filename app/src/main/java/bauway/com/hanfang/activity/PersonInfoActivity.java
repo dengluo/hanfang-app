@@ -2,16 +2,29 @@ package bauway.com.hanfang.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import bauway.com.hanfang.App.Constants;
 import bauway.com.hanfang.base.BaseActivity;
 import bauway.com.hanfang.R;
+import bauway.com.hanfang.bean.BUser;
+import bauway.com.hanfang.bean.User;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.bmob.sms.BmobSMS;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.listener.QueryListener;
+import cn.bmob.v3.exception.BmobException;
+
+import static com.wx.wheelview.util.WheelUtils.log;
 
 public class PersonInfoActivity extends BaseActivity {
 
@@ -20,6 +33,18 @@ public class PersonInfoActivity extends BaseActivity {
     ImageView mIvReturn;
     @BindView(R.id.ll_fragme_accountinfo)
     LinearLayout mLlAccountinfo;
+    @BindView(R.id.tv_personinfo_phone)
+    TextView tv_personinfo_phone;
+    @BindView(R.id.tv_personinfo_name)
+    TextView tv_personinfo_name;
+    @BindView(R.id.tv_personinfo_sex)
+    TextView tv_personinfo_sex;
+    @BindView(R.id.tv_personinfo_age)
+    TextView tv_personinfo_age;
+    @BindView(R.id.tv_personinfo_height)
+    TextView tv_personinfo_height;
+    @BindView(R.id.tv_personinfo_weight)
+    TextView tv_personinfo_weight;
 
     @Override
     protected int getLayoutRes() {
@@ -41,9 +66,42 @@ public class PersonInfoActivity extends BaseActivity {
         BmobSMS.initialize(this, Constants.BMOB_ID);
     }
 
+    /*
+    Bmob查询数据
+     */
+    public void queryData(){
+        String phone = userRxPreferences.getString(Constants.LOGIN_EMAIL).get();
+        tv_personinfo_phone.setText(phone);
+        BmobQuery query =new BmobQuery("_User");
+        query.addWhereEqualTo("username", phone);
+        query.setLimit(2);
+        query.order("createdAt");
+        //v3.5.0版本提供`findObjectsByTable`方法查询自定义表名的数据
+        query.findObjectsByTable(new QueryListener<JSONArray>() {
+            @Override
+            public void done(JSONArray ary, BmobException e) {
+                if(e==null){
+                    Log.i("bmob","查询成功："+ary.toString());
+                    try {
+                        JSONObject object = (JSONObject) ary.get(0);
+                        tv_personinfo_name.setText(object.getJSONArray("info").getString(0));
+                        tv_personinfo_sex.setText(object.getJSONArray("info").getString(1));
+                        tv_personinfo_age.setText(object.getJSONArray("info").getString(2));
+                        tv_personinfo_height.setText(object.getJSONArray("info").getString(3));
+                        tv_personinfo_weight.setText(object.getJSONArray("info").getString(4));
+                    } catch (JSONException e1) {
+                        e1.printStackTrace();
+                    }
+                }else{
+                    Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                }
+            }
+        });
+    }
+
     @Override
     protected void initView() {
-        String emailHistory = userRxPreferences.getString(Constants.LOGIN_PHONE).get();
+        queryData();
     }
 
     @Override

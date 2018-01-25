@@ -2,9 +2,11 @@ package bauway.com.hanfang.activity;
 
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -53,6 +55,7 @@ public class MainActivity2 extends BaseActivity implements View.OnClickListener 
     private TextView mTvDebug;
     private DateFormat mDateFormat = new SimpleDateFormat("HH:mm:ss");
     String strDevice1 = "";
+    private SharedPreferences sharedPreferences;
 
 
     @Override
@@ -81,6 +84,22 @@ public class MainActivity2 extends BaseActivity implements View.OnClickListener 
 
     @Override
     protected void init(Bundle savedInstanceState) {
+        sharedPreferences = getSharedPreferences("count",MODE_PRIVATE);
+        int count = sharedPreferences.getInt("count",0);
+        Log.d("print", String.valueOf(count));
+        //判断程序是第几次运行，如果是第一次运行则跳转到引导页面
+        if (count == 0){
+            Intent intent = new Intent();
+            intent.setClass(getApplicationContext(), WelcomeActivity.class);
+            startActivity(intent);
+            this.finish();
+        }
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        //存入数据
+        editor.putInt("count",++count);
+        //提交修改
+        editor.commit();
+
         mSmaManager = SmaManager.getInstance().init(this).addSmaCallback(new SimpleSmaCallback() {
 
             @Override

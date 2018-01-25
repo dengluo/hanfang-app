@@ -69,10 +69,11 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tv_personinfo_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp10"
-                android:text="18823380448"
+                android:text=""
                 android:textColor="@color/text_color_2"
                 android:textSize="14dp" />
 
@@ -136,9 +137,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp10"
-                android:text="@string/organization_name"
+                android:text="@string/person_name"
                 android:textColor="@color/text_color_2"
                 android:textSize="14dp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:gravity="right">
+
+                <TextView
+                    android:id="@+id/tv_personinfo_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="臧三"/>
+            </RelativeLayout>
         </LinearLayout>
 
         <View
@@ -162,9 +176,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp10"
-                android:text="@string/legal_representative"
+                android:text="@string/person_sex"
                 android:textColor="@color/text_color_2"
                 android:textSize="14dp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:gravity="right">
+
+                <TextView
+                    android:id="@+id/tv_personinfo_sex"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text=""/>
+            </RelativeLayout>
         </LinearLayout>
 
         <View
@@ -188,9 +215,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp10"
-                android:text="@string/personinfo_head"
+                android:text="@string/person_age"
                 android:textColor="@color/text_color_2"
                 android:textSize="14dp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:gravity="right">
+
+                <TextView
+                    android:id="@+id/tv_personinfo_age"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text=""/>
+            </RelativeLayout>
         </LinearLayout>
 
         <View
@@ -214,9 +254,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp10"
-                android:text="@string/registration_mark"
+                android:text="@string/person_height"
                 android:textColor="@color/text_color_2"
                 android:textSize="14dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:gravity="right">
+
+                <TextView
+                    android:id="@+id/tv_personinfo_height"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text=""/>
+            </RelativeLayout>
         </LinearLayout>
 
         <View
@@ -240,9 +294,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp10"
-                android:text="@string/address"
+                android:text="@string/person_weight"
                 android:textColor="@color/text_color_2"
                 android:textSize="14dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:gravity="right">
+
+                <TextView
+                    android:id="@+id/tv_personinfo_weight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text=""/>
+            </RelativeLayout>
         </LinearLayout>
 
         <View
