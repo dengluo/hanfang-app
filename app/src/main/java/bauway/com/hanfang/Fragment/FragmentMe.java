@@ -15,6 +15,10 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.ToastUtils;
 import com.f2prateek.rx.preferences2.RxSharedPreferences;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import bauway.com.hanfang.App.Constants;
 import bauway.com.hanfang.MyApplication;
 import bauway.com.hanfang.activity.LoginActivity;
@@ -24,7 +28,10 @@ import bauway.com.hanfang.R;
 import bauway.com.hanfang.interfaces.DialogCallback;
 import bauway.com.hanfang.util.DialogUtil;
 import bauway.com.hanfang.util.PreferencesUtils;
+import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.QueryListener;
 
 /**
  * Created by shun8 on 2017/12/28.
@@ -38,7 +45,7 @@ public class FragmentMe extends Fragment implements View.OnClickListener {
     private LinearLayout ll_fragme_exit;
     private Intent csintent,piintent;
     private LinearLayout ll_fragme_accountinfo;
-    private TextView tv_account_name;
+    private TextView tv_account_name,tv_account_nick;
     public RxSharedPreferences userRxPreferences;
     public MyApplication myApplication;
     @Override
@@ -57,8 +64,37 @@ public class FragmentMe extends Fragment implements View.OnClickListener {
         ll_fragme_exit = (LinearLayout) view_main.findViewById(R.id.ll_fragme_exit);
         ll_fragme_accountinfo = (LinearLayout) view_main.findViewById(R.id.ll_fragme_accountinfo);
         tv_account_name = (TextView) view_main.findViewById(R.id.tv_account_name);
+        tv_account_nick = (TextView) view_main.findViewById(R.id.tv_account_nick);
         ll_fragme_exit.setOnClickListener(this);
         ll_fragme_accountinfo.setOnClickListener(this);
+    }
+
+    /*
+    Bmob查询数据
+     */
+    public void queryData(){
+        String phone = userRxPreferences.getString(Constants.LOGIN_EMAIL).get();
+        BmobQuery query =new BmobQuery("_User");
+        query.addWhereEqualTo("username", phone);
+        query.setLimit(2);
+        query.order("createdAt");
+        //v3.5.0版本提供`findObjectsByTable`方法查询自定义表名的数据
+        query.findObjectsByTable(new QueryListener<JSONArray>() {
+            @Override
+            public void done(JSONArray ary, BmobException e) {
+                if(e==null){
+                    Log.i("bmob","查询成功："+ary.toString());
+                    try {
+                        JSONObject object = (JSONObject) ary.get(0);
+                        tv_account_nick.setText(object.getJSONArray("info").getString(0));
+                    } catch (JSONException e1) {
+                        e1.printStackTrace();
+                    }
+                }else{
+                    Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                }
+            }
+        });
     }
 
     private void initDate() {
@@ -70,6 +106,7 @@ public class FragmentMe extends Fragment implements View.OnClickListener {
         String pwd = userRxPreferences.getString(Constants.LOGIN_PWD).get();
         Log.e(TAG, accountname+"//"+pwd);
         tv_account_name.setText(accountname);
+        queryData();
     }
 
     @Override

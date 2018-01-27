@@ -31,7 +31,7 @@ public class FragmentStudio extends Fragment {
 
     private void inintView() {
         view_main = LayoutInflater.from(getActivity()).inflate(
-                R.layout.fragment_buy, null);
+                R.layout.fragment_buy1, null);
 //		Intent intent=getIntent();
 //		Bundle bundle=intent.getExtras();
         mywebview=(WebView)view_main.findViewById(R.id.mywebview);

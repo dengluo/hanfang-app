@@ -10,8 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="52dp"
         android:layout_gravity="center_vertical"
-        android:padding="10dp"
-        android:background="@color/blue_ice">
+        android:background="@color/blue_ice"
+        android:padding="10dp">
 
         <TextView
             android:layout_width="match_parent"
@@ -26,16 +26,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/gray_divider_line"
-        android:paddingLeft="15dp"
-        android:paddingTop="5dp"
+        android:orientation="vertical"
         android:paddingBottom="5dp"
-        android:orientation="vertical">
+        android:paddingLeft="15dp"
+        android:paddingTop="5dp">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12dp"
+            android:text="@string/account_info"
             android:textColor="@color/text_color_2"
-            android:text="@string/account_info"/>
+            android:textSize="12dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -44,31 +45,50 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp"
         android:paddingLeft="15dp"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:orientation="horizontal">
+        android:paddingTop="10dp">
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/aboutus"/>
-        <TextView
-            android:id="@+id/tv_account_name"
+            android:background="@drawable/aboutus" />
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14dp"
             android:layout_marginLeft="@dimen/dp10"
-            android:textColor="@color/text_color_2"
-            android:text=""/>
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_account_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/text_color_2"
+                android:textSize="14dp" />
+
+            <TextView
+                android:id="@+id/tv_account_nick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text=""
+                android:textColor="@color/text_color_2"
+                android:textSize="12dp" />
+        </LinearLayout>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right">
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:background="@drawable/icon_jiantou_gray"/>
+                android:background="@drawable/icon_jiantou_gray" />
         </RelativeLayout>
     </LinearLayout>
 
@@ -76,16 +96,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/gray_divider_line"
-        android:paddingLeft="15dp"
-        android:paddingTop="5dp"
+        android:orientation="vertical"
         android:paddingBottom="5dp"
-        android:orientation="vertical">
+        android:paddingLeft="15dp"
+        android:paddingTop="5dp">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12dp"
+            android:text="@string/fragme_data"
             android:textColor="@color/text_color_2"
-            android:text="@string/fragme_data"/>
+            android:textSize="12dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -93,22 +114,24 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:gravity="center_vertical"
-        android:paddingLeft="15dp"
-        android:paddingTop="5dp"
+        android:orientation="horizontal"
         android:paddingBottom="5dp"
-        android:orientation="horizontal">
+        android:paddingLeft="15dp"
+        android:paddingTop="5dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right">
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:background="@drawable/icon_jiantou_gray"/>
+                android:background="@drawable/icon_jiantou_gray" />
         </RelativeLayout>
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -119,22 +142,24 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:gravity="center_vertical"
-        android:paddingLeft="15dp"
-        android:paddingTop="5dp"
+        android:orientation="horizontal"
         android:paddingBottom="5dp"
-        android:orientation="horizontal">
+        android:paddingLeft="15dp"
+        android:paddingTop="5dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right">
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:background="@drawable/icon_jiantou_gray"/>
+                android:background="@drawable/icon_jiantou_gray" />
         </RelativeLayout>
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -145,22 +170,24 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:gravity="center_vertical"
-        android:paddingLeft="15dp"
-        android:paddingTop="5dp"
+        android:orientation="horizontal"
         android:paddingBottom="5dp"
-        android:orientation="horizontal">
+        android:paddingLeft="15dp"
+        android:paddingTop="5dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right">
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:background="@drawable/icon_jiantou_gray"/>
+                android:background="@drawable/icon_jiantou_gray" />
         </RelativeLayout>
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -170,16 +197,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/gray_divider_line"
-        android:paddingLeft="15dp"
-        android:paddingTop="5dp"
+        android:orientation="vertical"
         android:paddingBottom="5dp"
-        android:orientation="vertical">
+        android:paddingLeft="15dp"
+        android:paddingTop="5dp">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12dp"
+            android:text="@string/fragme_about"
             android:textColor="@color/text_color_2"
-            android:text="@string/fragme_about"/>
+            android:textSize="12dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -187,22 +215,24 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:gravity="center_vertical"
-        android:paddingLeft="15dp"
-        android:paddingTop="5dp"
+        android:orientation="horizontal"
         android:paddingBottom="5dp"
-        android:orientation="horizontal">
+        android:paddingLeft="15dp"
+        android:paddingTop="5dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right">
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:background="@drawable/icon_jiantou_gray"/>
+                android:background="@drawable/icon_jiantou_gray" />
         </RelativeLayout>
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -213,22 +243,24 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:gravity="center_vertical"
-        android:paddingLeft="15dp"
-        android:paddingTop="5dp"
+        android:orientation="horizontal"
         android:paddingBottom="5dp"
-        android:orientation="horizontal">
+        android:paddingLeft="15dp"
+        android:paddingTop="5dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right">
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:background="@drawable/icon_jiantou_gray"/>
+                android:background="@drawable/icon_jiantou_gray" />
         </RelativeLayout>
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -239,22 +271,24 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:gravity="center_vertical"
-        android:paddingLeft="15dp"
-        android:paddingTop="5dp"
+        android:orientation="horizontal"
         android:paddingBottom="5dp"
-        android:orientation="horizontal">
+        android:paddingLeft="15dp"
+        android:paddingTop="5dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right">
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:background="@drawable/icon_jiantou_gray"/>
+                android:background="@drawable/icon_jiantou_gray" />
         </RelativeLayout>
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -264,17 +298,18 @@
         android:id="@+id/ll_fragme_exit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_20"
         android:background="@color/white"
         android:gravity="center"
-        android:padding="8dp"
-        android:layout_marginTop="@dimen/dp_20"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="8dp">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14dp"
+            android:text="@string/fragme_exit"
             android:textColor="@color/text_color_1"
-            android:text="@string/fragme_exit"/>
+            android:textSize="14dp" />
 
     </LinearLayout>
 
