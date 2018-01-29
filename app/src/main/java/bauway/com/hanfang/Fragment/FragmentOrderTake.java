@@ -42,7 +42,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener{
     private RadioButton rb_channel;
     private RadioButton rb_message;
     private RadioButton rb_better;
-    private TextView tv_frag_wendu,tv_frag_time,tv_frag_fengsu;
+    private TextView tv_frag_wendu,tv_frag_time,tv_frag_fengsu,tv_frag_device_name;
     private ImageView iv_device_drug_codesss,iv_device_bluetooth;
     private ViewPager vpager;
 
@@ -82,6 +82,9 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener{
                         String mfengsu1 = sharedPreferencesFengsu1.getString("mfengsu1", "中");
                         tv_frag_fengsu.setText(mfengsu1+" 档");
                         break;
+                    case 14:
+                        tv_frag_device_name.setText(msg.obj+"");
+                        break;
                 }
             }
         };
@@ -101,6 +104,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener{
         tv_frag_wendu = (TextView) view_main.findViewById(R.id.tv_frag_wendu);
         tv_frag_time = (TextView) view_main.findViewById(R.id.tv_frag_time);
         tv_frag_fengsu = (TextView) view_main.findViewById(R.id.tv_frag_fengsu);
+        tv_frag_device_name = (TextView) view_main.findViewById(R.id.tv_frag_device_name);
         iv_device_drug_codesss = (ImageView) view_main.findViewById(R.id.iv_device_drug_codesss);
         iv_device_bluetooth = (ImageView) view_main.findViewById(R.id.iv_device_bluetooth);
         iv_device_drug_codesss.setOnClickListener(this);

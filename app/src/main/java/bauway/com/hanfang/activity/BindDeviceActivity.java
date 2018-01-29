@@ -133,7 +133,7 @@ public class BindDeviceActivity extends BaseActivity {
     protected void init(Bundle savedInstanceState) {
 //        mProduct = getIntent().getParcelableExtra(MyConstants2.PRODUCT);
         final String str = getIntent().getStringExtra("shebei");
-        Log.e("strll-",str);
+//        Log.e("strll-",str);
         mSmaManager = SmaManager.getInstance().addSmaCallback(mSmaCallback = new SimpleSmaCallback() {
 
             @Override
@@ -277,7 +277,7 @@ public class BindDeviceActivity extends BaseActivity {
         mScanner.exit();
 
         unregisterReceiver(mReceiver);
-        Log.e(TAG, "lololo="+mSmaManager.getNameAndAddress()[1]);
+//        Log.e(TAG, "lololo="+mSmaManager.getNameAndAddress()[1]);
         if (TextUtils.isEmpty(mSmaManager.getNameAndAddress()[1])) {
             mSmaManager.unbind();
         }

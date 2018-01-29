@@ -8,18 +8,22 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import bauway.com.hanfang.App.Constants;
+import bauway.com.hanfang.Fragment.FragmentOrderTake;
 import bauway.com.hanfang.R;
 import bauway.com.hanfang.adapter.DeviceListAdapter;
 import bauway.com.hanfang.base.BaseActivity;
 import bauway.com.hanfang.bean.ItemBean;
+import bauway.com.hanfang.util.ACache;
 import bauway.com.hanfang.util.ToastUtil;
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -35,7 +39,7 @@ public class DeviceListActivity extends BaseActivity {
     private static final String TAG = "DeviceSettingActivity";
     private Context ctx;
     private DeviceListAdapter mAdapter;
-    private List<ItemBean> mData;
+    private ArrayList<ItemBean> mData;
     public static Handler mHandler;//接受BindDeviceActivity发送过来的消息
     private ItemBean ib;
 
@@ -62,19 +66,55 @@ public class DeviceListActivity extends BaseActivity {
     @SuppressLint("HandlerLeak")
     @Override
     protected void initView() {
-
+        ACache aCache = ACache.get(DeviceListActivity.this);
+        ArrayList<String> list2 = (ArrayList<String>) aCache.getAsObject("danny");
+//        Log.e("list2.toString()",list2.toString());
+//        Log.e("list22.toString()",list2.size()+"");
         mData = new ArrayList<ItemBean>();
-        mAdapter = new DeviceListAdapter(this, mData);
+        if (list2 == null){
+//            Log.e("mxg", "list == null");
+            list2 = new ArrayList<>();
+            aCache.put("danny",list2);
+            mAdapter = new DeviceListAdapter(this,mData, null);
+        }else{
+            mAdapter = new DeviceListAdapter(this, null,list2);
+        }
         lv_device.setAdapter(mAdapter);
         mHandler = new Handler() {
             public void handleMessage(Message msg) {
                 switch (msg.what) {
                     case 19:
+                        ACache aCache = ACache.get(mContext);
+                        ArrayList<String> list = (ArrayList<String>) aCache.getAsObject("danny");
                         ib = new ItemBean();
                         ib.setText(msg.obj.toString());
                         mData.add(ib);
                         mAdapter.notifyDataSetChanged();
-                        ToastUtil.showShortToast(DeviceListActivity.this, msg.obj + "");
+
+                        list.add(msg.obj.toString());
+                        aCache.put("danny", list);
+
+//                        ToastUtil.showShortToast(DeviceListActivity.this, msg.obj + "");
+                        break;
+                    case 29:
+//                        Log.e("msg.arg1","=="+msg.arg1+"=="+msg.obj);
+                        ACache aCache2 = ACache.get(mContext);
+                        ArrayList<String> list3 = (ArrayList<String>) aCache2.getAsObject("danny");
+                        Log.e("list3.toString()",list3.toString());
+//                        String value = list2.get(msg.arg1).toString();
+                        list3.remove(msg.arg1);
+//                        list3 = new ArrayList<>();
+                        aCache2.put("danny",list3);
+                        mAdapter.notifyDataSetChanged();
+                        initView();
+//                        lv_device.setAdapter(mAdapter);
+                        break;
+                    case 39:
+                        Message message = new Message();
+                        message.what = 14;
+                        message.obj = msg.obj;
+                        FragmentOrderTake.mHandler.sendMessage(message);
+                        finish();
                         break;
                 }
             }
@@ -89,6 +129,7 @@ public class DeviceListActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        initView();
     }
 
     @Override

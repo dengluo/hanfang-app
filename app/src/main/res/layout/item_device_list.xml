@@ -2,29 +2,65 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:background="@drawable/shape_circle_edt_input"
-    android:gravity="center_vertical"
     android:layout_marginBottom="2dp"
     android:layout_marginLeft="15dp"
     android:layout_marginRight="15dp"
     android:layout_marginTop="10dp"
+    android:background="@drawable/shape_circle_edt_input"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
     android:padding="2dp">
 
-        <ImageView
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="@dimen/dp10"
-            android:background="@drawable/icon_device_bluetooth" />
+    <bauway.com.hanfang.View.SwipeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/tv_device_item_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="未连接"
-            android:textColor="@color/black_2"
-            android:textSize="14dp" />
+        <LinearLayout
+            android:id="@+id/ll_device_list_item"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="#ffffff"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="@dimen/dp10"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/icon_device_bluetooth" />
+
+            <TextView
+                android:id="@+id/tv_device_item_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="未连接"
+                android:textColor="@color/black_2"
+                android:textSize="14dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/back"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:padding="5dp"
+            android:gravity="center_vertical">
+
+            <RelativeLayout
+                android:id="@+id/delete_button"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:background="#ff0000"
+                android:gravity="center"
+                android:clickable="true">
+
+                <View
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/trash" />
+            </RelativeLayout>
+        </LinearLayout>
+    </bauway.com.hanfang.View.SwipeLayout>
 </LinearLayout>
