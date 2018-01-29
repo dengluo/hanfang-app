@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -95,8 +96,8 @@ public class DeviceListAdapter extends BaseAdapter {
             }
         });
 
-        holder.llItem = (LinearLayout) convertView.findViewById(R.id.ll_device_list_item);
-        holder.llItem.setOnClickListener(new View.OnClickListener(){
+        holder.ivItem = (ImageView) convertView.findViewById(R.id.iv_device_list_item);
+        holder.ivItem.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 Message message = new Message();
                 message.what = 39;
@@ -112,6 +113,7 @@ public class DeviceListAdapter extends BaseAdapter {
     private class ViewHolder {
         public TextView devicename2;
         public View delete;
+        public ImageView ivItem;
         public LinearLayout llItem;
 
     }
