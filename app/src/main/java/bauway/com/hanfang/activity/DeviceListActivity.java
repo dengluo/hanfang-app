@@ -62,11 +62,15 @@ public class DeviceListActivity extends BaseActivity {
     @SuppressLint("HandlerLeak")
     @Override
     protected void initView() {
-        ib = new ItemBean();
+
+        mData = new ArrayList<ItemBean>();
+        mAdapter = new DeviceListAdapter(this, mData);
+        lv_device.setAdapter(mAdapter);
         mHandler = new Handler() {
             public void handleMessage(Message msg) {
                 switch (msg.what) {
                     case 19:
+                        ib = new ItemBean();
                         ib.setText(msg.obj.toString());
                         mData.add(ib);
                         mAdapter.notifyDataSetChanged();
@@ -75,9 +79,6 @@ public class DeviceListActivity extends BaseActivity {
                 }
             }
         };
-        mData = new ArrayList<ItemBean>();
-        mAdapter = new DeviceListAdapter(this, mData);
-        lv_device.setAdapter(mAdapter);
     }
 
     @Override
@@ -104,7 +105,7 @@ public class DeviceListActivity extends BaseActivity {
             case R.id.iv_device_add:
 //                mData.add(new ItemBean());
 //                mAdapter.notifyDataSetChanged();
-                startActivity(new Intent(DeviceListActivity.this, BindDeviceActivity.class).putExtra("shebei", "device1"));
+                startActivity(new Intent(DeviceListActivity.this, BindDeviceActivity.class).putExtra("shebei", "device"+(mData.size()+1)));
                 break;
 
             default:

@@ -133,11 +133,26 @@ public class BindDeviceActivity extends BaseActivity {
     protected void init(Bundle savedInstanceState) {
 //        mProduct = getIntent().getParcelableExtra(MyConstants2.PRODUCT);
         final String str = getIntent().getStringExtra("shebei");
+        Log.e("strll-",str);
         mSmaManager = SmaManager.getInstance().addSmaCallback(mSmaCallback = new SimpleSmaCallback() {
 
             @Override
             public void onConnected(final BluetoothDevice device, boolean isConnected) {
                 L.e("______"+device.getName()+"//"+device.getAddress()+"//");
+//                for (int i = 0;i<20;i++){
+//                    if (!isFailed && isConnected) {
+//                        mSmaManager.setNameAndAddress(device.getName(), device.getAddress());
+//                        mSmaManager.mEaseConnector.setAddress(device.getAddress());
+//                        Context ctx =BindDeviceActivity.this;
+//                        SharedPreferences sp = ctx.getSharedPreferences("DEVICE",
+//                                Activity.MODE_PRIVATE);
+//                        SharedPreferences.Editor editor = sp.edit();
+//                        editor.putString("deviceName"+i, device.getName());
+//                        editor.commit();
+////                        startActivity(new Intent(mContext, MainActivity2.class));
+//                        finish();
+//                    }
+//                }
                 if (str.equals("device1")){
                     if (!isFailed && isConnected) {
                         mSmaManager.setNameAndAddress(device.getName(), device.getAddress());

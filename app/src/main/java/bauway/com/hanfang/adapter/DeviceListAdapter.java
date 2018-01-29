@@ -45,28 +45,28 @@ public class DeviceListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder = null;
+        ViewHolder holder;
         if (convertView == null) {
+            holder = new ViewHolder();
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_device_list, null);
-            holder = new ViewHolder(convertView);
-            holder.devicename = (TextView) convertView.findViewById(R.id.tv_device_item_name);
+            holder.devicename2 = (TextView) convertView.findViewById(R.id.tv_device_item_name);
             convertView.setTag(holder);
 
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
         ItemBean itemObj = mData.get(position);
-        holder.devicename.setTag(itemObj.getText());
-        holder.devicename.setText(holder.devicename.getTag().toString());
+        holder.devicename2.setTag(itemObj.getText());
+        holder.devicename2.setText(holder.devicename2.getTag().toString());
 
         return convertView;
     }
 
     private class ViewHolder {
-        private TextView devicename;
+        public TextView devicename2;
 
-        public ViewHolder(View convertView) {
-            devicename = (TextView) convertView.findViewById(R.id.tv_device_item_name);
-        }
+//        public ViewHolder(View convertView) {
+//            devicename2 = (TextView) convertView.findViewById(R.id.tv_device_item_name);
+//        }
     }
 }
