@@ -108,7 +108,7 @@ public class BindDeviceActivity extends BaseActivity {
                 L.e("点击设备地址");
                 Message message = new Message();
                 message.what = 19;
-                message.obj = mDeviceAdapter.get(position).device.getName();
+                message.obj = mDeviceAdapter.get(position).device.getName()+"=="+mDeviceAdapter.get(position).device.getAddress();
                 DeviceListActivity.mHandler.sendMessage(message);
                 isFailed = false;
                 mScanner.startScan(false);
@@ -278,9 +278,9 @@ public class BindDeviceActivity extends BaseActivity {
 
         unregisterReceiver(mReceiver);
 //        Log.e(TAG, "lololo="+mSmaManager.getNameAndAddress()[1]);
-        if (TextUtils.isEmpty(mSmaManager.getNameAndAddress()[1])) {
-            mSmaManager.unbind();
-        }
+//        if (TextUtils.isEmpty(mSmaManager.getNameAndAddress()[1])) {
+//            mSmaManager.unbind();
+//        }
         super.onDestroy();
     }
 

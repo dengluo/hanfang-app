@@ -70,7 +70,7 @@
             android:button="@null"
             android:drawableTop="@drawable/selector_radio_ordertake_nearby"
             android:gravity="center"
-            android:text="接单"
+            android:text="治疗"
             android:textColor="@drawable/selector_radio_txt_nearby"
             android:textSize="10sp" />
 
@@ -83,7 +83,7 @@
             android:button="@null"
             android:drawableTop="@drawable/selector_radio_find_nearby"
             android:gravity="center"
-            android:text="发现"
+            android:text="设备"
             android:textColor="@drawable/selector_radio_txt_nearby"
             android:textSize="10sp" />
         <RadioButton

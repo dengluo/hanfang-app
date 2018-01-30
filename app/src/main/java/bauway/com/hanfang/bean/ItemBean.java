@@ -5,6 +5,7 @@ package bauway.com.hanfang.bean;
  */
 public class ItemBean {
     private String text;
+    private String address;
 
     public String getText() {
         return text;
@@ -12,5 +13,13 @@ public class ItemBean {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

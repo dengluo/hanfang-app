@@ -71,13 +71,16 @@ public class DeviceListActivity extends BaseActivity {
 //        Log.e("list2.toString()",list2.toString());
 //        Log.e("list22.toString()",list2.size()+"");
         mData = new ArrayList<ItemBean>();
-        if (list2 == null){
-//            Log.e("mxg", "list == null");
+        if (list2.size() == 0) {
+            Log.e("mxg", "list == null");
             list2 = new ArrayList<>();
-            aCache.put("danny",list2);
-            mAdapter = new DeviceListAdapter(this,mData, null);
-        }else{
-            mAdapter = new DeviceListAdapter(this, null,list2);
+            aCache.put("danny", list2);
+            mAdapter = new DeviceListAdapter(this, mData ,list2.size());
+        } else {
+            Log.e("mxg", "list2 == null");
+            Log.e("list2.toString()", list2.toString());
+            Log.e("list22.toString()", list2.size() + "");
+            mAdapter = new DeviceListAdapter(this, list2 ,list2.size());
         }
         lv_device.setAdapter(mAdapter);
         mHandler = new Handler() {
@@ -87,7 +90,8 @@ public class DeviceListActivity extends BaseActivity {
                         ACache aCache = ACache.get(mContext);
                         ArrayList<String> list = (ArrayList<String>) aCache.getAsObject("danny");
                         ib = new ItemBean();
-                        ib.setText(msg.obj.toString());
+                        ib.setText(msg.obj.toString().substring(0, msg.obj.toString().indexOf("==")));
+                        ib.setAddress(msg.obj.toString().substring(msg.obj.toString().indexOf("=="), msg.obj.toString().length()));
                         mData.add(ib);
                         mAdapter.notifyDataSetChanged();
 
@@ -100,11 +104,11 @@ public class DeviceListActivity extends BaseActivity {
 //                        Log.e("msg.arg1","=="+msg.arg1+"=="+msg.obj);
                         ACache aCache2 = ACache.get(mContext);
                         ArrayList<String> list3 = (ArrayList<String>) aCache2.getAsObject("danny");
-                        Log.e("list3.toString()",list3.toString());
+                        Log.e("list3.toString()", list3.toString());
 //                        String value = list2.get(msg.arg1).toString();
                         list3.remove(msg.arg1);
 //                        list3 = new ArrayList<>();
-                        aCache2.put("danny",list3);
+                        aCache2.put("danny", list3);
                         mAdapter.notifyDataSetChanged();
                         initView();
 //                        lv_device.setAdapter(mAdapter);
@@ -146,7 +150,7 @@ public class DeviceListActivity extends BaseActivity {
             case R.id.iv_device_add:
 //                mData.add(new ItemBean());
 //                mAdapter.notifyDataSetChanged();
-                startActivity(new Intent(DeviceListActivity.this, BindDeviceActivity.class).putExtra("shebei", "device"+(mData.size()+1)));
+                startActivity(new Intent(DeviceListActivity.this, BindDeviceActivity.class).putExtra("shebei", "device" + (mData.size() + 1)));
                 break;
 
             default:

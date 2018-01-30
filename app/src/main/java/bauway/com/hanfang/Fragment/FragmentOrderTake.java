@@ -2,6 +2,7 @@ package bauway.com.hanfang.Fragment;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,12 +11,14 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -23,17 +26,25 @@ import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.bestmafen.smablelib.component.SimpleSmaCallback;
+import com.bestmafen.smablelib.component.SmaManager;
+import com.blankj.utilcode.util.ToastUtils;
+
+import bauway.com.hanfang.BuildConfig;
 import bauway.com.hanfang.R;
+import bauway.com.hanfang.activity.BindDeviceActivity;
 import bauway.com.hanfang.activity.DeviceListActivity;
 import bauway.com.hanfang.activity.DeviceSettingActivity;
 import bauway.com.hanfang.adapter.MyFragmentPagerAdapter;
+import bauway.com.hanfang.util.ToastUtil;
 import bauway.com.hanfang.zxing.activity.CaptureActivity;
 
 /**
- * Created by shun8 on 2017/12/28.
+ * Created by danny on 2017/12/28.
+ * 治疗
  */
 
-public class FragmentOrderTake extends Fragment implements View.OnClickListener{
+public class FragmentOrderTake extends Fragment implements View.OnClickListener {
 
     private Context context;
     private View view_main;
@@ -42,11 +53,13 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener{
     private RadioButton rb_channel;
     private RadioButton rb_message;
     private RadioButton rb_better;
-    private TextView tv_frag_wendu,tv_frag_time,tv_frag_fengsu,tv_frag_device_name;
-    private ImageView iv_device_drug_codesss,iv_device_bluetooth;
+    private TextView tv_frag_wendu, tv_frag_time, tv_frag_fengsu, tv_frag_device_name;
+    private ImageView iv_device_drug_codesss, iv_device_bluetooth,iv_find_play1;
     private ViewPager vpager;
+    private CheckBox checkbox_dengguang;
 
     private MyFragmentPagerAdapter mAdapter;
+    private SmaManager mSmaManager;
 
     //几个代表页面的常量
     public static final int PAGE_ONE = 0;
@@ -61,6 +74,33 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener{
                              Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         context = this.getActivity();
+        mSmaManager = SmaManager.getInstance().init(context).addSmaCallback(new SimpleSmaCallback() {
+
+            @Override
+            public void onConnected(BluetoothDevice device, boolean isConnected) {
+                if (isConnected) {
+                    mSmaManager.setNameAndAddress(device.getName(), device.getAddress());
+                    mSmaManager.mEaseConnector.setAddress(device.getAddress());
+                }
+            }
+
+            @Override
+            public void onWrite(byte[] data) {
+                if (BuildConfig.DEBUG) {
+//                    append("  ->  onWrite", data);
+                }
+            }
+
+            @Override
+            public void onRead(byte[] data) {
+                if (BuildConfig.DEBUG) {
+//                    append("  ->  onRead", data);
+                }
+            }
+        });
+        mSmaManager.connect(true);
+
+        mSmaManager = SmaManager.getInstance();
         mHandler = new Handler() {
             public void handleMessage(Message msg) {
                 switch (msg.what) {
@@ -68,22 +108,52 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener{
                         SharedPreferences sharedPreferencesWendu1 = context.getSharedPreferences(
                                 "MWENDU", Activity.MODE_PRIVATE);
                         String mwendu1 = sharedPreferencesWendu1.getString("mwendu1", "1");
-                        tv_frag_wendu.setText(mwendu1+" 档");
+                        tv_frag_wendu.setText(mwendu1 + " 档");
+                        Log.e("mSmaManager==name==", mSmaManager.getNameAndAddress().toString() + "||" + mSmaManager.getNameAndAddress()[0]);
+                        if (!mSmaManager.isConnected) {
+                            ToastUtils.showShortSafe(R.string.device_not_connected);
+                            return;
+                        }
+                        mSmaManager.write(SmaManager.SET.GOAL_VOICE_MODE, mwendu1);
                         break;
                     case 12:
                         SharedPreferences sharedPreferencesTime1 = context.getSharedPreferences(
                                 "MTIME", Activity.MODE_PRIVATE);
                         String mtime1 = sharedPreferencesTime1.getString("mtime1", "1");
-                        tv_frag_time.setText(mtime1+" min");
+                        tv_frag_time.setText(mtime1 + " min");
+                        if (!mSmaManager.isConnected) {
+                            ToastUtils.showShortSafe(R.string.device_not_connected);
+                            return;
+                        }
+                        mSmaManager.write(SmaManager.SET.ALARM_OCLOCK, mtime1);
                         break;
                     case 13:
                         SharedPreferences sharedPreferencesFengsu1 = context.getSharedPreferences(
                                 "MFENGSU", Activity.MODE_PRIVATE);
                         String mfengsu1 = sharedPreferencesFengsu1.getString("mfengsu1", "中");
-                        tv_frag_fengsu.setText(mfengsu1+" 档");
+                        tv_frag_fengsu.setText(mfengsu1 + " 档");
+                        if (!mSmaManager.isConnected) {
+                            ToastUtils.showShortSafe(R.string.device_not_connected);
+                            return;
+                        }
+                        if(mfengsu1.equals("低")){
+                            mSmaManager.write(SmaManager.SET.GOAL_SCORE_RATIO, 1+"");
+                        }else if(mfengsu1.equals("中")){
+                            mSmaManager.write(SmaManager.SET.GOAL_SCORE_RATIO, 2+"");
+                        }else if(mfengsu1.equals("高")){
+                            mSmaManager.write(SmaManager.SET.GOAL_SCORE_RATIO, 3+"");
+                        }else {
+
+                        }
+
                         break;
                     case 14:
-                        tv_frag_device_name.setText(msg.obj+"");
+                        String deviceName = msg.obj.toString().substring(0, msg.obj.toString().indexOf("=="));
+                        String deviceAddress = msg.obj.toString().substring(msg.obj.toString().indexOf("==") + 2, msg.obj.toString().length());
+                        tv_frag_device_name.setText(deviceName);
+                        mSmaManager.setNameAndAddress(deviceName, deviceAddress);
+                        mSmaManager.mEaseConnector.setAddress(deviceAddress);
+
                         break;
                 }
             }
@@ -101,14 +171,44 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener{
         rb_channel = (RadioButton) view_main.findViewById(R.id.rb_channel);
         rb_message = (RadioButton) view_main.findViewById(R.id.rb_message);
         rb_better = (RadioButton) view_main.findViewById(R.id.rb_better);
+        iv_find_play1 = (ImageView) view_main.findViewById(R.id.iv_find_play1);
+        checkbox_dengguang = (CheckBox) view_main.findViewById(R.id.checkbox_dengguang);
+        checkbox_dengguang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(checkbox_dengguang.isChecked()){
+                    if (!mSmaManager.isConnected) {
+                        ToastUtils.showShortSafe(R.string.device_not_connected);
+                        checkbox_dengguang.setChecked(false);
+                        return;
+                    }
+                    ToastUtil.showShortToast(context,"open");
+                    mSmaManager.write(SmaManager.SET.ENABLE_GOAL_LIGHT);
+                }else{
+                    if (!mSmaManager.isConnected) {
+                        ToastUtils.showShortSafe(R.string.device_not_connected);
+                        checkbox_dengguang.setChecked(false);
+                        return;
+                    }
+                    ToastUtil.showShortToast(context,"close");
+                    mSmaManager.write(SmaManager.SET.DISABLE_GOAL_LIGHT);
+                }
+            }
+        });
         tv_frag_wendu = (TextView) view_main.findViewById(R.id.tv_frag_wendu);
         tv_frag_time = (TextView) view_main.findViewById(R.id.tv_frag_time);
         tv_frag_fengsu = (TextView) view_main.findViewById(R.id.tv_frag_fengsu);
         tv_frag_device_name = (TextView) view_main.findViewById(R.id.tv_frag_device_name);
+        if (mSmaManager.getNameAndAddress()[0].equals("")) {
+            tv_frag_device_name.setText("未连接");
+        }else {
+            tv_frag_device_name.setText(mSmaManager.getNameAndAddress()[0]);
+        }
         iv_device_drug_codesss = (ImageView) view_main.findViewById(R.id.iv_device_drug_codesss);
         iv_device_bluetooth = (ImageView) view_main.findViewById(R.id.iv_device_bluetooth);
         iv_device_drug_codesss.setOnClickListener(this);
         iv_device_bluetooth.setOnClickListener(this);
+        iv_find_play1.setOnClickListener(this);
         rg_tab_bar.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -162,12 +262,19 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-        switch(v.getId()){
+        switch (v.getId()) {
             case R.id.iv_device_drug_codesss:
-                startActivity(new Intent(context, CaptureActivity.class).putExtra("shebei","device1"));
+                startActivity(new Intent(context, CaptureActivity.class).putExtra("shebei", "device1"));
                 break;
             case R.id.iv_device_bluetooth:
                 startActivity(new Intent(context, DeviceListActivity.class));
+                break;
+            case R.id.iv_find_play1:
+                if (!mSmaManager.isConnected) {
+                    ToastUtils.showShortSafe(R.string.device_not_connected);
+                    return;
+                }
+                mSmaManager.write(SmaManager.SET.PLAY_WORKE);
                 break;
         }
     }

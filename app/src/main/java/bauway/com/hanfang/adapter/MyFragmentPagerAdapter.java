@@ -11,7 +11,7 @@ import bauway.com.hanfang.Fragment.MyFragment2;
 import bauway.com.hanfang.Fragment.MyFragment3;
 
 /**
- * Created by Jay on 2015/8/31 0031.
+ * Created by Danny on 2018/1/30
  */
 public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
 
