@@ -2,6 +2,7 @@ package bauway.com.hanfang.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,11 +14,15 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.bestmafen.smablelib.component.SimpleSmaCallback;
+import com.bestmafen.smablelib.component.SmaManager;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import bauway.com.hanfang.App.Constants;
+import bauway.com.hanfang.BuildConfig;
 import bauway.com.hanfang.Fragment.FragmentOrderTake;
 import bauway.com.hanfang.R;
 import bauway.com.hanfang.adapter.DeviceListAdapter;
@@ -42,6 +47,7 @@ public class DeviceListActivity extends BaseActivity {
     private ArrayList<ItemBean> mData;
     public static Handler mHandler;//接受BindDeviceActivity发送过来的消息
     private ItemBean ib;
+    private SmaManager mSmaManager;
 
     @Override
     protected int getLayoutRes() {
@@ -102,6 +108,9 @@ public class DeviceListActivity extends BaseActivity {
                         break;
                     case 29:
 //                        Log.e("msg.arg1","=="+msg.arg1+"=="+msg.obj);
+                        mSmaManager.mEaseConnector.closeConnect(true);
+                        mSmaManager.unbind();
+//                        mSmaManager.exit();
                         ACache aCache2 = ACache.get(mContext);
                         ArrayList<String> list3 = (ArrayList<String>) aCache2.getAsObject("danny");
                         Log.e("list3.toString()", list3.toString());
@@ -128,6 +137,34 @@ public class DeviceListActivity extends BaseActivity {
     @Override
     protected void init(Bundle savedInstanceState) {
         ctx = DeviceListActivity.this;
+        mSmaManager = SmaManager.getInstance().init(ctx).addSmaCallback(new SimpleSmaCallback() {
+
+            @Override
+            public void onConnected(BluetoothDevice device, boolean isConnected) {
+                if (isConnected) {
+                    Log.e("device","==device=="+device.getName()+"=="+device.getAddress());
+                    mSmaManager.setNameAndAddress(device.getName(), device.getAddress());
+                    mSmaManager.mEaseConnector.setAddress(device.getAddress());
+                }
+            }
+
+            @Override
+            public void onWrite(byte[] data) {
+                if (BuildConfig.DEBUG) {
+//                    append("  ->  onWrite", data);
+                }
+            }
+
+            @Override
+            public void onRead(byte[] data) {
+                if (BuildConfig.DEBUG) {
+//                    append("  ->  onRead", data);
+                }
+            }
+        });
+        mSmaManager.connect(true);
+
+        mSmaManager = SmaManager.getInstance();
     }
 
     @Override
@@ -145,6 +182,9 @@ public class DeviceListActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_return:
+                Message message = new Message();
+                message.what = 15;
+                FragmentOrderTake.mHandler.sendMessage(message);
                 this.finish();
                 break;
             case R.id.iv_device_add:

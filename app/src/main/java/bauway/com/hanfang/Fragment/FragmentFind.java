@@ -167,11 +167,11 @@ public class FragmentFind extends Fragment implements View.OnClickListener {
 
     @Override
     public void onDestroy() {
-        try {
-            mSmaManager.exit();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            mSmaManager.exit();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
         super.onDestroy();
     }

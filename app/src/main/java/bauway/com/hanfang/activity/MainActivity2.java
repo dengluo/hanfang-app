@@ -236,7 +236,11 @@ public class MainActivity2 extends BaseActivity implements View.OnClickListener 
 
     @Override
     protected void onDestroy() {
-        mSmaManager.exit();
+        if (!mSmaManager.getNameAndAddress()[0].equals("")){
+            mSmaManager.mEaseConnector.closeConnect(true);
+            mSmaManager.unbind();
+            mSmaManager.exit();
+        }
         super.onDestroy();
     }
 }

@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,6 +61,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
 
     private MyFragmentPagerAdapter mAdapter;
     private SmaManager mSmaManager;
+    private Boolean iswork = true;
 
     //几个代表页面的常量
     public static final int PAGE_ONE = 0;
@@ -79,6 +81,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
             @Override
             public void onConnected(BluetoothDevice device, boolean isConnected) {
                 if (isConnected) {
+                    Log.e("device","==device=="+device.getName()+"=="+device.getAddress());
                     mSmaManager.setNameAndAddress(device.getName(), device.getAddress());
                     mSmaManager.mEaseConnector.setAddress(device.getAddress());
                 }
@@ -148,12 +151,32 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
 
                         break;
                     case 14:
+                        Log.e("14","14");
+                        mSmaManager.connect(true);
+                        mSmaManager.isConnected = true;
+                        mSmaManager.mEaseConnector.connect(true);
                         String deviceName = msg.obj.toString().substring(0, msg.obj.toString().indexOf("=="));
                         String deviceAddress = msg.obj.toString().substring(msg.obj.toString().indexOf("==") + 2, msg.obj.toString().length());
+                        if (!TextUtils.isEmpty(deviceAddress))
+                            mSmaManager.mEaseConnector.setAddress(deviceAddress).connect(true);
+
+                        if (!mSmaManager.isConnected) {
+                            ToastUtils.showShortSafe(R.string.device_not_connected);
+                            checkbox_dengguang.setChecked(false);
+                            return;
+                        }
                         tv_frag_device_name.setText(deviceName);
                         mSmaManager.setNameAndAddress(deviceName, deviceAddress);
                         mSmaManager.mEaseConnector.setAddress(deviceAddress);
 
+                        break;
+                    case 15:
+                        Log.e("15","15");
+                        if (mSmaManager.getNameAndAddress()[0].equals("")) {
+                            tv_frag_device_name.setText("未连接");
+                        }else {
+                            tv_frag_device_name.setText(mSmaManager.getNameAndAddress()[0]);
+                        }
                         break;
                 }
             }
@@ -273,6 +296,13 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                 if (!mSmaManager.isConnected) {
                     ToastUtils.showShortSafe(R.string.device_not_connected);
                     return;
+                }
+                if (iswork){
+                    iv_find_play1.setBackgroundResource(R.drawable.pause);
+                    iswork = false;
+                }else {
+                    iv_find_play1.setBackgroundResource(R.drawable.play);
+                    iswork = true;
                 }
                 mSmaManager.write(SmaManager.SET.PLAY_WORKE);
                 break;
