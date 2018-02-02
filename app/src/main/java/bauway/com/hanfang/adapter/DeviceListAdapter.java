@@ -47,13 +47,13 @@ public class DeviceListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        if (i == 0) {
-            Log.e("mData.size()==", "" + mData.size());
-            return mData.size();
-        } else {
-            Log.e("str.size()==", "" + str.size());
-            return str.size();
-        }
+//        if (i == 0) {
+//            Log.e("mData.size()==", "" + i);
+//            return i;
+//        } else {
+        Log.e("str.size()==", "" + str.size());
+        return str.size();
+//        }
     }
 
     @Override
@@ -96,7 +96,7 @@ public class DeviceListAdapter extends BaseAdapter {
             String str2 = str.get(position);
             holder.devicename2.setTag(str2.substring(0, str2.indexOf("==")));
             holder.devicename2.setText(holder.devicename2.getTag().toString());
-            holder.deviceaddress2.setTag(str2.substring(str2.indexOf("==")+2, str2.length()));
+            holder.deviceaddress2.setTag(str2.substring(str2.indexOf("==") + 2, str2.length()));
             holder.deviceaddress2.setText(holder.deviceaddress2.getTag().toString());
         }
 

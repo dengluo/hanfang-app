@@ -74,13 +74,15 @@ public class DeviceListActivity extends BaseActivity {
     protected void initView() {
         ACache aCache = ACache.get(DeviceListActivity.this);
         ArrayList<String> list2 = (ArrayList<String>) aCache.getAsObject("danny");
+
 //        Log.e("list2.toString()",list2.toString());
 //        Log.e("list22.toString()",list2.size()+"");
         mData = new ArrayList<ItemBean>();
-        if (list2.size() == 0) {
+        if (list2 == null) {
             Log.e("mxg", "list == null");
             list2 = new ArrayList<>();
             aCache.put("danny", list2);
+            Log.e("list2.size()", "=="+list2.size());
             mAdapter = new DeviceListAdapter(this, mData ,list2.size());
         } else {
             Log.e("mxg", "list2 == null");

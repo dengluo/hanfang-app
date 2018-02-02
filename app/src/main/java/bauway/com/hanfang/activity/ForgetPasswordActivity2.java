@@ -16,6 +16,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import bauway.com.hanfang.App.Constants;
 import bauway.com.hanfang.base.BaseActivity;
 import bauway.com.hanfang.util.CountDownTimerUtils;
+import bauway.com.hanfang.util.NetworkUtil;
 import bauway.com.hanfang.util.ToastUtil;
 import bauway.com.hanfang.R;
 import bauway.com.hanfang.util.DialogUtil;
@@ -129,6 +130,10 @@ public class ForgetPasswordActivity2 extends BaseActivity {
 
     //请求验证码
     private void requestVerificationCode() {
+        if (!NetworkUtil.isNetworkAvailable(this)){
+            ToastUtil.showShortToast(ForgetPasswordActivity2.this,"网络连接异常!");
+            return;
+        }
         phone = username.getText().toString().trim();
         if (TextUtils.isEmpty(phone)){
             ToastUtil.showShortToast(mContext,"手机号码不能为空,请重新输入!");
@@ -167,6 +172,10 @@ public class ForgetPasswordActivity2 extends BaseActivity {
     }
     //验证验证码
     private void verifacityCode() {
+        if (!NetworkUtil.isNetworkAvailable(this)){
+            ToastUtil.showShortToast(ForgetPasswordActivity2.this,"网络连接异常!");
+            return;
+        }
         String register_code = verificationCode.getText().toString().trim();
         if (TextUtils.isEmpty(register_code)) {
             ToastUtils.showShort("验证码为空,请重新填写验证码");

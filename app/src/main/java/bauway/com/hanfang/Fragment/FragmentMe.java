@@ -27,7 +27,9 @@ import bauway.com.hanfang.activity.PersonInfoActivity;
 import bauway.com.hanfang.R;
 import bauway.com.hanfang.interfaces.DialogCallback;
 import bauway.com.hanfang.util.DialogUtil;
+import bauway.com.hanfang.util.NetworkUtil;
 import bauway.com.hanfang.util.PreferencesUtils;
+import bauway.com.hanfang.util.ToastUtil;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
@@ -69,10 +71,30 @@ public class FragmentMe extends Fragment implements View.OnClickListener {
         ll_fragme_accountinfo.setOnClickListener(this);
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.setUserVisibleHint(hidden);
+        if (hidden) {
+            //可见时执行的操作
+//            Log.e("isVisibleToUser11",hidden+"");
+        } else {
+            //不可见时执行的操作
+//            Log.e("isVisibleToUser22",hidden+"");
+            if (!NetworkUtil.isNetworkAvailable(context)){
+                ToastUtil.showShortToast(context, "网络连接异常!");
+                return;
+            }
+        }
+    }
+
     /*
-    Bmob查询数据
-     */
+        Bmob查询数据
+         */
     public void queryData(){
+        if (!NetworkUtil.isNetworkAvailable(context)){
+            ToastUtil.showShortToast(context, "网络连接异常!");
+            return;
+        }
         String phone = userRxPreferences.getString(Constants.LOGIN_EMAIL).get();
         BmobQuery query =new BmobQuery("_User");
         query.addWhereEqualTo("username", phone);
@@ -86,7 +108,7 @@ public class FragmentMe extends Fragment implements View.OnClickListener {
                     Log.i("bmob","查询成功："+ary.toString());
                     try {
                         JSONObject object = (JSONObject) ary.get(0);
-                        tv_account_nick.setText(object.getJSONArray("info").getString(0));
+                        tv_account_nick.setText(object.optJSONArray("info").getString(0));
                     } catch (JSONException e1) {
                         e1.printStackTrace();
                     }

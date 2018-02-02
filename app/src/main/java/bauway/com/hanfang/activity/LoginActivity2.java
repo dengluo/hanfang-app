@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import bauway.com.hanfang.App.Constants;
+import bauway.com.hanfang.util.NetworkUtil;
 import bauway.com.hanfang.util.ToastUtil;
 import bauway.com.hanfang.R;
 import bauway.com.hanfang.base.BaseActivity;
@@ -112,6 +113,10 @@ public class LoginActivity2 extends BaseActivity implements View.OnClickListener
     }
 
     private void login() {
+        if (!NetworkUtil.isNetworkAvailable(this)){
+            ToastUtil.showShortToast(LoginActivity2.this,"网络连接异常!");
+            return;
+        }
         final String email = username.getText().toString().trim();
         if (TextUtils.isEmpty(email)) {
             ToastUtil.showShortToast(this, getString(R.string.plz_input_phone));

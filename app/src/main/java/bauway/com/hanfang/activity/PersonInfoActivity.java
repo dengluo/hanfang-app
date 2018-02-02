@@ -1,5 +1,6 @@
 package bauway.com.hanfang.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +18,8 @@ import bauway.com.hanfang.base.BaseActivity;
 import bauway.com.hanfang.R;
 import bauway.com.hanfang.bean.BUser;
 import bauway.com.hanfang.bean.User;
+import bauway.com.hanfang.util.NetworkUtil;
+import bauway.com.hanfang.util.ToastUtil;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.bmob.sms.BmobSMS;
@@ -46,6 +49,8 @@ public class PersonInfoActivity extends BaseActivity {
     @BindView(R.id.tv_personinfo_weight)
     TextView tv_personinfo_weight;
 
+    private Context ctx;
+
     @Override
     protected int getLayoutRes() {
         return R.layout.activity_personinfo;
@@ -70,6 +75,10 @@ public class PersonInfoActivity extends BaseActivity {
     Bmob查询数据
      */
     public void queryData(){
+        if (!NetworkUtil.isNetworkAvailable(this)){
+            ToastUtil.showShortToast(ctx,"网络连接异常!");
+            return;
+        }
         String phone = userRxPreferences.getString(Constants.LOGIN_EMAIL).get();
         tv_personinfo_phone.setText(phone);
         BmobQuery query =new BmobQuery("_User");
@@ -106,7 +115,7 @@ public class PersonInfoActivity extends BaseActivity {
 
     @Override
     protected void init(Bundle savedInstanceState) {
-
+        ctx = PersonInfoActivity.this;
     }
 
     @OnClick({R.id.iv_return, R.id.ll_fragme_accountinfo})

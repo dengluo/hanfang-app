@@ -16,6 +16,8 @@ import bauway.com.hanfang.App.Constants;
 import bauway.com.hanfang.base.BaseActivity;
 import bauway.com.hanfang.R;
 import bauway.com.hanfang.util.DialogUtil;
+import bauway.com.hanfang.util.NetworkUtil;
+import bauway.com.hanfang.util.ToastUtil;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.bmob.sms.BmobSMS;
@@ -107,6 +109,10 @@ public class ChangePwdActivity extends BaseActivity {
     }
 
     private void changePwd() {
+        if (!NetworkUtil.isNetworkAvailable(this)){
+            ToastUtil.showShortToast(ChangePwdActivity.this,"网络连接异常!");
+            return;
+        }
         final String oldpwd = mEtOldpwd.getText().toString().trim();
         final String newpwd = mEtNewpwd.getText().toString().trim();
         String pwd = userRxPreferences.getString(Constants.LOGIN_PWD).get();
