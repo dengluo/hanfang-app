@@ -48,7 +48,7 @@
         android:orientation="horizontal"
         android:paddingTop="8dp" >
 
-        <RadioButton
+        <!--<RadioButton
             android:id="@+id/radio_studio"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -58,8 +58,9 @@
             android:drawableTop="@drawable/selector_radio_main_nearby"
             android:gravity="center"
             android:text="工作室"
+            android:visibility="gone"
             android:textColor="@drawable/selector_radio_txt_nearby"
-            android:textSize="10sp" />
+            android:textSize="10sp" />-->
 
         <RadioButton
             android:id="@+id/radio_order_take"
@@ -74,18 +75,19 @@
             android:textColor="@drawable/selector_radio_txt_nearby"
             android:textSize="10sp" />
 
-        <RadioButton
+        <!--<RadioButton
             android:id="@+id/radio_find"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:button="@null"
+            android:visibility="gone"
             android:drawableTop="@drawable/selector_radio_find_nearby"
             android:gravity="center"
             android:text="设备"
             android:textColor="@drawable/selector_radio_txt_nearby"
-            android:textSize="10sp" />
+            android:textSize="10sp" />-->
         <RadioButton
             android:id="@+id/radio_me"
             android:layout_width="match_parent"

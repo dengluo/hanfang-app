@@ -37,7 +37,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.MainActivity2"
+            android:name=".activity.WelcomeActivity"
             android:theme="@style/launch_app_theme"
             >
             <intent-filter>
@@ -46,7 +46,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.WelcomeActivity"
+            android:name=".activity.MainActivity2"
             android:launchMode="singleTask"
             />
         <activity

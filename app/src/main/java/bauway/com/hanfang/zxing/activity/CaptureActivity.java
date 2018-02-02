@@ -25,6 +25,7 @@ import android.os.Bundle;
 import android.os.Handler;
 //import android.support.design.widget.FloatingActionButton;
 //import android.support.design.widget.Snackbar;
+import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
@@ -50,20 +51,27 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.google.zxing.Result;
 import com.squareup.otto.Subscribe;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.lang.reflect.Field;
 
 import bauway.com.hanfang.App.Constants;
+import bauway.com.hanfang.Fragment.FragmentOrderTake;
 import bauway.com.hanfang.R;
 import bauway.com.hanfang.activity.DisplayScanResultActivity;
 import bauway.com.hanfang.activity.LocalAlbumActivity;
 import bauway.com.hanfang.activity.MyDialogActivitySingle;
 import bauway.com.hanfang.base.BaseActivity;
 import bauway.com.hanfang.bean.Event.ScanCodeEvent;
+import bauway.com.hanfang.bean.QRCode;
 import bauway.com.hanfang.util.AudioPlayer;
 import bauway.com.hanfang.util.LogUtil;
 import bauway.com.hanfang.util.MyUtil;
 import bauway.com.hanfang.util.OttoAppConfig;
+import bauway.com.hanfang.util.ToastUtil;
 import bauway.com.hanfang.zxing.camera.CameraManager;
 import bauway.com.hanfang.zxing.decode.DecodeThread;
 import bauway.com.hanfang.zxing.decode.DecodeUtils;
@@ -71,6 +79,9 @@ import bauway.com.hanfang.zxing.utils.BeepManager;
 import bauway.com.hanfang.zxing.utils.CaptureActivityHandler;
 import bauway.com.hanfang.zxing.utils.InactivityTimer;
 import butterknife.BindView;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.listener.QueryListener;
+import cn.bmob.v3.exception.BmobException;
 
 /**
  * This activity opens the camera and does the actual scanning on a background
@@ -308,8 +319,35 @@ public final class CaptureActivity extends BaseActivity implements SurfaceHolder
      * @param scanResult 扫描内容
      * @param type       扫描类型：0，二维码；1，条形码
      */
-    private void displayResult(String scanResult, int type) {
+    private void displayResult(final String scanResult, int type) {
         L.e("scanResult____"+scanResult);
+//        BmobQuery<QRCode> query = new BmobQuery<QRCode>();
+        BmobQuery query =new BmobQuery("QRcode");
+        query.addWhereEqualTo("code", scanResult);
+        query.setLimit(2);
+        query.order("createdAt");
+        //v3.5.0版本提供`findObjectsByTable`方法查询自定义表名的数据
+        query.findObjectsByTable(new QueryListener<JSONArray>() {
+            @Override
+            public void done(JSONArray ary, BmobException e) {
+                if(e==null){
+                    Log.i("bmob","查询成功："+ary.toString());
+                    if (ary.length()>0) {
+                        Message message = new Message();
+                        message.what = 10;
+                        message.obj = scanResult;
+                        FragmentOrderTake.mHandler.sendMessage(message);
+                    }else{
+                        ToastUtil.showShortToast(CaptureActivity.this,"药品码不存在或者过期");
+                    }
+
+                }else{
+                    Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                    ToastUtil.showShortToast(CaptureActivity.this,"药品码不存在或者过期");
+                }
+            }
+        });
+
         SharedPreferences sp = this.getSharedPreferences("SCAN",
                 Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
@@ -325,8 +363,6 @@ public final class CaptureActivity extends BaseActivity implements SurfaceHolder
         }else if (str.equals("device5")){
             editor.putString("scanResult5", scanResult);
         }
-
-
         editor.commit();
         finish();
     }

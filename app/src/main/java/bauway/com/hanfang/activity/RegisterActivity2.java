@@ -16,6 +16,7 @@ import com.blankj.utilcode.util.ToastUtils;
 
 import bauway.com.hanfang.App.Constants;
 import bauway.com.hanfang.util.CountDownTimerUtils;
+import bauway.com.hanfang.util.NetworkUtil;
 import bauway.com.hanfang.util.ToastUtil;
 import bauway.com.hanfang.R;
 import bauway.com.hanfang.base.BaseActivity;
@@ -131,6 +132,10 @@ public class RegisterActivity2 extends BaseActivity {
 
     //请求验证码
     private void requestVerificationCode() {
+        if (!NetworkUtil.isNetworkAvailable(this)){
+            ToastUtil.showShortToast(mContext, "网络连接异常!");
+            return;
+        }
         String phone = et_phone_code.getText().toString().trim();
         if (TextUtils.isEmpty(phone)) {
             ToastUtil.showShortToast(mContext, "手机号码不能为空!");
@@ -210,6 +215,10 @@ public class RegisterActivity2 extends BaseActivity {
     private void verifacityCode() {
         String register_code = et_register_code.getText().toString().trim();
         String phone = et_phone_code.getText().toString().trim();
+        if (!NetworkUtil.isNetworkAvailable(this)){
+            ToastUtil.showShortToast(mContext, "网络连接异常!");
+            return;
+        }
         if (TextUtils.isEmpty(register_code)) {
             ToastUtils.showShort("验证码为空,请重新填写验证码");
             return;

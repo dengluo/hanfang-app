@@ -84,11 +84,11 @@ public class PersonInfoActivity extends BaseActivity {
                     Log.i("bmob","查询成功："+ary.toString());
                     try {
                         JSONObject object = (JSONObject) ary.get(0);
-                        tv_personinfo_name.setText(object.getJSONArray("info").getString(0));
-                        tv_personinfo_sex.setText(object.getJSONArray("info").getString(1));
-                        tv_personinfo_age.setText(object.getJSONArray("info").getString(2));
-                        tv_personinfo_height.setText(object.getJSONArray("info").getString(3));
-                        tv_personinfo_weight.setText(object.getJSONArray("info").getString(4));
+                        tv_personinfo_name.setText(object.optJSONArray("info").getString(0));
+                        tv_personinfo_sex.setText(object.optJSONArray("info").getString(1));
+                        tv_personinfo_age.setText(object.optJSONArray("info").getString(2));
+                        tv_personinfo_height.setText(object.optJSONArray("info").getString(3));
+                        tv_personinfo_weight.setText(object.optJSONArray("info").getString(4));
                     } catch (JSONException e1) {
                         e1.printStackTrace();
                     }

@@ -54,7 +54,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
     private RadioButton rb_channel;
     private RadioButton rb_message;
     private RadioButton rb_better;
-    private TextView tv_frag_wendu, tv_frag_time, tv_frag_fengsu, tv_frag_device_name;
+    private TextView tv_frag_wendu, tv_frag_time, tv_frag_fengsu, tv_frag_device_name,tv_frag_device_ypcode;
     private ImageView iv_device_drug_codesss, iv_device_bluetooth,iv_find_play1;
     private ViewPager vpager;
     private CheckBox checkbox_dengguang;
@@ -96,9 +96,10 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
 
             @Override
             public void onRead(byte[] data) {
-                if (BuildConfig.DEBUG) {
-//                    append("  ->  onRead", data);
-                }
+//                if (BuildConfig.DEBUG) {
+////                    append("  ->  onRead", data);
+//                }
+                Log.e("read==",data+"");
             }
         });
         mSmaManager.connect(true);
@@ -107,6 +108,13 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
         mHandler = new Handler() {
             public void handleMessage(Message msg) {
                 switch (msg.what) {
+                    case 10:
+                        if (mSmaManager.getNameAndAddress()[0].equals("")) {
+                            tv_frag_device_ypcode.setText("");
+                        }else {
+                            tv_frag_device_ypcode.setText(msg.obj.toString());
+                        }
+                        break;
                     case 11:
                         SharedPreferences sharedPreferencesWendu1 = context.getSharedPreferences(
                                 "MWENDU", Activity.MODE_PRIVATE);
@@ -222,10 +230,20 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
         tv_frag_time = (TextView) view_main.findViewById(R.id.tv_frag_time);
         tv_frag_fengsu = (TextView) view_main.findViewById(R.id.tv_frag_fengsu);
         tv_frag_device_name = (TextView) view_main.findViewById(R.id.tv_frag_device_name);
+        tv_frag_device_ypcode = (TextView) view_main.findViewById(R.id.tv_frag_device_ypcode);
         if (mSmaManager.getNameAndAddress()[0].equals("")) {
             tv_frag_device_name.setText("未连接");
         }else {
             tv_frag_device_name.setText(mSmaManager.getNameAndAddress()[0]);
+        }
+        if (mSmaManager.getNameAndAddress()[0].equals("")) {
+            tv_frag_device_ypcode.setText("");
+        }else {
+            SharedPreferences mSpScan = context.getSharedPreferences(
+                    "SCAN", Activity.MODE_PRIVATE);
+            String scanResult1 = mSpScan.getString("scanResult1", "未输入");
+            tv_frag_device_ypcode.setText(scanResult1);
+//            tv_frag_device_ypcode.setText(msg.obj.toString());
         }
         iv_device_drug_codesss = (ImageView) view_main.findViewById(R.id.iv_device_drug_codesss);
         iv_device_bluetooth = (ImageView) view_main.findViewById(R.id.iv_device_bluetooth);

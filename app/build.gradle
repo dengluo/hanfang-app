@@ -6,7 +6,7 @@ android {
     flavorDimensions "versionCode"
     defaultConfig {
         minSdkVersion 19
-        targetSdkVersion 19
+        targetSdkVersion 22
         vectorDrawables.useSupportLibrary = true
         aaptOptions.cruncherEnabled = false
         aaptOptions.useNewCruncher = false
@@ -15,10 +15,10 @@ android {
     signingConfigs {
 
         release {
-            storeFile file('ElectronicCigarettes.jks')
-            storePassword 'bauway'
-            keyAlias 'bauway'
-            keyPassword 'bauway'
+            storeFile file('hanfang.jks')
+            storePassword '123456'
+            keyAlias 'hanfang'
+            keyPassword '123456'
         }
     }
     //lint检查,有任何的错误或者警告提示,都会终止构建,可以将其关掉。

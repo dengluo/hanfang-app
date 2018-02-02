@@ -41,12 +41,12 @@ public class MainActivity2 extends BaseActivity implements View.OnClickListener 
 
     @BindView(R.id.rg_main)
     RadioGroup rg_main;
-    @BindView(R.id.radio_studio)
-    RadioButton radio_studio;
+//    @BindView(R.id.radio_studio)
+//    RadioButton radio_studio;
     @BindView(R.id.radio_order_take)
     RadioButton radio_order_take;
-    @BindView(R.id.radio_find)
-    RadioButton radio_find;
+//    @BindView(R.id.radio_find)
+//    RadioButton radio_find;
     @BindView(R.id.radio_me)
     RadioButton radio_me;
 
@@ -142,7 +142,7 @@ public class MainActivity2 extends BaseActivity implements View.OnClickListener 
 
     private List<Fragment> getFragments() {
         List<Fragment> list_fm = new ArrayList<Fragment>();
-        FragmentStudio fg_studio=new FragmentStudio();
+//        FragmentStudio fg_studio=new FragmentStudio();
 //        fg_studio.setDoGo(new DoGoJieDan() {
 //
 //            @Override
@@ -151,9 +151,9 @@ public class MainActivity2 extends BaseActivity implements View.OnClickListener 
 //                radio_order_take.setChecked(true);
 //            }
 //        });
-        list_fm.add(fg_studio);// 工作室
-        list_fm.add(new FragmentOrderTake());// 接单
-        list_fm.add(new FragmentFind());// 发现
+//        list_fm.add(fg_studio);// 工作室
+        list_fm.add(new FragmentOrderTake());// 治疗
+//        list_fm.add(new FragmentFind());// 设备
         list_fm.add(new FragmentMe());// 我
         return list_fm;
     }
@@ -236,9 +236,11 @@ public class MainActivity2 extends BaseActivity implements View.OnClickListener 
 
     @Override
     protected void onDestroy() {
+        Log.e("onDestroy","=="+mSmaManager.getNameAndAddress()[0]);
         if (!mSmaManager.getNameAndAddress()[0].equals("")){
             mSmaManager.mEaseConnector.closeConnect(true);
             mSmaManager.unbind();
+            mSmaManager.connect(false);
             mSmaManager.exit();
         }
         super.onDestroy();
