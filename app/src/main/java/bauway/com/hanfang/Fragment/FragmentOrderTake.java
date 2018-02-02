@@ -2,8 +2,11 @@ package bauway.com.hanfang.Fragment;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -311,6 +314,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                 startActivity(new Intent(context, DeviceListActivity.class));
                 break;
             case R.id.iv_find_play1:
+                checkBluetoothValid();
                 if (!mSmaManager.isConnected) {
                     ToastUtils.showShortSafe(R.string.device_not_connected);
                     return;
@@ -324,6 +328,29 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                 }
                 mSmaManager.write(SmaManager.SET.PLAY_WORKE);
                 break;
+        }
+    }
+
+    private void checkBluetoothValid() {
+        final BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+        if(adapter == null) {
+            AlertDialog dialog = new AlertDialog.Builder(context).setTitle("错误").setMessage("你的设备不具备蓝牙功能!").create();
+            dialog.show();
+            return;
+        }
+
+        if(!adapter.isEnabled()) {
+            AlertDialog dialog = new AlertDialog.Builder(context).setTitle("提示")
+                    .setMessage("蓝牙设备未打开,请开启此功能后重试!")
+                    .setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface arg0, int arg1) {
+                            Intent mIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                            startActivityForResult(mIntent, 1);
+                        }
+                    })
+                    .create();
+            dialog.show();
         }
     }
 }
