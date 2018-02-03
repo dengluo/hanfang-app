@@ -116,10 +116,11 @@ public class RegisterActivity2 extends BaseActivity {
             case R.id.bt_register://注册
                 //验证验证码
                 verifacityCode();
+                break;
 
             case R.id.verification_code://验证码
                 hideKeyboard();
-                erificationCode.setText("验证码");
+//                erificationCode.setText("验证码");
                 requestVerificationCode();
                 break;
             case R.id.txt_agreement://服务条款
@@ -132,22 +133,25 @@ public class RegisterActivity2 extends BaseActivity {
 
     //请求验证码
     private void requestVerificationCode() {
-        if (!NetworkUtil.isNetworkAvailable(this)){
-            ToastUtil.showShortToast(mContext, "网络连接异常!");
+        if (!NetworkUtil.isNetworkAvailable(this)) {
+            ToastUtils.showShort("网络连接异常!");
             return;
         }
         String phone = et_phone_code.getText().toString().trim();
         if (TextUtils.isEmpty(phone)) {
-            ToastUtil.showShortToast(mContext, "手机号码不能为空!");
+            ToastUtils.showShort("手机号码不能为空!");
             return;
         }
         BmobSMS.requestSMSCode(this, phone, "register", new RequestSMSCodeListener() {
             @Override
             public void done(Integer smsId, cn.bmob.sms.exception.BmobException ex) {
+                Log.e("bmob", ex + "短信id11：" + smsId);//用于查询本次短信发送详情
                 if (ex == null) {//验证码发送成功
                     Log.e("bmob", "短信id：" + smsId);//用于查询本次短信发送详情
                     //erificationCode.setText("已发送");
                     myListener.setupdateUIVericationCode();
+                } else {
+                    ToastUtils.showShort("必须是有效的手机号码");
                 }
             }
         });
@@ -194,7 +198,7 @@ public class RegisterActivity2 extends BaseActivity {
                     // ToastUtils.showShort(R.string.register_success_plz_check_email);
                     ToastUtils.showShort(R.string.register_success_plz_check_phone);
                     userRxPreferences.getString(Constants.LOGIN_PHONE).set(et_phone);
-                    startActivity(new Intent(mContext, LoginActivity.class));
+                    startActivity(new Intent(mContext, LoginActivity2.class));
                     RegisterActivity2.this.finish();
                 } else {
                     Log.e(TAG, "done: " + e.getErrorCode() + ":" + e.getMessage());
@@ -215,8 +219,8 @@ public class RegisterActivity2 extends BaseActivity {
     private void verifacityCode() {
         String register_code = et_register_code.getText().toString().trim();
         String phone = et_phone_code.getText().toString().trim();
-        if (!NetworkUtil.isNetworkAvailable(this)){
-            ToastUtil.showShortToast(mContext, "网络连接异常!");
+        if (!NetworkUtil.isNetworkAvailable(this)) {
+            ToastUtils.showShort("网络连接异常");
             return;
         }
         if (TextUtils.isEmpty(register_code)) {
@@ -231,11 +235,11 @@ public class RegisterActivity2 extends BaseActivity {
             public void done(cn.bmob.sms.exception.BmobException ex) {
                 if (ex == null) {//短信验证码已验证成功
                     Log.e("bmob", "验证通过");
-                    ToastUtil.showShortToast(mContext, "短信验证已通过");
+                    ToastUtils.showShort("短信验证已通过");
                     //注册!
                     register();
                 } else {
-                    ToastUtil.showShortToast(mContext, "短信验证失败");
+                    ToastUtils.showShort("短信验证失败");
                     Log.e("bmob", "验证失败：code =" + ex.getErrorCode() + ",msg = " + ex.getLocalizedMessage());
                 }
             }

@@ -13,6 +13,8 @@
     <string name="tab_menu_wendu">温度</string>
     <string name="tab_menu_shijian">时间</string>
     <string name="tab_menu_fengsu">风速</string>
+    <string name="toast_yzm_1">验证码为空,请重新填写验证码</string>
+    <string name="toast_yzm_2">网络连接异常</string>
 
     <string name="plz_input_pwd_again">请再次输入密码</string>
     <string name="pwd_input_diff">两次输入的密码不一致</string>
@@ -176,6 +178,7 @@
     <string name="menu_connect">Connect</string>
     <string name="menu_disconnect">Disconnect</string>
     <string name="plz_input_phone">请输入手机号码</string>
+    <string name="plz_input_yzm">请输入验证码</string>
     <string name="plz_input_email">请输入邮箱</string>
     <string name="plz_input_pwd">请输入密码</string>
     <string name="plz_input_oldpwd">请输入旧密码</string>

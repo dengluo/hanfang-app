@@ -51,9 +51,9 @@ public class ForgetPasswordActivity2 extends BaseActivity {
     ImageView imagePwd2;
     @BindView(R.id.pwd_bt_reset)
     Button pwdBtReset;
-    private boolean isopen=true;//用来标记密码是否可见
-    private boolean isopen2=true;//用来标记密码是否可见
-    private   String phone;
+    private boolean isopen = true;//用来标记密码是否可见
+    private boolean isopen2 = true;//用来标记密码是否可见
+    private String phone;
 
     @Override
     protected int getLayoutRes() {
@@ -90,7 +90,7 @@ public class ForgetPasswordActivity2 extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.iv_return, R.id.pwd_bt_reset,R.id.image_pwd, R.id.image_pwd2,R.id.phone_verification_code})
+    @OnClick({R.id.iv_return, R.id.pwd_bt_reset, R.id.image_pwd, R.id.image_pwd2, R.id.phone_verification_code})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_return:
@@ -130,13 +130,13 @@ public class ForgetPasswordActivity2 extends BaseActivity {
 
     //请求验证码
     private void requestVerificationCode() {
-        if (!NetworkUtil.isNetworkAvailable(this)){
-            ToastUtil.showShortToast(ForgetPasswordActivity2.this,"网络连接异常!");
+        if (!NetworkUtil.isNetworkAvailable(this)) {
+            ToastUtil.showShortToast(ForgetPasswordActivity2.this, "网络连接异常!");
             return;
         }
         phone = username.getText().toString().trim();
-        if (TextUtils.isEmpty(phone)){
-            ToastUtil.showShortToast(mContext,"手机号码不能为空,请重新输入!");
+        if (TextUtils.isEmpty(phone)) {
+            ToastUtil.showShortToast(mContext, "手机号码不能为空,请重新输入!");
             return;
         }
         BmobSMS.requestSMSCode(this, phone, "register", new RequestSMSCodeListener() {
@@ -145,8 +145,8 @@ public class ForgetPasswordActivity2 extends BaseActivity {
                 if (ex == null) {//验证码发送成功
                     Log.e("bmob", "短信id：" + smsId);//用于查询本次短信发送详情
                     myListener.setupdateUIVericationCode();
-                }else{
-                    Log.e(TAG, "done: -------------------------"+ex.getErrorCode()+","+ex.getMessage()+","+smsId );
+                } else {
+                    Log.e(TAG, "done: -------------------------" + ex.getErrorCode() + "," + ex.getMessage() + "," + smsId);
                 }
             }
 
@@ -164,16 +164,17 @@ public class ForgetPasswordActivity2 extends BaseActivity {
             @Override
             public void run() {
                 phoneVerificationCode.setText("已发送");
-                CountDownTimerUtils timer = new CountDownTimerUtils(phoneVerificationCode,60000,1000);
+                CountDownTimerUtils timer = new CountDownTimerUtils(phoneVerificationCode, 60000, 1000);
                 timer.start();
             }
         });
 
     }
+
     //验证验证码
     private void verifacityCode() {
-        if (!NetworkUtil.isNetworkAvailable(this)){
-            ToastUtil.showShortToast(ForgetPasswordActivity2.this,"网络连接异常!");
+        if (!NetworkUtil.isNetworkAvailable(this)) {
+            ToastUtil.showShortToast(ForgetPasswordActivity2.this, "网络连接异常!");
             return;
         }
         String register_code = verificationCode.getText().toString().trim();
@@ -226,16 +227,16 @@ public class ForgetPasswordActivity2 extends BaseActivity {
         BmobUser newUser = new BmobUser();
         newUser.setPassword(pwd);
         BmobUser bmobUser = BmobUser.getCurrentUser();
-        newUser.update(bmobUser.getObjectId(),new UpdateListener() {
+        newUser.update(bmobUser.getObjectId(), new UpdateListener() {
             @Override
             public void done(BmobException e) {
                 if (e == null) {
                     ToastUtils.showShort(R.string.reset_success_password);
                     userRxPreferences.getString(Constants.LOGIN_PHONE).set(et_phone);
-                    startActivity(new Intent(mContext,LoginActivity.class));
+                    startActivity(new Intent(mContext, LoginActivity.class));
                     finish();
                 } else {
-                    Log.e(TAG, "done: "+e.getErrorCode() + ":" + e.getMessage() );
+                    Log.e(TAG, "done: " + e.getErrorCode() + ":" + e.getMessage());
                     if (203 == e.getErrorCode()) {
                         ToastUtils.showShort(R.string.phone_already_register);
                     } else {
@@ -249,10 +250,12 @@ public class ForgetPasswordActivity2 extends BaseActivity {
 
     }
 
-    public  interface UpdateUIVericationCode {
-    public void  setupdateUIVericationCode();
-}
+    public interface UpdateUIVericationCode {
+        public void setupdateUIVericationCode();
+    }
+
     private UpdateUIVericationCode myListener;
+
     //回调方法
     public void setOnListener(UpdateUIVericationCode myListener) {
         this.myListener = myListener;

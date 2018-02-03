@@ -1,20 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="bauway.com.hanfang">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="bauway.com.hanfang">
+
+    <uses-sdk
+        android:minSdkVersion="15"
+        android:targetSdkVersion="22" />
     <!--允许联网 -->
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <!--获取GSM（2g）、WCDMA（联通3g）等网络状态的信息  -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!--获取wifi网络状态的信息 -->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <!--保持CPU 运转，屏幕和键盘灯有可能是关闭的,用于文件上传和下载 -->
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <!--获取sd卡写的权限，用于文件上传和下载-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!--允许读取手机状态 用于创建BmobInstallation-->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.READ_LOGS"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
     <!-- 操作SD卡 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -38,21 +43,18 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activity.WelcomeActivity"
-            android:theme="@style/launch_app_theme"
-            >
+            android:theme="@style/launch_app_theme">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".activity.MainActivity2"
-            android:launchMode="singleTask"
-            />
+            android:launchMode="singleTask" />
         <activity
             android:name=".activity.MainActivity"
-            android:launchMode="singleTask"
-            />
+            android:launchMode="singleTask" />
         <activity
             android:name=".activity.LocalAlbumActivity"
             android:launchMode="singleTop"
@@ -61,34 +63,34 @@
             android:name=".activity.LocalAlbumDetailActivity"
             android:launchMode="singleTop"
             android:theme="@style/Transparent.Light" />
-        <activity android:name=".activity.RegisterActivity"/>
-        <activity android:name=".activity.ForgetPasswordActivity"/>
-        <activity android:name=".activity.ForgetPasswordActivity2"/>
-        <activity android:name=".activity.LoginActivity"/>
-        <activity android:name=".activity.LoginActivity2"/>
-        <activity android:name=".activity.BindDeviceActivity"/>
-        <activity android:name=".activity.ProductSelectActivity"/>
-        <activity android:name=".activity.CommonSetActivity"/>
-        <activity android:name=".activity.ConcernUsActivity"/>
-        <activity android:name=".activity.EvaluationActivity"/>
-        <activity android:name=".activity.UserUseNumberActivity"/>
-        <activity android:name=".activity.SetActivity"/>
-        <activity android:name=".activity.NotificationActivity"/>
-        <activity android:name=".activity.NotesActivity"/>
-        <activity android:name=".activity.AppUserInfoActivity"/>
-        <activity android:name=".activity.DeviceSettingActivity"/>
-        <activity android:name=".activity.DeviceSettingActivity2"/>
-        <activity android:name=".activity.DeviceSettingActivity3"/>
-        <activity android:name=".activity.DeviceSettingActivity4"/>
-        <activity android:name=".activity.DeviceSettingActivity5"/>
-        <activity android:name=".activity.ChangePasswordActivity"/>
-        <activity android:name=".activity.PersonInfoActivity"/>
-        <activity android:name=".activity.ChangePwdActivity"/>
-        <activity android:name=".activity.AgreementActivity"/>
-        <activity android:name=".activity.RegisterActivity2"/>
-        <activity android:name=".activity.DisplayScanResultActivity"/>
-        <activity android:name=".zxing.activity.CaptureActivity"/>
-        <activity android:name=".activity.MyDialogActivitySingle"/>
-        <activity android:name=".activity.DeviceListActivity"/>
+        <activity android:name=".activity.RegisterActivity" />
+        <activity android:name=".activity.ForgetPasswordActivity" />
+        <activity android:name=".activity.ForgetPasswordActivity2" />
+        <activity android:name=".activity.LoginActivity" />
+        <activity android:name=".activity.LoginActivity2" />
+        <activity android:name=".activity.BindDeviceActivity" />
+        <activity android:name=".activity.ProductSelectActivity" />
+        <activity android:name=".activity.CommonSetActivity" />
+        <activity android:name=".activity.ConcernUsActivity" />
+        <activity android:name=".activity.EvaluationActivity" />
+        <activity android:name=".activity.UserUseNumberActivity" />
+        <activity android:name=".activity.SetActivity" />
+        <activity android:name=".activity.NotificationActivity" />
+        <activity android:name=".activity.NotesActivity" />
+        <activity android:name=".activity.AppUserInfoActivity" />
+        <activity android:name=".activity.DeviceSettingActivity" />
+        <activity android:name=".activity.DeviceSettingActivity2" />
+        <activity android:name=".activity.DeviceSettingActivity3" />
+        <activity android:name=".activity.DeviceSettingActivity4" />
+        <activity android:name=".activity.DeviceSettingActivity5" />
+        <activity android:name=".activity.ChangePasswordActivity" />
+        <activity android:name=".activity.PersonInfoActivity" />
+        <activity android:name=".activity.ChangePwdActivity" />
+        <activity android:name=".activity.AgreementActivity" />
+        <activity android:name=".activity.RegisterActivity2" />
+        <activity android:name=".activity.DisplayScanResultActivity" />
+        <activity android:name=".zxing.activity.CaptureActivity" />
+        <activity android:name=".activity.MyDialogActivitySingle" />
+        <activity android:name=".activity.DeviceListActivity" />
     </application>
 </manifest>
