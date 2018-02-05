@@ -51,8 +51,8 @@ public class DeviceListAdapter extends BaseAdapter {
 //            Log.e("mData.size()==", "" + i);
 //            return i;
 //        } else {
-        Log.e("str.size()==", "" + str.size());
-        return str.size();
+//        Log.e("str.size()==", "" + str.size());
+        return i;
 //        }
     }
 

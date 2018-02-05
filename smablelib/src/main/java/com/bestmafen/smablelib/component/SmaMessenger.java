@@ -3,6 +3,8 @@ package com.bestmafen.smablelib.component;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattDescriptor;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 
 import com.bestmafen.easeblelib.util.EaseUtils;
 import com.bestmafen.easeblelib.util.L;
@@ -51,6 +53,7 @@ class SmaMessenger {
     SmaMessenger() {
         new Thread(new Runnable() {
 
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
             @Override
             public void run() {
                 try {
