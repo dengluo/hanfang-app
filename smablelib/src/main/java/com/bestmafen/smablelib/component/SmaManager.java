@@ -17,11 +17,13 @@ import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.bestmafen.easeblelib.connector.EaseConnector;
 import com.bestmafen.easeblelib.util.EaseUtils;
 import com.bestmafen.easeblelib.util.L;
 
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -78,6 +80,9 @@ public class SmaManager {
     }
 
     public static final class BACK {
+        public static final byte TIME       = 0x04;
+        public static final byte WENDU    = 0x05;
+        public static final byte FENGSU   = 0x06;
         public static final byte VOLTAGE       = 0x1F;
         public static final byte PUFF          = 0x20;
         public static final byte SMOKE_COUNT   = 0x23;
@@ -211,7 +216,11 @@ public class SmaManager {
                     if (data == null) return;
 
                     L.d("SmaManager onCharacteristicChanged " + EaseUtils.byteArray2HexString(data));
-                    parseData(data);
+                    try {
+                        parseData(data);
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
                     for (SmaCallback callback : mSmaCallbacks) {
                         callback.onRead(data);
                     }
@@ -292,7 +301,7 @@ public class SmaManager {
     /**
      * Parse the data received.
      */
-    private synchronized void parseData(byte[] data) {
+    private synchronized void parseData(byte[] data) throws UnsupportedEncodingException {
         if (data == null || data.length != 11) return;
         if (data[1] == 0x8) return;
 
@@ -302,9 +311,32 @@ public class SmaManager {
         for (byte b : valuePart) {
             sb.append((char) b);
         }
-        float value = Float.parseFloat(sb.toString());
+        Log.e("sb.toString()==",sb.toString());
+        float value;
+        if (!sb.toString().isEmpty()){
+            value = Float.parseFloat(new String(sb.toString().getBytes("gbk"),"utf-8"));
+        }else{
+            value = Float.parseFloat("");
+        }
+//        new String(sb.toString().getBytes("gbk"),"utf-8");
+//        float value = Float.parseFloat(sb.toString());
         L.d("parseData " + EaseUtils.byteArray2HexString(data) + " , valuePart = " + sb.toString());
         switch (cmd) {
+            case BACK.FENGSU:
+                for (SmaCallback bc : mSmaCallbacks) {
+                    bc.onReadFengsu((int) value);
+                }
+                break;
+            case BACK.WENDU:
+                for (SmaCallback bc : mSmaCallbacks) {
+                    bc.onReadWendu((int) value);
+                }
+                break;
+            case BACK.TIME:
+                for (SmaCallback bc : mSmaCallbacks) {
+                    bc.onReadTime((int) value);
+                }
+                break;
             case BACK.BEING_DORMANT:
                 for (SmaCallback bc : mSmaCallbacks) {
                     bc.onBeingDormant();

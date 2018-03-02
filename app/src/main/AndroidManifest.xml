@@ -92,5 +92,6 @@
         <activity android:name=".zxing.activity.CaptureActivity" />
         <activity android:name=".activity.MyDialogActivitySingle" />
         <activity android:name=".activity.DeviceListActivity" />
+        <activity android:name=".activity.PerfectInfoActivity" />
     </application>
 </manifest>

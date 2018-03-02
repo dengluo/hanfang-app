@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -32,6 +33,7 @@ public class MyFragment3 extends Fragment {
     private WheelView wv_time_setting;
     private String mFengsu1 = "";
     private Context context;
+    public static Handler mHandler;//接受MainActivity2发送过来的消息
 
     public MyFragment3() {
     }
@@ -41,7 +43,19 @@ public class MyFragment3 extends Fragment {
         View view = inflater.inflate(R.layout.fg_content3, container, false);
         context = this.getActivity();
         wv_time_setting = (WheelView) view.findViewById(R.id.wv_time_setting);
-        initWheelTime();
+        initWheelTime(2);
+        mHandler = new Handler() {
+            public void handleMessage(Message msg) {
+                switch (msg.what) {
+                    case 22:
+                        Log.e("pos--",msg.arg1+"");
+                        initWheelTime(msg.arg1-1);
+//                        wv_time_setting.setSelection(msg.arg1-1);
+                        break;
+
+                }
+            }
+        };
         return view;
     }
 
@@ -66,7 +80,7 @@ public class MyFragment3 extends Fragment {
     /**
      * common皮肤、图文混排无皮肤、自定义布局
      */
-    private void initWheelTime() {
+    private void initWheelTime(int pos) {
         WheelView.WheelViewStyle style = new WheelView.WheelViewStyle();
         style.selectedTextColor = Color.parseColor("#60212121");
         style.textColor = Color.GRAY;
@@ -75,7 +89,7 @@ public class MyFragment3 extends Fragment {
         wv_time_setting.setWheelAdapter(new ArrayWheelAdapter(MyApplication.getInstance()));
         wv_time_setting.setLoop(true);
         wv_time_setting.setWheelSize(3);
-        wv_time_setting.setSelection(0);
+        wv_time_setting.setSelection(pos);
         wv_time_setting.setSkin(WheelView.Skin.Holo);
         wv_time_setting.setWheelData(createMainDatas());
         wv_time_setting.setStyle(style);

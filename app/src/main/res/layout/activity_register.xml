@@ -148,7 +148,6 @@
                     <Button
                         android:id="@+id/bt_register2"
                         style="@style/bt_style"
-                        android:visibility="gone"
                         android:text="@string/jgregister" />
                 </LinearLayout>
             </LinearLayout>

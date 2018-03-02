@@ -93,7 +93,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="低档"
+                android:text="高档"
                 android:textSize="12dp" />
 
         </LinearLayout>
@@ -175,7 +175,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dp10"
-                        android:text="药品:"
+                        android:text="产品码:"
                         android:textColor="@color/text_color_2"
                         android:textSize="14dp" />
 
@@ -227,7 +227,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dp10"
-                        android:text="灯光"
+                        android:text="红光"
                         android:textColor="@color/text_color_2"
                         android:textSize="14dp" />
 

@@ -44,7 +44,7 @@ public class LoginActivity2 extends BaseActivity implements View.OnClickListener
     Button register;
     @BindView(R.id.image_pwd)
     ImageView imagePwd;
-    private boolean isopen=true;//用来标记密码是否可见
+    private boolean isopen = true;//用来标记密码是否可见
 
     @Override
     protected int getLayoutRes() {
@@ -68,10 +68,11 @@ public class LoginActivity2 extends BaseActivity implements View.OnClickListener
 
     @Override
     protected void initData() {
-      String phone = userRxPreferences.getString(Constants.LOGIN_PHONE).get();
-     if (!TextUtils.isEmpty(phone)){
-         username.setText(phone);
-     }
+        String phone = userRxPreferences.getString(Constants.LOGIN_PHONE).get();
+        Log.i("bmob", "phone：" + phone);
+        if (!TextUtils.isEmpty(phone)) {
+            username.setText(phone);
+        }
     }
 
     @Override
@@ -107,14 +108,14 @@ public class LoginActivity2 extends BaseActivity implements View.OnClickListener
                 isopen = !isopen;
                 break;
             default:
-                ToastUtil.showLongToast(mContext, "id有误！");
+                ToastUtil.showLongToast(LoginActivity2.this, "id有误！");
                 break;
         }
     }
 
     private void login() {
-        if (!NetworkUtil.isNetworkAvailable(this)){
-            ToastUtil.showShortToast(LoginActivity2.this,"网络连接异常!");
+        if (!NetworkUtil.isNetworkAvailable(this)) {
+            ToastUtil.showShortToast(LoginActivity2.this, "网络连接异常!");
             return;
         }
         final String email = username.getText().toString().trim();
@@ -125,8 +126,9 @@ public class LoginActivity2 extends BaseActivity implements View.OnClickListener
         final String pwd = et_pwd.getText().toString().trim();
         if (TextUtils.isEmpty(pwd)) {
             ToastUtil.showShortToast(this, getString(R.string.plz_input_pwd));
+            return;
         }
-        DialogUtil.progressDialog(mContext, getString(R.string.login_now), false);
+        DialogUtil.progressDialog(LoginActivity2.this, getString(R.string.login_now), false);
 
         BmobUser.loginByAccount(email, pwd, new LogInListener<User>() {
             @Override
@@ -135,7 +137,7 @@ public class LoginActivity2 extends BaseActivity implements View.OnClickListener
 //                    Log.e(TAG, userRxPreferences.getString(Constants.LOGIN_EMAIL).get()+"//"+userRxPreferences.getString(Constants.LOGIN_PHONE).get());
                     userRxPreferences.getString(Constants.LOGIN_EMAIL).set(email);
                     userRxPreferences.getString(Constants.LOGIN_PWD).set(pwd);
-                    PreferencesUtils.putEntity(mContext, user);
+                    PreferencesUtils.putEntity(LoginActivity2.this, user);
                     startActivity(new Intent(LoginActivity2.this, MainActivity2.class));
                     LoginActivity2.this.finish();
 //                    if (user.getMobilePhoneNumberVerified()) {
@@ -159,21 +161,21 @@ public class LoginActivity2 extends BaseActivity implements View.OnClickListener
 //                    }
                 } else {
                     Log.e(TAG, "done: " + e.getErrorCode() + ":" + e.getMessage());
-                    switch (e.getErrorCode()){
+                    switch (e.getErrorCode()) {
                         case 101:
-                            ToastUtil.showShortToast(LoginActivity2.this,"用户名或密码错误");
+                            ToastUtil.showShortToast(LoginActivity2.this, "用户名或密码错误");
                             break;
                         case 9001:
-                            ToastUtil.showShortToast(LoginActivity2.this,"Application Id为空，请初始化");
+                            ToastUtil.showShortToast(LoginActivity2.this, "Application Id为空，请初始化");
                             break;
                         case 9010:
-                            ToastUtil.showShortToast(LoginActivity2.this,"网络超时");
+                            ToastUtil.showShortToast(LoginActivity2.this, "网络超时");
                             break;
                         case 9016:
-                            ToastUtil.showShortToast(LoginActivity2.this,"无网络连接，请检查您的手机网络.");
+                            ToastUtil.showShortToast(LoginActivity2.this, "无网络连接，请检查您的手机网络.");
                             break;
                         default:
-                            ToastUtil.showShortToast(LoginActivity2.this,"登录异常");
+                            ToastUtil.showShortToast(LoginActivity2.this, "登录异常");
                             break;
                     }
                 }
@@ -203,6 +205,12 @@ public class LoginActivity2 extends BaseActivity implements View.OnClickListener
                 imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
             }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        DialogUtil.hide();//dismissDialog();
+        super.onDestroy();
     }
 
 }

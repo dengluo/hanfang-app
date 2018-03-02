@@ -38,6 +38,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -110,6 +112,10 @@ public final class CaptureActivity extends BaseActivity implements SurfaceHolder
     LinearLayout scanCropView;
     @BindView(R.id.capture_scan_line)
     ImageView scanLine;
+    @BindView(R.id.et_input_yaopin_code)
+    EditText inputCode;
+    @BindView(R.id.bt_submit_yaopin_code)
+    Button submitCode;
 
     private Rect mCropRect = null;
     private boolean isHasSurface = false;
@@ -172,6 +178,7 @@ public final class CaptureActivity extends BaseActivity implements SurfaceHolder
         TextView albumBtn = (TextView) findViewById(R.id.action_album);
         mLightBtn = (FloatingActionButton) findViewById(R.id.action_light);
 
+        submitCode.setOnClickListener(this);
         backBtn.setOnClickListener(this);
         albumBtn.setOnClickListener(this);
         mLightBtn.setOnClickListener(this);
@@ -514,6 +521,11 @@ public final class CaptureActivity extends BaseActivity implements SurfaceHolder
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            //提交药品码
+            case R.id.bt_submit_yaopin_code:
+                String code = inputCode.getText().toString();
+                validateCode(code);//验证药品码
+                break;
             // 返回按钮
             case R.id.action_back:
                 finish();
@@ -536,6 +548,39 @@ public final class CaptureActivity extends BaseActivity implements SurfaceHolder
                 overridePendingTransition(R.anim.zoomin, 0);
                 break;
         }
+    }
+
+    private void validateCode(final String code) {
+        if (inputCode.getText().toString().trim().equals("")){
+            ToastUtil.showShortToast(CaptureActivity.this,"药品码不能为空");
+            return;
+        }
+        BmobQuery query =new BmobQuery("QRcode");
+        query.addWhereEqualTo("code", code);
+        query.setLimit(2);
+        query.order("createdAt");
+        //v3.5.0版本提供`findObjectsByTable`方法查询自定义表名的数据
+        query.findObjectsByTable(new QueryListener<JSONArray>() {
+            @Override
+            public void done(JSONArray ary, BmobException e) {
+                if(e==null){
+                    Log.i("bmob","查询成功："+ary.toString());
+                    if (ary.length()>0) {
+                        Message message = new Message();
+                        message.what = 10;
+                        message.obj = code;
+                        FragmentOrderTake.mHandler.sendMessage(message);
+                        finish();
+                    }else{
+                        ToastUtil.showShortToast(CaptureActivity.this,"药品码不存在或者过期");
+                    }
+
+                }else{
+                    Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                    ToastUtil.showShortToast(CaptureActivity.this,"药品码不存在或者过期");
+                }
+            }
+        });
     }
 
     /**

@@ -1,5 +1,7 @@
 package bauway.com.hanfang.bean;
 
+import java.lang.reflect.Array;
+
 import cn.bmob.v3.BmobUser;
 
 /**
@@ -10,6 +12,8 @@ public class User extends BmobUser {
 
     private String app_msg;
     private String app_name;
+    private Boolean isPerson;
+    private String [] info;
 
     public String getApp_msg() {
         return app_msg;
@@ -25,5 +29,21 @@ public class User extends BmobUser {
 
     public void setApp_name(String app_name) {
         this.app_name = app_name;
+    }
+
+    public Boolean getPerson() {
+        return isPerson;
+    }
+
+    public void setPerson(Boolean person) {
+        isPerson = person;
+    }
+
+    public String [] getInfo() {
+        return info;
+    }
+
+    public void setInfo(String[] info) {
+        this.info = info;
     }
 }

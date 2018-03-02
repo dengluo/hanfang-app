@@ -12,6 +12,7 @@ import android.widget.TextView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import bauway.com.hanfang.App.Constants;
 import bauway.com.hanfang.base.BaseActivity;
@@ -48,6 +49,16 @@ public class PersonInfoActivity extends BaseActivity {
     TextView tv_personinfo_height;
     @BindView(R.id.tv_personinfo_weight)
     TextView tv_personinfo_weight;
+    @BindView(R.id.tv_person_t1)
+    TextView tv_person_t1;
+    @BindView(R.id.tv_person_t2)
+    TextView tv_person_t2;
+    @BindView(R.id.tv_person_t3)
+    TextView tv_person_t3;
+    @BindView(R.id.tv_person_t4)
+    TextView tv_person_t4;
+    @BindView(R.id.tv_person_t5)
+    TextView tv_person_t5;
 
     private Context ctx;
 
@@ -93,11 +104,25 @@ public class PersonInfoActivity extends BaseActivity {
                     Log.i("bmob","查询成功："+ary.toString());
                     try {
                         JSONObject object = (JSONObject) ary.get(0);
+                        if (!object.optBoolean("person")){
+                            tv_person_t1.setText(getResources().getText(R.string.organization_name1));
+                            tv_person_t2.setText(getResources().getText(R.string.legal_representative1));
+                            tv_person_t3.setText(getResources().getText(R.string.personinfo_head1));
+                            tv_person_t4.setText(getResources().getText(R.string.registration_mark1));
+                            tv_person_t5.setText(getResources().getText(R.string.address1));
+                        }else {
+                            tv_person_t1.setText(getResources().getText(R.string.person_name));
+                            tv_person_t2.setText(getResources().getText(R.string.person_sex));
+                            tv_person_t3.setText(getResources().getText(R.string.person_age));
+                            tv_person_t4.setText(getResources().getText(R.string.person_height));
+                            tv_person_t5.setText(getResources().getText(R.string.person_weight));
+                        }
                         tv_personinfo_name.setText(object.optJSONArray("info").getString(0));
                         tv_personinfo_sex.setText(object.optJSONArray("info").getString(1));
                         tv_personinfo_age.setText(object.optJSONArray("info").getString(2));
                         tv_personinfo_height.setText(object.optJSONArray("info").getString(3));
                         tv_personinfo_weight.setText(object.optJSONArray("info").getString(4));
+
                     } catch (JSONException e1) {
                         e1.printStackTrace();
                     }

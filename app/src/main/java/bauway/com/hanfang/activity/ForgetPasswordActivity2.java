@@ -54,6 +54,7 @@ public class ForgetPasswordActivity2 extends BaseActivity {
     private boolean isopen = true;//用来标记密码是否可见
     private boolean isopen2 = true;//用来标记密码是否可见
     private String phone;
+    private String msmid = "";
 
     @Override
     protected int getLayoutRes() {
@@ -98,7 +99,8 @@ public class ForgetPasswordActivity2 extends BaseActivity {
                 break;
             case R.id.pwd_bt_reset://重置密码
                 //验证验证码
-                verifacityCode();
+//                verifacityCode();
+            resetPwd();
                 break;
             case R.id.image_pwd:
                 if (isopen) {
@@ -144,6 +146,7 @@ public class ForgetPasswordActivity2 extends BaseActivity {
             public void done(Integer smsId, cn.bmob.sms.exception.BmobException ex) {
                 if (ex == null) {//验证码发送成功
                     Log.e("bmob", "短信id：" + smsId);//用于查询本次短信发送详情
+                    msmid = smsId+"";
                     myListener.setupdateUIVericationCode();
                 } else {
                     Log.e(TAG, "done: -------------------------" + ex.getErrorCode() + "," + ex.getMessage() + "," + smsId);
@@ -183,27 +186,36 @@ public class ForgetPasswordActivity2 extends BaseActivity {
             return;
         }
 
-        BmobSMS.verifySmsCode(this, phone, register_code, new VerifySMSCodeListener() {
-
-
-            @Override
-            public void done(cn.bmob.sms.exception.BmobException ex) {
-                if (ex == null) {//短信验证码已验证成功
-                    Log.e("bmob", "验证通过");
-                    ToastUtil.showShortToast(mContext, "短信验证已通过");
-                    //重置密码!
-                    resetPwd();
-                } else {
-                    ToastUtil.showShortToast(mContext, "短信验证失败");
-                    Log.e("bmob", "验证失败：code =" + ex.getErrorCode() + ",msg = " + ex.getLocalizedMessage());
-                }
-            }
-
-
-        });
+//        BmobSMS.verifySmsCode(this, phone, register_code, new VerifySMSCodeListener() {
+//
+//
+//            @Override
+//            public void done(cn.bmob.sms.exception.BmobException ex) {
+//                if (ex == null) {//短信验证码已验证成功
+//                    Log.e("bmob", "验证通过");
+//                    ToastUtil.showShortToast(mContext, "短信验证已通过");
+//                    //重置密码!
+//                    resetPwd();
+//                } else {
+//                    ToastUtil.showShortToast(mContext, "短信验证失败");
+//                    Log.e("bmob", "验证失败：code =" + ex.getErrorCode() + ",msg = " + ex.getLocalizedMessage());
+//                }
+//            }
+//
+//
+//        });
     }
 
     private void resetPwd() {
+        if (!NetworkUtil.isNetworkAvailable(this)) {
+            ToastUtil.showShortToast(ForgetPasswordActivity2.this, "网络连接异常!");
+            return;
+        }
+        String register_code = verificationCode.getText().toString().trim();
+        if (TextUtils.isEmpty(register_code)) {
+            ToastUtils.showShort("验证码为空,请重新填写验证码");
+            return;
+        }
         final String et_phone = username.getText().toString().trim();
         if (TextUtils.isEmpty(et_phone)) {
             ToastUtils.showShort(R.string.plz_input_phone);
@@ -227,13 +239,15 @@ public class ForgetPasswordActivity2 extends BaseActivity {
         BmobUser newUser = new BmobUser();
         newUser.setPassword(pwd);
         BmobUser bmobUser = BmobUser.getCurrentUser();
-        newUser.update(bmobUser.getObjectId(), new UpdateListener() {
+        Log.e(TAG, "code: " + verificationCode.getText().toString().trim());
+        Log.e(TAG, "pwd: " + pwd);
+        BmobUser.resetPasswordBySMSCode(verificationCode.getText().toString().trim(),pwd,new UpdateListener() {
             @Override
             public void done(BmobException e) {
                 if (e == null) {
                     ToastUtils.showShort(R.string.reset_success_password);
                     userRxPreferences.getString(Constants.LOGIN_PHONE).set(et_phone);
-                    startActivity(new Intent(mContext, LoginActivity.class));
+                    startActivity(new Intent(mContext, LoginActivity2.class));
                     finish();
                 } else {
                     Log.e(TAG, "done: " + e.getErrorCode() + ":" + e.getMessage());

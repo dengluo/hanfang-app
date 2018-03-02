@@ -4,6 +4,7 @@ import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import com.bestmafen.easeblelib.util.EaseUtils;
 import com.bestmafen.smablelib.component.SimpleSmaCallback;
+import com.bestmafen.smablelib.component.SmaCallback;
 import com.bestmafen.smablelib.component.SmaManager;
 import com.blankj.utilcode.util.ToastUtils;
 
@@ -25,6 +27,9 @@ import java.util.Date;
 import java.util.List;
 
 import bauway.com.hanfang.Fragment.FragmentOrderTake;
+import bauway.com.hanfang.Fragment.MyFragment1;
+import bauway.com.hanfang.Fragment.MyFragment2;
+import bauway.com.hanfang.Fragment.MyFragment3;
 import bauway.com.hanfang.adapter.FragmentTabAdapter;
 import bauway.com.hanfang.base.BaseActivity;
 import bauway.com.hanfang.BuildConfig;
@@ -56,6 +61,7 @@ public class MainActivity2 extends BaseActivity implements View.OnClickListener 
     private DateFormat mDateFormat = new SimpleDateFormat("HH:mm:ss");
     String strDevice1 = "";
     private SharedPreferences sharedPreferences;
+    private SmaCallback mSmaCallback;
 
 
     @Override
@@ -100,33 +106,116 @@ public class MainActivity2 extends BaseActivity implements View.OnClickListener 
         //提交修改
         editor.commit();
 
-        mSmaManager = SmaManager.getInstance().init(this).addSmaCallback(new SimpleSmaCallback() {
+        mSmaManager = SmaManager.getInstance().addSmaCallback(mSmaCallback = new SimpleSmaCallback() {
 
             @Override
             public void onConnected(BluetoothDevice device, boolean isConnected) {
-                if (BuildConfig.DEBUG) {
-                    append("  ->  isConnected " + isConnected);
-                }
+
+            }
+
+
+
+            @Override
+            public void onCharging(final float voltage) {
+                runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+//                        mTvDcv.setText(String.valueOf(voltage));
+//                        updateChargeTime();
+                    }
+                });
             }
 
             @Override
-            public void onWrite(byte[] data) {
-                if (BuildConfig.DEBUG) {
-                    append("  ->  onWrite", data);
-                }
+            public void onReadTemperature(final int temperature) {
+                runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        Log.e("temperature==",String.valueOf(temperature));
+//                        mTvTemp.setText(String.valueOf(temperature));
+                    }
+                });
             }
 
             @Override
-            public void onRead(byte[] data) {
-                if (BuildConfig.DEBUG) {
-                    append("  ->  onRead", data);
-                }
+            public void onReadPuffCount(final int puff) {
+                runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+//                        mTvUseNum.setText(String.valueOf(puff));
+                    }
+                });
+            }
+
+            @Override
+            public void onReadChargeCount(final int count) {
+                runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+//                        mTvChargeCount.setText(String.valueOf(count));
+                    }
+                });
+            }
+
+            @Override
+            public void onReadWendu(final int count) {
+                runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        Log.e("wendu==",String.valueOf(count));
+                        Message message = new Message();
+                        message.what = 21;
+                        message.obj = String.valueOf(count);
+                        FragmentOrderTake.mHandler.sendMessage(message);
+
+                        Message message2 = new Message();
+                        message2.what = 22;
+                        message2.arg1 = count;
+                        MyFragment1.mHandler.sendMessage(message2);
+                    }
+                });
+            }
+
+            @Override
+            public void onReadFengsu(final int count) {
+                runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        Log.e("fengsu==",String.valueOf(count));
+                        Message message = new Message();
+                        message.what = 22;
+                        message.obj = String.valueOf(count);
+                        FragmentOrderTake.mHandler.sendMessage(message);
+
+                        Message message2 = new Message();
+                        message2.what = 22;
+                        message2.arg1 = count;
+                        MyFragment3.mHandler.sendMessage(message2);
+                    }
+                });
+            }
+
+            @Override
+            public void onReadTime(final int count) {
+                runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        Log.e("time==",String.valueOf(count));
+                        Message message = new Message();
+                        message.what = 23;
+                        message.obj = String.valueOf(count);
+                        FragmentOrderTake.mHandler.sendMessage(message);
+                    }
+                });
             }
         });
-        mSmaManager.connect(true);
-        if (BuildConfig.DEBUG) {
-//            mDebugViewManager = new DebugViewManager(this);
-        }
 
     }
 
@@ -236,8 +325,9 @@ public class MainActivity2 extends BaseActivity implements View.OnClickListener 
 
     @Override
     protected void onDestroy() {
-        Log.e("onDestroy","=="+mSmaManager.getNameAndAddress()[0]);
-        if (!mSmaManager.getNameAndAddress()[0].equals("")){
+        mSmaManager.removeSmaCallback(mSmaCallback);
+//        Log.e("onDestroy","=="+mSmaManager.getNameAndAddress()[0]);
+        if (!mSmaManager.isConnected){
             mSmaManager.mEaseConnector.closeConnect(true);
             mSmaManager.unbind();
             mSmaManager.connect(false);

@@ -46,7 +46,7 @@ android {
             debuggable false
             zipAlignEnabled true
             //请使用第三方加固，例如360加固、乐固，无需本地混淆
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }

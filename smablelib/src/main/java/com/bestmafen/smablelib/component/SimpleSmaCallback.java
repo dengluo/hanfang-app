@@ -40,6 +40,21 @@ public class SimpleSmaCallback implements SmaCallback {
     }
 
     @Override
+    public void onReadFengsu(int count) {
+
+    }
+
+    @Override
+    public void onReadWendu(int count) {
+
+    }
+
+    @Override
+    public void onReadTime(int count) {
+
+    }
+
+    @Override
     public void onCharging(float voltage) {
 
     }

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -18,6 +19,8 @@ import com.wx.wheelview.adapter.ArrayWheelAdapter;
 import com.wx.wheelview.widget.WheelView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import bauway.com.hanfang.MyApplication;
 import bauway.com.hanfang.R;
@@ -40,6 +43,11 @@ public class MyFragment2 extends Fragment {
         wv_time_setting = (WheelView) view.findViewById(R.id.wv_time_setting);
         initWheelTime();
         return view;
+    }
+
+    private List<String> createWendus() {
+        String[] strings = {"10", "15", "20", "25", "30", "35", "40"};
+        return Arrays.asList(strings);
     }
 
     private ArrayList<String> createMinutes() {
@@ -67,9 +75,9 @@ public class MyFragment2 extends Fragment {
         wv_time_setting.setWheelAdapter(new ArrayWheelAdapter(MyApplication.getInstance()));
         wv_time_setting.setLoop(true);
         wv_time_setting.setWheelSize(3);
-        wv_time_setting.setSelection(0);
+        wv_time_setting.setSelection(4);
         wv_time_setting.setSkin(WheelView.Skin.Holo);
-        wv_time_setting.setWheelData(createMinutes());
+        wv_time_setting.setWheelData(createWendus());
         wv_time_setting.setStyle(style);
         wv_time_setting.setExtraText("", Color.parseColor("#3F51B5"), 40, 70);
         wv_time_setting.setOnWheelItemSelectedListener(new WheelView.OnWheelItemSelectedListener() {

@@ -57,8 +57,8 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
     private RadioButton rb_channel;
     private RadioButton rb_message;
     private RadioButton rb_better;
-    private TextView tv_frag_wendu, tv_frag_time, tv_frag_fengsu, tv_frag_device_name,tv_frag_device_ypcode;
-    private ImageView iv_device_drug_codesss, iv_device_bluetooth,iv_find_play1;
+    private TextView tv_frag_wendu, tv_frag_time, tv_frag_fengsu, tv_frag_device_name, tv_frag_device_ypcode;
+    private ImageView iv_device_drug_codesss, iv_device_bluetooth, iv_find_play1;
     private ViewPager vpager;
     private CheckBox checkbox_dengguang;
 
@@ -84,7 +84,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
             @Override
             public void onConnected(BluetoothDevice device, boolean isConnected) {
                 if (isConnected) {
-                    Log.e("device","==device=="+device.getName()+"=="+device.getAddress());
+                    Log.e("device", "==device==" + device.getName() + "==" + device.getAddress());
                     mSmaManager.setNameAndAddress(device.getName(), device.getAddress());
                     mSmaManager.mEaseConnector.setAddress(device.getAddress());
                 }
@@ -102,7 +102,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
 //                if (BuildConfig.DEBUG) {
 ////                    append("  ->  onRead", data);
 //                }
-                Log.e("read==",data+"");
+                Log.e("read==", data + "");
             }
         });
         mSmaManager.connect(true);
@@ -112,28 +112,44 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
             public void handleMessage(Message msg) {
                 switch (msg.what) {
                     case 10:
-                        if (mSmaManager.getNameAndAddress()[0].equals("")) {
-                            tv_frag_device_ypcode.setText("");
-                        }else {
-                            tv_frag_device_ypcode.setText(msg.obj.toString());
-                        }
+//                        if (mSmaManager.getNameAndAddress()[0].equals("")) {
+//                            ToastUtils.showShortSafe(R.string.device_not_connected);
+//                            tv_frag_device_ypcode.setText("");
+//                        }else {
+//                            tv_frag_device_ypcode.setText(msg.obj.toString());
+//                        }
+                        tv_frag_device_ypcode.setText(msg.obj.toString());
                         break;
                     case 11:
                         SharedPreferences sharedPreferencesWendu1 = context.getSharedPreferences(
                                 "MWENDU", Activity.MODE_PRIVATE);
-                        String mwendu1 = sharedPreferencesWendu1.getString("mwendu1", "1");
+                        String mwendu1 = sharedPreferencesWendu1.getString("mwendu1", "六");
                         tv_frag_wendu.setText(mwendu1 + " 档");
                         Log.e("mSmaManager==name==", mSmaManager.getNameAndAddress().toString() + "||" + mSmaManager.getNameAndAddress()[0]);
                         if (!mSmaManager.isConnected) {
                             ToastUtils.showShortSafe(R.string.device_not_connected);
                             return;
                         }
-                        mSmaManager.write(SmaManager.SET.GOAL_VOICE_MODE, mwendu1);
+                        if (mwendu1.equals("一")) {
+                            mSmaManager.write(SmaManager.SET.GOAL_VOICE_MODE, 1 + "");
+                        } else if (mwendu1.equals("二")) {
+                            mSmaManager.write(SmaManager.SET.GOAL_VOICE_MODE, 2 + "");
+                        } else if (mwendu1.equals("三")) {
+                            mSmaManager.write(SmaManager.SET.GOAL_VOICE_MODE, 3 + "");
+                        } else if (mwendu1.equals("四")) {
+                            mSmaManager.write(SmaManager.SET.GOAL_VOICE_MODE, 4 + "");
+                        } else if (mwendu1.equals("五")) {
+                            mSmaManager.write(SmaManager.SET.GOAL_VOICE_MODE, 5 + "");
+                        } else if (mwendu1.equals("六")) {
+                            mSmaManager.write(SmaManager.SET.GOAL_VOICE_MODE, 6 + "");
+                        } else {
+
+                        }
                         break;
                     case 12:
                         SharedPreferences sharedPreferencesTime1 = context.getSharedPreferences(
                                 "MTIME", Activity.MODE_PRIVATE);
-                        String mtime1 = sharedPreferencesTime1.getString("mtime1", "1");
+                        String mtime1 = sharedPreferencesTime1.getString("mtime1", "30");
                         tv_frag_time.setText(mtime1 + " min");
                         if (!mSmaManager.isConnected) {
                             ToastUtils.showShortSafe(R.string.device_not_connected);
@@ -144,25 +160,25 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                     case 13:
                         SharedPreferences sharedPreferencesFengsu1 = context.getSharedPreferences(
                                 "MFENGSU", Activity.MODE_PRIVATE);
-                        String mfengsu1 = sharedPreferencesFengsu1.getString("mfengsu1", "中");
+                        String mfengsu1 = sharedPreferencesFengsu1.getString("mfengsu1", "高");
                         tv_frag_fengsu.setText(mfengsu1 + " 档");
                         if (!mSmaManager.isConnected) {
                             ToastUtils.showShortSafe(R.string.device_not_connected);
                             return;
                         }
-                        if(mfengsu1.equals("低")){
-                            mSmaManager.write(SmaManager.SET.GOAL_SCORE_RATIO, 1+"");
-                        }else if(mfengsu1.equals("中")){
-                            mSmaManager.write(SmaManager.SET.GOAL_SCORE_RATIO, 2+"");
-                        }else if(mfengsu1.equals("高")){
-                            mSmaManager.write(SmaManager.SET.GOAL_SCORE_RATIO, 3+"");
-                        }else {
+                        if (mfengsu1.equals("低")) {
+                            mSmaManager.write(SmaManager.SET.GOAL_SCORE_RATIO, 1 + "");
+                        } else if (mfengsu1.equals("中")) {
+                            mSmaManager.write(SmaManager.SET.GOAL_SCORE_RATIO, 2 + "");
+                        } else if (mfengsu1.equals("高")) {
+                            mSmaManager.write(SmaManager.SET.GOAL_SCORE_RATIO, 3 + "");
+                        } else {
 
                         }
 
                         break;
                     case 14:
-                        Log.e("14","14");
+                        Log.e("14", "14");
                         mSmaManager.connect(true);
                         mSmaManager.isConnected = true;
                         mSmaManager.mEaseConnector.connect(true);
@@ -182,11 +198,51 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
 
                         break;
                     case 15:
-                        Log.e("15","15");
+                        Log.e("15", "15");
                         if (mSmaManager.getNameAndAddress()[0].equals("")) {
                             tv_frag_device_name.setText("未连接");
-                        }else {
+                        } else {
                             tv_frag_device_name.setText(mSmaManager.getNameAndAddress()[0]);
+                        }
+                        break;
+                    case 21:
+                        if (mSmaManager.getNameAndAddress()[0].equals("")) {
+                            tv_frag_device_name.setText("未连接");
+                        } else {
+                            if (msg.obj.equals("1")){
+                                tv_frag_wendu.setText("一 档");
+                            }else if(msg.obj.equals("2")){
+                                tv_frag_wendu.setText("二 档");
+                            }else if(msg.obj.equals("3")){
+                                tv_frag_wendu.setText("三 档");
+                            }else if(msg.obj.equals("4")){
+                                tv_frag_wendu.setText("四 档");
+                            }else if(msg.obj.equals("5")){
+                                tv_frag_wendu.setText("五 档");
+                            }else if(msg.obj.equals("6")){
+                                tv_frag_wendu.setText("六 档");
+                            }
+
+                        }
+                        break;
+                    case 22:
+                        if (mSmaManager.getNameAndAddress()[0].equals("")) {
+                            tv_frag_device_name.setText("未连接");
+                        } else {
+                            if (msg.obj.equals("1")){
+                                tv_frag_fengsu.setText("低 档");
+                            }else if(msg.obj.equals("2")){
+                                tv_frag_fengsu.setText("中 档");
+                            }else if(msg.obj.equals("3")){
+                                tv_frag_fengsu.setText("高 档");
+                            }
+                        }
+                        break;
+                    case 23:
+                        if (mSmaManager.getNameAndAddress()[0].equals("")) {
+                            tv_frag_device_name.setText("未连接");
+                        } else {
+                            tv_frag_time.setText(msg.obj+" min");
                         }
                         break;
                 }
@@ -210,21 +266,21 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
         checkbox_dengguang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(checkbox_dengguang.isChecked()){
+                if (checkbox_dengguang.isChecked()) {
                     if (!mSmaManager.isConnected) {
                         ToastUtils.showShortSafe(R.string.device_not_connected);
                         checkbox_dengguang.setChecked(false);
                         return;
                     }
-                    ToastUtil.showShortToast(context,"open");
+                    ToastUtil.showShortToast(context, "open");
                     mSmaManager.write(SmaManager.SET.ENABLE_GOAL_LIGHT);
-                }else{
+                } else {
                     if (!mSmaManager.isConnected) {
                         ToastUtils.showShortSafe(R.string.device_not_connected);
                         checkbox_dengguang.setChecked(false);
                         return;
                     }
-                    ToastUtil.showShortToast(context,"close");
+                    ToastUtil.showShortToast(context, "close");
                     mSmaManager.write(SmaManager.SET.DISABLE_GOAL_LIGHT);
                 }
             }
@@ -236,12 +292,12 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
         tv_frag_device_ypcode = (TextView) view_main.findViewById(R.id.tv_frag_device_ypcode);
         if (mSmaManager.getNameAndAddress()[0].equals("")) {
             tv_frag_device_name.setText("未连接");
-        }else {
+        } else {
             tv_frag_device_name.setText(mSmaManager.getNameAndAddress()[0]);
         }
         if (mSmaManager.getNameAndAddress()[0].equals("")) {
             tv_frag_device_ypcode.setText("");
-        }else {
+        } else {
             SharedPreferences mSpScan = context.getSharedPreferences(
                     "SCAN", Activity.MODE_PRIVATE);
             String scanResult1 = mSpScan.getString("scanResult1", "未输入");
@@ -319,10 +375,14 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                     ToastUtils.showShortSafe(R.string.device_not_connected);
                     return;
                 }
-                if (iswork){
+                if (tv_frag_device_ypcode.getText().toString().trim().equals("")) {
+                    ToastUtils.showShortSafe(R.string.code_not_scan);
+                    return;
+                }
+                if (iswork) {
                     iv_find_play1.setBackgroundResource(R.drawable.pause);
                     iswork = false;
-                }else {
+                } else {
                     iv_find_play1.setBackgroundResource(R.drawable.play);
                     iswork = true;
                 }
@@ -333,13 +393,13 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
 
     private void checkBluetoothValid() {
         final BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
-        if(adapter == null) {
+        if (adapter == null) {
             AlertDialog dialog = new AlertDialog.Builder(context).setTitle("错误").setMessage("你的设备不具备蓝牙功能!").create();
             dialog.show();
             return;
         }
 
-        if(!adapter.isEnabled()) {
+        if (!adapter.isEnabled()) {
             AlertDialog dialog = new AlertDialog.Builder(context).setTitle("提示")
                     .setMessage("蓝牙设备未打开,请开启此功能后重试!")
                     .setPositiveButton("确认", new DialogInterface.OnClickListener() {

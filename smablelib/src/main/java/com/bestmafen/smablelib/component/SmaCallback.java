@@ -44,6 +44,23 @@ public interface SmaCallback {
     void onBeingDormant();
 
     /**
+     * 风速
+     */
+    void onReadFengsu(int count);
+
+    /**
+     * 温度
+     */
+    void onReadWendu(int count);
+
+    /**
+     * 时间
+     */
+    void onReadTime(int count);
+
+
+
+    /**
      * 正在充电
      *
      * @param voltage 充电时的电压值
@@ -69,4 +86,5 @@ public interface SmaCallback {
     void onRead(byte[] data);
 
     void onReadChargeCount(int count);
+
 }
