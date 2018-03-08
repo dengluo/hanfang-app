@@ -110,7 +110,7 @@ public class DeviceListActivity extends BaseActivity {
                         break;
                     case 29:
 //                        Log.e("msg.arg1","=="+msg.arg1+"=="+msg.obj);
-                        mSmaManager.mEaseConnector.closeConnect(true);
+//                        mSmaManager.mEaseConnector.closeConnect(true);
                         mSmaManager.unbind();
 //                        mSmaManager.exit();
                         ACache aCache2 = ACache.get(mContext);
@@ -139,14 +139,14 @@ public class DeviceListActivity extends BaseActivity {
     @Override
     protected void init(Bundle savedInstanceState) {
         ctx = DeviceListActivity.this;
-        mSmaManager = SmaManager.getInstance().init(ctx).addSmaCallback(new SimpleSmaCallback() {
+        mSmaManager = SmaManager.getInstance().addSmaCallback(new SimpleSmaCallback() {
 
             @Override
             public void onConnected(BluetoothDevice device, boolean isConnected) {
                 if (isConnected) {
                     Log.e("device","==device=="+device.getName()+"=="+device.getAddress());
                     mSmaManager.setNameAndAddress(device.getName(), device.getAddress());
-                    mSmaManager.mEaseConnector.setAddress(device.getAddress());
+//                    mSmaManager.mEaseConnector.setAddress(device.getAddress());
                 }
             }
 
@@ -165,8 +165,6 @@ public class DeviceListActivity extends BaseActivity {
             }
         });
         mSmaManager.connect(true);
-
-        mSmaManager = SmaManager.getInstance();
     }
 
     @Override

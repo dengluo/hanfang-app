@@ -327,12 +327,7 @@ public class MainActivity2 extends BaseActivity implements View.OnClickListener 
     protected void onDestroy() {
         mSmaManager.removeSmaCallback(mSmaCallback);
 //        Log.e("onDestroy","=="+mSmaManager.getNameAndAddress()[0]);
-        if (!mSmaManager.isConnected){
-            mSmaManager.mEaseConnector.closeConnect(true);
-            mSmaManager.unbind();
-            mSmaManager.connect(false);
-            mSmaManager.exit();
-        }
+        mSmaManager.exit();
         super.onDestroy();
     }
 }

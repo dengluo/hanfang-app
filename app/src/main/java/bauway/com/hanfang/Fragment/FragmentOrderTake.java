@@ -181,7 +181,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                         Log.e("14", "14");
                         mSmaManager.connect(true);
                         mSmaManager.isConnected = true;
-                        mSmaManager.mEaseConnector.connect(true);
+//                        mSmaManager.mEaseConnector.connect(true);
                         String deviceName = msg.obj.toString().substring(0, msg.obj.toString().indexOf("=="));
                         String deviceAddress = msg.obj.toString().substring(msg.obj.toString().indexOf("==") + 2, msg.obj.toString().length());
                         if (!TextUtils.isEmpty(deviceAddress))

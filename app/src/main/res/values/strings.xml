@@ -12,7 +12,7 @@
 
     <string name="tab_menu_wendu">温度</string>
     <string name="tab_menu_shijian">时间</string>
-    <string name="tab_menu_fengsu">风速</string>
+    <string name="tab_menu_fengsu">速度</string>
     <string name="toast_yzm_1">验证码为空,请重新填写验证码</string>
     <string name="toast_yzm_2">网络连接异常</string>
 
@@ -176,7 +176,7 @@
     <string name="selected_device">选择设备</string>
     <string name="please_enable_the_bluetooth">请打开蓝牙</string>
     <string name="device_not_connected">请先连接设备</string>
-    <string name="code_not_scan">请扫描药品码</string>
+    <string name="code_not_scan">请扫描产品码</string>
     <string name="already_bind">已经绑定了设备</string>
     <string name="searching">正在搜索…</string>
     <string name="search_again">重试</string>
@@ -228,8 +228,8 @@
     <string name="bar_code">条形码：%1$s</string>
     <string name="decode_null">未发现二维码/条形码</string>
     <string name="Alignment_code">对准二维码/条形码</string>
-    <string name="scan_code_open">扫描药品码开启使用</string>
-    <string name="manual_input_code">或者输入药品码</string>
+    <string name="scan_code_open">扫描产品码开启使用</string>
+    <string name="manual_input_code">或者输入产品码</string>
     <string name="camera_error">相机错误</string>
     <!--生成二维码-->
     <string name="scan_code">扫码</string>
