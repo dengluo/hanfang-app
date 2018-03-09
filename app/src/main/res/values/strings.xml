@@ -166,6 +166,11 @@
     <string name="person_age">年龄</string>
     <string name="person_height">身高</string>
     <string name="person_weight">体重</string>
+    <string name="plz_input_person_name">姓名</string>
+    <string name="plz_input_person_sex">性别</string>
+    <string name="plz_input_person_age">年龄</string>
+    <string name="plz_input_person_height">身高</string>
+    <string name="plz_input_person_weight">体重</string>
 
     <string name="change_pwd">更改密码</string>
     <string name="change">修改</string>

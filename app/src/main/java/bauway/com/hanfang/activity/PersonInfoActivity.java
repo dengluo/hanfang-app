@@ -104,7 +104,7 @@ public class PersonInfoActivity extends BaseActivity {
                     Log.i("bmob","查询成功："+ary.toString());
                     try {
                         JSONObject object = (JSONObject) ary.get(0);
-                        if (!object.optBoolean("person")){
+                        if (!object.optBoolean("isPerson")){
                             tv_person_t1.setText(getResources().getText(R.string.organization_name1));
                             tv_person_t2.setText(getResources().getText(R.string.legal_representative1));
                             tv_person_t3.setText(getResources().getText(R.string.personinfo_head1));

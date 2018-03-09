@@ -117,11 +117,13 @@ public class RegisterActivity2 extends BaseActivity {
                 break;
             case R.id.bt_register://注册
                 //验证验证码
-                verifacityCode();
+//                verifacityCode();
+                register();
                 break;
             case R.id.bt_register2://机构注册
                 //验证验证码
-                verifacityCode2();
+//                verifacityCode2();
+                register2();
                 break;
             case R.id.verification_code://验证码
                 hideKeyboard();
@@ -196,7 +198,7 @@ public class RegisterActivity2 extends BaseActivity {
         user.setPassword(pwd);
         user.setMobilePhoneNumberVerified(true);
         user.setApp_name(AppUtils.getAppName());
-        user.setPerson(true);
+        user.setIsPerson(true);
         user.signUp(new SaveListener<User>() {
             @Override
             public void done(User user, BmobException e) {
@@ -204,7 +206,7 @@ public class RegisterActivity2 extends BaseActivity {
                     // ToastUtils.showShort(R.string.register_success_plz_check_email);
                     ToastUtils.showShort(R.string.register_success_plz_check_phone);
                     userRxPreferences.getString(Constants.LOGIN_PHONE).set(et_phone);
-                    startActivity(new Intent(mContext, LoginActivity2.class));
+                    startActivity(new Intent(mContext, PerfectInfoActivity2.class));
                     RegisterActivity2.this.finish();
                 } else {
                     Log.e(TAG, "done: " + e.getErrorCode() + ":" + e.getMessage());
@@ -253,7 +255,7 @@ public class RegisterActivity2 extends BaseActivity {
         user.setPassword(pwd);
         user.setMobilePhoneNumberVerified(true);
         user.setApp_name(AppUtils.getAppName());
-        user.setPerson(false);
+        user.setIsPerson(false);
         user.signUp(new SaveListener<User>() {
             @Override
             public void done(User user, BmobException e) {
@@ -291,22 +293,22 @@ public class RegisterActivity2 extends BaseActivity {
             return;
         }
 
-        BmobSMS.verifySmsCode(this, phone, register_code, new VerifySMSCodeListener() {
-
-
-            @Override
-            public void done(cn.bmob.sms.exception.BmobException ex) {
-                if (ex == null) {//短信验证码已验证成功
-                    Log.e("bmob", "验证通过");
-                    ToastUtils.showShort("短信验证已通过");
-                    //注册!
-                    register();
-                } else {
-                    ToastUtils.showShort("短信验证失败");
-                    Log.e("bmob", "验证失败：code =" + ex.getErrorCode() + ",msg = " + ex.getLocalizedMessage());
-                }
-            }
-        });
+//        BmobSMS.verifySmsCode(this, phone, register_code, new VerifySMSCodeListener() {
+//
+//
+//            @Override
+//            public void done(cn.bmob.sms.exception.BmobException ex) {
+//                if (ex == null) {//短信验证码已验证成功
+//                    Log.e("bmob", "验证通过");
+//                    ToastUtils.showShort("短信验证已通过");
+//                    //注册!
+//                    register();
+//                } else {
+//                    ToastUtils.showShort("短信验证失败");
+//                    Log.e("bmob", "验证失败：code =" + ex.getErrorCode() + ",msg = " + ex.getLocalizedMessage());
+//                }
+//            }
+//        });
     }
 
     //验证验证码

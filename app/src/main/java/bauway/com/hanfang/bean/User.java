@@ -31,12 +31,12 @@ public class User extends BmobUser {
         this.app_name = app_name;
     }
 
-    public Boolean getPerson() {
+    public Boolean getIsPerson() {
         return isPerson;
     }
 
-    public void setPerson(Boolean person) {
-        isPerson = person;
+    public void setIsPerson(Boolean isPerson) {
+        this.isPerson = isPerson;
     }
 
     public String [] getInfo() {

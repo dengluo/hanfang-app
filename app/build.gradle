@@ -110,4 +110,6 @@ dependencies {
     compile 'com.blankj:utilcode:1.8.4'
     compile project(path: ':wheelview')
     implementation files('libs/zxing-4.7.3.jar')
+    //省市区联动
+    compile 'com.contrarywind:Android-PickerView:3.2.6'
 }
