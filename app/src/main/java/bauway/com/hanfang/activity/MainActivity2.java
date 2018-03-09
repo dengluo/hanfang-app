@@ -3,11 +3,14 @@ package bauway.com.hanfang.activity;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -88,29 +91,32 @@ public class MainActivity2 extends BaseActivity implements View.OnClickListener 
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
     @Override
     protected void init(Bundle savedInstanceState) {
         sharedPreferences = getSharedPreferences("count",MODE_PRIVATE);
         int count = sharedPreferences.getInt("count",0);
         Log.d("print", String.valueOf(count));
         //判断程序是第几次运行，如果是第一次运行则跳转到引导页面
-        if (count == 0){
-            Intent intent = new Intent();
-            intent.setClass(getApplicationContext(), WelcomeActivity.class);
-            startActivity(intent);
-            this.finish();
-        }
+//        if (count == 0){
+//            Intent intent = new Intent();
+//            intent.setClass(getApplicationContext(), WelcomeActivity.class);
+//            startActivity(intent);
+//            this.finish();
+//        }
         SharedPreferences.Editor editor = sharedPreferences.edit();
         //存入数据
         editor.putInt("count",++count);
         //提交修改
         editor.commit();
 
-        mSmaManager = SmaManager.getInstance().addSmaCallback(mSmaCallback = new SimpleSmaCallback() {
+        mSmaManager = SmaManager.getInstance().init(this).addSmaCallback(mSmaCallback = new SimpleSmaCallback() {
 
             @Override
             public void onConnected(BluetoothDevice device, boolean isConnected) {
-
+                if (isConnected) {
+                    mSmaManager.write(SmaManager.SET.GET_PRODUCT);
+                }
             }
 
 
@@ -329,5 +335,16 @@ public class MainActivity2 extends BaseActivity implements View.OnClickListener 
 //        Log.e("onDestroy","=="+mSmaManager.getNameAndAddress()[0]);
         mSmaManager.exit();
         super.onDestroy();
+    }
+
+    /**
+     * 重写返回键
+     */
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            myApplication.exit();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

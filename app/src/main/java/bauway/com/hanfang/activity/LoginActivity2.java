@@ -30,7 +30,7 @@ import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.LogInListener;
 
 public class LoginActivity2 extends BaseActivity implements View.OnClickListener, View.OnKeyListener {
-    private static final String TAG = "LoginActivity";
+    private static final String TAG = "Login2Activity";
 
     @BindView(R.id.username)
     EditText username;
@@ -139,26 +139,7 @@ public class LoginActivity2 extends BaseActivity implements View.OnClickListener
                     userRxPreferences.getString(Constants.LOGIN_PWD).set(pwd);
                     PreferencesUtils.putEntity(LoginActivity2.this, user);
                     startActivity(new Intent(LoginActivity2.this, MainActivity2.class));
-                    LoginActivity2.this.finish();
-//                    if (user.getMobilePhoneNumberVerified()) {
-//                        //存储用户账号信息
-//                        userRxPreferences.getString(Constants.LOGIN_EMAIL).set(email);
-//                        PreferencesUtils.putEntity(mContext, user);
-//                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
-//                        LoginActivity.this.finish();
-//                    } else {
-//                        //邮箱未验证，提醒用户验证，同时判断账号更新时间，如果超过10分钟，则再次发送验证邮件
-//                        ToastUtils.showShort(R.string.email_need_check);
-//                        long timeSpan = TimeUtils.getTimeSpan(System.currentTimeMillis(), DateUtils.getServiceDate(user.getUpdatedAt()), TimeConstants.MSEC);
-//                        if (timeSpan > (1000 * 60 * 10)) {
-//                            BmobUser.requestEmailVerify(user.getEmail(), new UpdateListener() {
-//                                @Override
-//                                public void done(BmobException e) {
-//
-//                                }
-//                            });
-//                        }
-//                    }
+                    finish();
                 } else {
                     Log.e(TAG, "done: " + e.getErrorCode() + ":" + e.getMessage());
                     switch (e.getErrorCode()) {

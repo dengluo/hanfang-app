@@ -77,6 +77,7 @@ public class SmaManager {
         public static final byte INTO_OTA           = 0x5A;
         public static final byte PLAY_WORKE           = 0x3B;
         public static final byte PLAY_WORKE2           = 0x26;
+        public static final byte GET_PRODUCT          = 0x3C;
     }
 
     public static final class BACK {
