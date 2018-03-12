@@ -84,6 +84,7 @@ public class SmaManager {
         public static final byte TIME       = 0x04;
         public static final byte WENDU    = 0x05;
         public static final byte FENGSU   = 0x06;
+        public static final byte PRODUCT   = 0x3C;
         public static final byte VOLTAGE       = 0x1F;
         public static final byte PUFF          = 0x20;
         public static final byte SMOKE_COUNT   = 0x23;
@@ -313,16 +314,21 @@ public class SmaManager {
             sb.append((char) b);
         }
         Log.e("sb.toString()==",sb.toString());
-        float value;
-        if (!sb.toString().isEmpty()){
-            value = Float.parseFloat(new String(sb.toString().getBytes("gbk"),"utf-8"));
-        }else{
-            value = Float.parseFloat("");
-        }
+//        float value;
+//        if (!sb.toString().isEmpty()){
+//            value = Float.parseFloat(new String(sb.toString().getBytes("gbk"),"utf-8"));
+//        }else{
+//            value = Float.parseFloat("");
+//        }
 //        new String(sb.toString().getBytes("gbk"),"utf-8");
-//        float value = Float.parseFloat(sb.toString());
+        float value = Float.parseFloat(sb.toString());
         L.d("parseData " + EaseUtils.byteArray2HexString(data) + " , valuePart = " + sb.toString());
         switch (cmd) {
+            case BACK.PRODUCT:
+                for (SmaCallback bc : mSmaCallbacks) {
+                    bc.onReadProduct((int) value);
+                }
+                break;
             case BACK.FENGSU:
                 for (SmaCallback bc : mSmaCallbacks) {
                     bc.onReadFengsu((int) value);

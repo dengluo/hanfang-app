@@ -40,6 +40,11 @@ public class SimpleSmaCallback implements SmaCallback {
     }
 
     @Override
+    public void onReadProduct(int count) {
+
+    }
+
+    @Override
     public void onReadFengsu(int count) {
 
     }

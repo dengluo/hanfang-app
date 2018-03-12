@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -34,6 +35,8 @@ import com.bestmafen.smablelib.component.SimpleSmaCallback;
 import com.bestmafen.smablelib.component.SmaManager;
 import com.blankj.utilcode.util.ToastUtils;
 
+import java.io.UnsupportedEncodingException;
+
 import bauway.com.hanfang.BuildConfig;
 import bauway.com.hanfang.R;
 import bauway.com.hanfang.activity.BindDeviceActivity;
@@ -42,6 +45,7 @@ import bauway.com.hanfang.activity.DeviceSettingActivity;
 import bauway.com.hanfang.adapter.MyFragmentPagerAdapter;
 import bauway.com.hanfang.util.ToastUtil;
 import bauway.com.hanfang.zxing.activity.CaptureActivity;
+import butterknife.BindView;
 
 /**
  * Created by danny on 2017/12/28.
@@ -65,6 +69,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
     private MyFragmentPagerAdapter mAdapter;
     private SmaManager mSmaManager;
     private Boolean iswork = true;
+    private LinearLayout ll_hongguang;
 
     //几个代表页面的常量
     public static final int PAGE_ONE = 0;
@@ -72,6 +77,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
     public static final int PAGE_THREE = 2;
 
     public static Handler mHandler;//接受MyFragment1发送过来的消息
+    String getProduct = "";
 
     @SuppressLint("HandlerLeak")
     @Override
@@ -79,45 +85,74 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                              Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         context = this.getActivity();
-        mSmaManager = SmaManager.getInstance().init(context).addSmaCallback(new SimpleSmaCallback() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            mSmaManager = SmaManager.getInstance().init(context).addSmaCallback(new SimpleSmaCallback() {
 
-            @Override
-            public void onConnected(BluetoothDevice device, boolean isConnected) {
-                if (isConnected) {
-                    Log.e("device", "==device==" + device.getName() + "==" + device.getAddress());
-                    mSmaManager.setNameAndAddress(device.getName(), device.getAddress());
-                    mSmaManager.mEaseConnector.setAddress(device.getAddress());
+                @Override
+                public void onConnected(BluetoothDevice device, boolean isConnected) {
+                    if (isConnected) {
+                        Log.e("device", "==device==" + device.getName() + "==" + device.getAddress());
+                        mSmaManager.setNameAndAddress(device.getName(), device.getAddress());
+                        mSmaManager.mEaseConnector.setAddress(device.getAddress());
+                    }
                 }
-            }
 
-            @Override
-            public void onWrite(byte[] data) {
-                if (BuildConfig.DEBUG) {
-//                    append("  ->  onWrite", data);
+                @Override
+                public void onWrite(byte[] data) {
+                    if (BuildConfig.DEBUG) {
+    //                    append("  ->  onWrite", data);
+                    }
                 }
-            }
 
-            @Override
-            public void onRead(byte[] data) {
-//                if (BuildConfig.DEBUG) {
-////                    append("  ->  onRead", data);
-//                }
-                Log.e("read==", data + "");
-            }
-        });
+                @Override
+                public void onRead(byte[] data) {
+    //                if (BuildConfig.DEBUG) {
+    ////                    append("  ->  onRead", data);
+    //                }
+                    try {
+                        getProduct=new String(data,"Utf-8").trim();
+                        Log.e("read==", getProduct.trim() + "///");
+                        if (getProduct.equals("00mini.")){
+                            Message message = new Message();
+                            message.what = 9;
+                            message.obj = getProduct;
+                            FragmentOrderTake.mHandler.sendMessage(message);
+
+                            Message message2 = new Message();
+                            message2.what = 9;
+                            message2.obj = getProduct;
+                            MyFragment1.mHandler.sendMessage(message2);
+                        }else {
+                            Message message = new Message();
+                            message.what = 19;
+                            message.obj = getProduct;
+                            FragmentOrderTake.mHandler.sendMessage(message);
+
+                            Message message2 = new Message();
+                            message2.what = 19;
+                            message2.obj = getProduct;
+                            MyFragment1.mHandler.sendMessage(message2);
+                        }
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            });
+        }
         mSmaManager.connect(true);
 
         mSmaManager = SmaManager.getInstance();
         mHandler = new Handler() {
             public void handleMessage(Message msg) {
                 switch (msg.what) {
+                    case 19:
+                        ll_hongguang.setVisibility(View.VISIBLE);
+                        break;
+                    case 9:
+                        ll_hongguang.setVisibility(View.GONE);
+                        break;
                     case 10:
-//                        if (mSmaManager.getNameAndAddress()[0].equals("")) {
-//                            ToastUtils.showShortSafe(R.string.device_not_connected);
-//                            tv_frag_device_ypcode.setText("");
-//                        }else {
-//                            tv_frag_device_ypcode.setText(msg.obj.toString());
-//                        }
                         tv_frag_device_ypcode.setText(msg.obj.toString());
                         break;
                     case 11:
@@ -195,6 +230,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                         tv_frag_device_name.setText(deviceName);
                         mSmaManager.setNameAndAddress(deviceName, deviceAddress);
                         mSmaManager.mEaseConnector.setAddress(deviceAddress);
+                        mSmaManager.write(SmaManager.SET.GET_PRODUCT);
 
                         break;
                     case 15:
@@ -280,7 +316,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                         checkbox_dengguang.setChecked(false);
                         return;
                     }
-                    ToastUtil.showShortToast(context, "close");
+//                    ToastUtil.showShortToast(context, "close");
                     mSmaManager.write(SmaManager.SET.DISABLE_GOAL_LIGHT);
                 }
             }
@@ -290,6 +326,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
         tv_frag_fengsu = (TextView) view_main.findViewById(R.id.tv_frag_fengsu);
         tv_frag_device_name = (TextView) view_main.findViewById(R.id.tv_frag_device_name);
         tv_frag_device_ypcode = (TextView) view_main.findViewById(R.id.tv_frag_device_ypcode);
+        ll_hongguang = (LinearLayout) view_main.findViewById(R.id.ll_hongguang);
         if (mSmaManager.getNameAndAddress()[0].equals("")) {
             tv_frag_device_name.setText("未连接");
         } else {

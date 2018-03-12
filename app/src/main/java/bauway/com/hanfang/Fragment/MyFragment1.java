@@ -51,6 +51,14 @@ public class MyFragment1 extends Fragment {
         mHandler = new Handler() {
             public void handleMessage(Message msg) {
                 switch (msg.what) {
+                    case 19:
+                        Log.e("pos--",msg.arg1+"");
+                        initWheelTime(msg.arg1-1);
+                        break;
+                    case 9:
+                        Log.e("pos--",msg.arg1+"");
+                        initWheelTime1(msg.arg1-1);
+                        break;
                     case 22:
                         Log.e("pos--",msg.arg1+"");
                         initWheelTime(msg.arg1-1);
@@ -65,6 +73,11 @@ public class MyFragment1 extends Fragment {
 
     private List<String> createTimes() {
         String[] strings = {"一", "二", "三", "四", "五", "六"};
+        return Arrays.asList(strings);
+    }
+
+    private List<String> createTimes1() {
+        String[] strings = {"一", "二", "三"};
         return Arrays.asList(strings);
     }
 
@@ -96,6 +109,38 @@ public class MyFragment1 extends Fragment {
         wv_time_setting.setSelection(pos);
         wv_time_setting.setSkin(WheelView.Skin.Holo);
         wv_time_setting.setWheelData(createTimes());
+        wv_time_setting.setStyle(style);
+        wv_time_setting.setExtraText("", Color.parseColor("#3F51B5"), 40, 70);
+        wv_time_setting.setOnWheelItemSelectedListener(new WheelView.OnWheelItemSelectedListener() {
+            @Override
+            public void onItemSelected(int position, Object o) {
+                mWendu1 = o.toString();
+                Log.e("mWendu1==",mWendu1);
+                SharedPreferences sp1 = context.getSharedPreferences("MWENDU",
+                        Activity.MODE_PRIVATE);
+                SharedPreferences.Editor editor1 = sp1.edit();
+                editor1.putString("mwendu1", mWendu1);
+                editor1.commit();
+                Message message = new Message();
+                message.what = 11;
+                FragmentOrderTake.mHandler.sendMessage(message);
+            }
+        });
+
+    }
+
+    private void initWheelTime1(int pos) {
+        WheelView.WheelViewStyle style = new WheelView.WheelViewStyle();
+        style.selectedTextColor = Color.parseColor("#60212121");
+        style.textColor = Color.GRAY;
+        style.selectedTextSize = 24;
+
+        wv_time_setting.setWheelAdapter(new ArrayWheelAdapter(MyApplication.getInstance()));
+        wv_time_setting.setLoop(true);
+        wv_time_setting.setWheelSize(3);
+        wv_time_setting.setSelection(pos);
+        wv_time_setting.setSkin(WheelView.Skin.Holo);
+        wv_time_setting.setWheelData(createTimes1());
         wv_time_setting.setStyle(style);
         wv_time_setting.setExtraText("", Color.parseColor("#3F51B5"), 40, 70);
         wv_time_setting.setOnWheelItemSelectedListener(new WheelView.OnWheelItemSelectedListener() {

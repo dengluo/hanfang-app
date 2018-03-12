@@ -44,6 +44,11 @@ public interface SmaCallback {
     void onBeingDormant();
 
     /**
+     * 产品区分
+     */
+    void onReadProduct(int count);
+
+    /**
      * 风速
      */
     void onReadFengsu(int count);

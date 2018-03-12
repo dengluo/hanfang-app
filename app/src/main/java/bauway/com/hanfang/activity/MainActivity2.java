@@ -188,6 +188,26 @@ public class MainActivity2 extends BaseActivity implements View.OnClickListener 
             }
 
             @Override
+            public void onReadProduct(final int count) {
+                runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        Log.e("product==",String.valueOf(count));
+//                        Message message = new Message();
+//                        message.what = 22;
+//                        message.obj = String.valueOf(count);
+//                        FragmentOrderTake.mHandler.sendMessage(message);
+//
+//                        Message message2 = new Message();
+//                        message2.what = 22;
+//                        message2.arg1 = count;
+//                        MyFragment3.mHandler.sendMessage(message2);
+                    }
+                });
+            }
+
+            @Override
             public void onReadFengsu(final int count) {
                 runOnUiThread(new Runnable() {
 
