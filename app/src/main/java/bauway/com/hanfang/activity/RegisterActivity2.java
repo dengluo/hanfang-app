@@ -32,7 +32,7 @@ import cn.bmob.v3.listener.SaveListener;
 
 public class RegisterActivity2 extends BaseActivity {
 
-    private static final String TAG = "RegisterActivity";
+    private static final String TAG = "RegisterActivity2";
 
     @BindView(R.id.et_register_email)
     EditText et_phone_code;
@@ -119,6 +119,8 @@ public class RegisterActivity2 extends BaseActivity {
                 //验证验证码
 //                verifacityCode();
                 register();
+//                startActivity(new Intent(mContext, PerfectInfoActivity2.class));
+//                RegisterActivity2.this.finish();
                 break;
             case R.id.bt_register2://机构注册
                 //验证验证码

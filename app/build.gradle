@@ -7,8 +7,8 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 12
-        versionName "1.2"
+        versionCode 13
+        versionName "1.3"
         vectorDrawables.useSupportLibrary = true
         aaptOptions.cruncherEnabled = false
         aaptOptions.useNewCruncher = false
