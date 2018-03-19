@@ -21,12 +21,17 @@ import org.json.JSONObject;
 
 import bauway.com.hanfang.App.Constants;
 import bauway.com.hanfang.MyApplication;
+import bauway.com.hanfang.R;
+import bauway.com.hanfang.activity.AboutUsActivity;
+import bauway.com.hanfang.activity.AgreementActivity;
+import bauway.com.hanfang.activity.HelpDocsActivity;
 import bauway.com.hanfang.activity.LoginActivity;
 import bauway.com.hanfang.activity.LoginActivity2;
 import bauway.com.hanfang.activity.PersonInfoActivity;
-import bauway.com.hanfang.R;
+import bauway.com.hanfang.activity.RegisterActivity2;
 import bauway.com.hanfang.interfaces.DialogCallback;
 import bauway.com.hanfang.util.DialogUtil;
+import bauway.com.hanfang.util.MyUtil;
 import bauway.com.hanfang.util.NetworkUtil;
 import bauway.com.hanfang.util.PreferencesUtils;
 import bauway.com.hanfang.util.ToastUtil;
@@ -46,8 +51,8 @@ public class FragmentMe extends Fragment implements View.OnClickListener {
     private View view_main;
     private LinearLayout ll_fragme_exit;
     private Intent csintent,piintent;
-    private LinearLayout ll_fragme_accountinfo;
-    private TextView tv_account_name,tv_account_nick;
+    private LinearLayout ll_fragme_accountinfo,ll_fragme_help_docs,ll_fragme_about_us;
+    private TextView tv_account_name,tv_account_nick,tv_version_num;
     public RxSharedPreferences userRxPreferences;
     public MyApplication myApplication;
     @Override
@@ -65,10 +70,15 @@ public class FragmentMe extends Fragment implements View.OnClickListener {
                 R.layout.fragment_me, null);
         ll_fragme_exit = (LinearLayout) view_main.findViewById(R.id.ll_fragme_exit);
         ll_fragme_accountinfo = (LinearLayout) view_main.findViewById(R.id.ll_fragme_accountinfo);
+        ll_fragme_help_docs = (LinearLayout) view_main.findViewById(R.id.ll_fragme_help_docs);
+        ll_fragme_about_us = (LinearLayout) view_main.findViewById(R.id.ll_fragme_about_us);
         tv_account_name = (TextView) view_main.findViewById(R.id.tv_account_name);
         tv_account_nick = (TextView) view_main.findViewById(R.id.tv_account_nick);
+        tv_version_num  = (TextView) view_main.findViewById(R.id.tv_version_num);
         ll_fragme_exit.setOnClickListener(this);
         ll_fragme_accountinfo.setOnClickListener(this);
+        ll_fragme_help_docs.setOnClickListener(this);
+        ll_fragme_about_us.setOnClickListener(this);
     }
 
     @Override
@@ -120,6 +130,8 @@ public class FragmentMe extends Fragment implements View.OnClickListener {
     }
 
     private void initDate() {
+        String vsersion = MyUtil.getVersion(context);
+        tv_version_num.setText("V"+vsersion);
         if (userRxPreferences == null) {
             SharedPreferences preferences = context.getSharedPreferences(Constants.USER_INFO, Context.MODE_PRIVATE);
             userRxPreferences = RxSharedPreferences.create(preferences);
@@ -140,16 +152,18 @@ public class FragmentMe extends Fragment implements View.OnClickListener {
             case R.id.ll_fragme_accountinfo:
                 jumpPersonInfo();
                 break;
+            case R.id.ll_fragme_help_docs:
+                startActivity(new Intent(context, HelpDocsActivity.class));
+                break;
+            case R.id.ll_fragme_about_us:
+                startActivity(new Intent(context, AboutUsActivity.class));
+                break;
             default:
                 break;
         }
     }
 
     public void jumpLogin() {
-//        csintent = new Intent(context, LoginActivity2.class)
-//                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
-//                        | Intent.FLAG_ACTIVITY_NEW_TASK);
-//        startActivity(csintent);
         DialogUtil.defaultDialog(context, getString(R.string.confirm_log_out_app), null, null, new
                 DialogCallback() {
 

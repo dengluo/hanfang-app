@@ -52,15 +52,19 @@ public class MyFragment1 extends Fragment {
             public void handleMessage(Message msg) {
                 switch (msg.what) {
                     case 19:
-                        Log.e("pos--",msg.arg1+"");
-                        initWheelTime(msg.arg1-1);
+                        Log.e("pos19--",msg.arg1+"");
+                        if (!msg.obj.equals("00mini.")){
+//                            initWheelTime(msg.arg1-1);
+                        }
                         break;
                     case 9:
-                        Log.e("pos--",msg.arg1+"");
-                        initWheelTime1(msg.arg1-1);
+                        Log.e("pos9--",msg.arg1+"");
+                        if (msg.obj.equals("00mini.")){
+                            initWheelTime1(msg.arg1-1);
+                        }
                         break;
                     case 22:
-                        Log.e("pos--",msg.arg1+"");
+                        Log.e("pos22--",msg.arg1+"");
                         initWheelTime(msg.arg1-1);
                         break;
 

@@ -268,6 +268,15 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="about_us_tv" parent="Default_font_size_16">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/white_1</item>
+        <item name="android:textColorLink">@color/white_1</item>
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
     <style name="bt_return_1" parent="bt_return">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>

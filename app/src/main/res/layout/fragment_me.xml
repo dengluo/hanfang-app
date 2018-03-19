@@ -46,9 +46,9 @@
         android:background="@color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingBottom="10dp"
+        android:paddingBottom="12dp"
         android:paddingLeft="15dp"
-        android:paddingTop="10dp">
+        android:paddingTop="12dp">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -110,115 +110,22 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll_fragme_help_docs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingBottom="5dp"
+        android:paddingBottom="10dp"
         android:paddingLeft="15dp"
-        android:paddingTop="5dp">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="right">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="@drawable/icon_jiantou_gray" />
-        </RelativeLayout>
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/sayes_txt_me_line" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingBottom="5dp"
-        android:paddingLeft="15dp"
-        android:paddingTop="5dp">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="right">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="@drawable/icon_jiantou_gray" />
-        </RelativeLayout>
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/sayes_txt_me_line" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingBottom="5dp"
-        android:paddingLeft="15dp"
-        android:paddingTop="5dp">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="right">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="@drawable/icon_jiantou_gray" />
-        </RelativeLayout>
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/sayes_txt_me_line" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/gray_divider_line"
-        android:orientation="vertical"
-        android:paddingBottom="5dp"
-        android:paddingLeft="15dp"
-        android:paddingTop="5dp">
+        android:paddingTop="10dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/fragme_about"
+            android:text="@string/help_docs"
             android:textColor="@color/text_color_2"
-            android:textSize="12dp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingBottom="5dp"
-        android:paddingLeft="15dp"
-        android:paddingTop="5dp">
+            android:textSize="14dp" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -239,26 +146,38 @@
         android:background="@color/sayes_txt_me_line" />
 
     <LinearLayout
+        android:id="@+id/ll_fragme_version_num"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingBottom="5dp"
+        android:paddingBottom="10dp"
         android:paddingLeft="15dp"
-        android:paddingTop="5dp">
+        android:paddingTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/version_num"
+            android:textColor="@color/text_color_2"
+            android:textSize="14dp" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right">
 
-            <ImageView
+            <TextView
+                android:id="@+id/tv_version_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="v1.1"
                 android:layout_margin="5dp"
-                android:background="@drawable/icon_jiantou_gray" />
+                android:textColor="@color/blue_ice"
+                android:textSize="14dp" />
         </RelativeLayout>
+
     </LinearLayout>
 
     <View
@@ -267,14 +186,22 @@
         android:background="@color/sayes_txt_me_line" />
 
     <LinearLayout
+        android:id="@+id/ll_fragme_about_us"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingBottom="5dp"
+        android:paddingBottom="10dp"
         android:paddingLeft="15dp"
-        android:paddingTop="5dp">
+        android:paddingTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/about_us"
+            android:textColor="@color/text_color_2"
+            android:textSize="14dp" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -302,7 +229,7 @@
         android:background="@color/white"
         android:gravity="center"
         android:orientation="horizontal"
-        android:padding="8dp">
+        android:padding="10dp">
 
         <TextView
             android:layout_width="wrap_content"
