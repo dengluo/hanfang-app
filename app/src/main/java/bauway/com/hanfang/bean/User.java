@@ -13,6 +13,7 @@ public class User extends BmobUser {
     private String app_msg;
     private String app_name;
     private Boolean isPerson;
+    private Boolean SMSBOOL;
     private String [] info;
 
     public String getApp_msg() {
@@ -45,5 +46,13 @@ public class User extends BmobUser {
 
     public void setInfo(String[] info) {
         this.info = info;
+    }
+
+    public Boolean getSMSBOOL() {
+        return SMSBOOL;
+    }
+
+    public void setSMSBOOL(Boolean SMSBOOL) {
+        this.SMSBOOL = SMSBOOL;
     }
 }

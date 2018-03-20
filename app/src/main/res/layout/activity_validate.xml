@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_gravity="center_vertical"
+        android:padding="10dp"
+        android:background="@color/blue_ice">
+
+        <ImageView
+            android:id="@+id/iv_return"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:background="@drawable/shop_return2" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/validate"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <!--手机号码-->
+            <LinearLayout style="@style/login_ll">
+
+                <LinearLayout style="@style/login_item_ll">
+
+                    <EditText
+                        android:id="@+id/et_validate_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/shape_circle_edt_input"
+                        android:hint="@string/telphone"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:textColor="@color/black_trans60"
+                        android:textSize="14dp" />
+                </LinearLayout>
+
+                <View style="@style/vertical_line" />
+
+                <!--验证码部分-->
+                <LinearLayout
+                    android:id="@+id/ll_validate_code"
+                    style="@style/login_item_ll"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="15dp">
+
+                    <EditText
+                        android:id="@+id/et_validate_code"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3"
+                        android:background="@drawable/shape_circle_edt_input"
+                        android:hint="@string/receive_code"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:textColor="@color/black_trans60"
+                        android:textSize="14dp" />
+
+                    <TextView
+                        android:id="@+id/verification_code"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dp_48"
+                        android:layout_weight="2"
+                        android:background="@drawable/selector_bt"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:text="验证码"
+                        android:textColor="@color/white"
+                        android:textSize="14dp" />
+
+                </LinearLayout>
+
+                <View style="@style/vertical_line" />
+                <!--新密码部分-->
+
+                <View style="@style/vertical_line" />
+
+                <!--确认密码部分-->
+
+
+                <!--按钮部分-->
+                <LinearLayout
+                    style="@style/login_ll_two"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
+
+                    <Button
+                        android:id="@+id/bt_validate"
+                        style="@style/bt_style"
+                        android:text="@string/validate" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

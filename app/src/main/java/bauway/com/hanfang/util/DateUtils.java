@@ -3,6 +3,7 @@ package bauway.com.hanfang.util;
 import android.annotation.SuppressLint;
 import android.content.Context;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -350,6 +351,38 @@ public class DateUtils {
             return yearMonthDay + "，" + weekDayDesc + "，" + hourMinSec;
         }
 
+    }
+
+    /**
+     * 计算两个日期之间相差的天数
+     * @param date1
+     * @param date2
+     * @return
+     */
+    public static int daysBetween(Date date1,Date date2)
+    {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date1);
+        long time1 = cal.getTimeInMillis();
+        cal.setTime(date2);
+        long time2 = cal.getTimeInMillis();
+        long between_days=(time2-time1)/(1000*3600*24);
+
+        return Integer.parseInt(String.valueOf(between_days));
+    }
+
+    //把日期转为字符串
+    public static String ConverToString(Date date)
+    {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        return df.format(date);
+    }
+    //把字符串转为日期
+    public static Date ConverToDate(String strDate) throws Exception
+    {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return df.parse(strDate);
     }
 
 

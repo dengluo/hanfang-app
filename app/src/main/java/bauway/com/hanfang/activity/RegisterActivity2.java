@@ -7,8 +7,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.AppUtils;
@@ -16,6 +18,7 @@ import com.blankj.utilcode.util.ToastUtils;
 
 import bauway.com.hanfang.App.Constants;
 import bauway.com.hanfang.util.CountDownTimerUtils;
+import bauway.com.hanfang.util.MyUtil;
 import bauway.com.hanfang.util.NetworkUtil;
 import bauway.com.hanfang.util.ToastUtil;
 import bauway.com.hanfang.R;
@@ -29,6 +32,7 @@ import cn.bmob.sms.listener.RequestSMSCodeListener;
 import cn.bmob.sms.listener.VerifySMSCodeListener;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 public class RegisterActivity2 extends BaseActivity {
 
@@ -54,6 +58,12 @@ public class RegisterActivity2 extends BaseActivity {
     TextView erificationCode;//发过来的验证码
     @BindView(R.id.chekbox_agreement)//是否接受条款
             CheckBox chekbox_agreement;
+    @BindView(R.id.chekbox_agreement_myz)//是否开启30天免验证
+            CheckBox chekbox_agreement_myz;
+    @BindView(R.id.ll_register_code)
+    LinearLayout ll_register_code;
+
+    private User mUser;
 
     @Override
     protected int getLayoutRes() {
@@ -78,6 +88,7 @@ public class RegisterActivity2 extends BaseActivity {
     @Override
     protected void initData() {
         BmobSMS.initialize(this, Constants.BMOB_ID);
+        mUser = getUserEntity();
     }
 
     @Override
@@ -87,6 +98,17 @@ public class RegisterActivity2 extends BaseActivity {
             et_phone_code.setTag(emailHistory);
             et_phone_code.setSelection(et_phone_code.getText().toString().length());
         }
+        chekbox_agreement_myz.setChecked(false);
+        chekbox_agreement_myz.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    ll_register_code.setVisibility(View.GONE);
+                } else {
+                    ll_register_code.setVisibility(View.VISIBLE);
+                }
+            }
+        });
     }
 
     @Override
@@ -116,20 +138,13 @@ public class RegisterActivity2 extends BaseActivity {
                 this.finish();
                 break;
             case R.id.bt_register://注册
-                //验证验证码
-//                verifacityCode();
                 register();
-//                startActivity(new Intent(mContext, PerfectInfoActivity2.class));
-//                RegisterActivity2.this.finish();
                 break;
             case R.id.bt_register2://机构注册
-                //验证验证码
-//                verifacityCode2();
                 register2();
                 break;
             case R.id.verification_code://验证码
                 hideKeyboard();
-//                erificationCode.setText("验证码");
                 requestVerificationCode();
                 break;
             case R.id.txt_agreement://服务条款
@@ -151,6 +166,10 @@ public class RegisterActivity2 extends BaseActivity {
             ToastUtils.showShort("手机号码不能为空!");
             return;
         }
+        if (!MyUtil.isMobileNO(phone)){
+            ToastUtils.showShort(R.string.plz_phone_format);
+            return;
+        }
         BmobSMS.requestSMSCode(this, phone, "register", new RequestSMSCodeListener() {
             @Override
             public void done(Integer smsId, cn.bmob.sms.exception.BmobException ex) {
@@ -160,7 +179,7 @@ public class RegisterActivity2 extends BaseActivity {
                     //erificationCode.setText("已发送");
                     myListener.setupdateUIVericationCode();
                 } else {
-                    ToastUtils.showShort("必须是有效的手机号码");
+                    ToastUtils.showShort(R.string.plz_phone_format);
                 }
             }
         });
@@ -169,10 +188,18 @@ public class RegisterActivity2 extends BaseActivity {
 
 
     private void register() {
-
         final String et_phone = et_phone_code.getText().toString().trim();
         if (TextUtils.isEmpty(et_phone)) {
             ToastUtils.showShort(R.string.plz_input_phone);
+            return;
+        }
+        if (!MyUtil.isMobileNO(et_phone)){
+            ToastUtils.showShort(R.string.plz_phone_format);
+            return;
+        }
+        String register_code = et_register_code.getText().toString().trim();
+        if (TextUtils.isEmpty(register_code) && !chekbox_agreement_myz.isChecked()) {
+            ToastUtils.showShort(R.string.plz_input_yzm);
             return;
         }
         String pwd = mEtRegisterPwd.getText().toString().trim();
@@ -194,26 +221,33 @@ public class RegisterActivity2 extends BaseActivity {
             return;
         }
         DialogUtil.progressDialog(mContext, getString(R.string.register_now), false);
-        User user = new User();
-        user.setUsername(et_phone);
-        user.setMobilePhoneNumber(et_phone);
-        user.setPassword(pwd);
-        user.setMobilePhoneNumberVerified(true);
-        user.setApp_name(AppUtils.getAppName());
-        user.setIsPerson(true);
-        user.signUp(new SaveListener<User>() {
+        mUser.setUsername(et_phone_code.getText().toString().trim());
+        mUser.setMobilePhoneNumber(et_phone_code.getText().toString().trim());
+        mUser.setPassword(mEtRegisterPwd.getText().toString().trim());
+        mUser.setMobilePhoneNumberVerified(true);
+        mUser.setApp_name(AppUtils.getAppName());
+        mUser.setIsPerson(true);
+        if (chekbox_agreement_myz.isChecked()) {
+            mUser.setSMSBOOL(false);
+        } else {
+            mUser.setSMSBOOL(true);
+        }
+
+        mUser.signOrLogin(register_code, new SaveListener<User>() {
             @Override
             public void done(User user, BmobException e) {
                 if (e == null) {
                     // ToastUtils.showShort(R.string.register_success_plz_check_email);
                     ToastUtils.showShort(R.string.register_success_plz_check_phone);
-                    userRxPreferences.getString(Constants.LOGIN_PHONE).set(et_phone);
+                    userRxPreferences.getString(Constants.LOGIN_PHONE).set(et_phone_code.getText().toString().trim());
                     startActivity(new Intent(mContext, PerfectInfoActivity2.class));
                     RegisterActivity2.this.finish();
                 } else {
                     Log.e(TAG, "done: " + e.getErrorCode() + ":" + e.getMessage());
                     if (203 == e.getErrorCode()) {
                         ToastUtils.showShort(R.string.phone_already_register);
+                    } else if(207 == e.getErrorCode()) {
+                        ToastUtils.showShort(R.string.code_error);
                     } else {
                         ToastUtils.showShort(R.string.register_failure);
                     }
@@ -222,14 +256,21 @@ public class RegisterActivity2 extends BaseActivity {
             }
         });
 
-
     }
 
     private void register2() {
-
         final String et_phone = et_phone_code.getText().toString().trim();
         if (TextUtils.isEmpty(et_phone)) {
             ToastUtils.showShort(R.string.plz_input_phone);
+            return;
+        }
+        if (!MyUtil.isMobileNO(et_phone)){
+            ToastUtils.showShort(R.string.plz_phone_format);
+            return;
+        }
+        String register_code = et_register_code.getText().toString().trim();
+        if (TextUtils.isEmpty(register_code) && !chekbox_agreement_myz.isChecked()) {
+            ToastUtils.showShort(R.string.plz_input_yzm);
             return;
         }
         String pwd = mEtRegisterPwd.getText().toString().trim();
@@ -251,26 +292,33 @@ public class RegisterActivity2 extends BaseActivity {
             return;
         }
         DialogUtil.progressDialog(mContext, getString(R.string.register_now), false);
-        User user = new User();
-        user.setUsername(et_phone);
-        user.setMobilePhoneNumber(et_phone);
-        user.setPassword(pwd);
-        user.setMobilePhoneNumberVerified(true);
-        user.setApp_name(AppUtils.getAppName());
-        user.setIsPerson(false);
-        user.signUp(new SaveListener<User>() {
+        mUser.setUsername(et_phone_code.getText().toString().trim());
+        mUser.setMobilePhoneNumber(et_phone_code.getText().toString().trim());
+        mUser.setPassword(mEtRegisterPwd.getText().toString().trim());
+        mUser.setMobilePhoneNumberVerified(true);
+        mUser.setApp_name(AppUtils.getAppName());
+        mUser.setIsPerson(false);
+        if (chekbox_agreement_myz.isChecked()) {
+            mUser.setSMSBOOL(false);
+        } else {
+            mUser.setSMSBOOL(true);
+        }
+
+        mUser.signOrLogin(register_code, new SaveListener<User>() {
             @Override
             public void done(User user, BmobException e) {
                 if (e == null) {
                     // ToastUtils.showShort(R.string.register_success_plz_check_email);
                     ToastUtils.showShort(R.string.register_success_plz_check_phone);
-                    userRxPreferences.getString(Constants.LOGIN_PHONE).set(et_phone);
+                    userRxPreferences.getString(Constants.LOGIN_PHONE).set(et_phone_code.getText().toString().trim());
                     startActivity(new Intent(mContext, PerfectInfoActivity.class));
                     RegisterActivity2.this.finish();
                 } else {
                     Log.e(TAG, "done: " + e.getErrorCode() + ":" + e.getMessage());
                     if (203 == e.getErrorCode()) {
                         ToastUtils.showShort(R.string.phone_already_register);
+                    } else if(207 == e.getErrorCode()) {
+                        ToastUtils.showShort(R.string.code_error);
                     } else {
                         ToastUtils.showShort(R.string.register_failure);
                     }
@@ -279,69 +327,6 @@ public class RegisterActivity2 extends BaseActivity {
             }
         });
 
-
-    }
-
-    //验证验证码
-    private void verifacityCode() {
-        String register_code = et_register_code.getText().toString().trim();
-        String phone = et_phone_code.getText().toString().trim();
-        if (!NetworkUtil.isNetworkAvailable(this)) {
-            ToastUtils.showShort("网络连接异常");
-            return;
-        }
-        if (TextUtils.isEmpty(register_code)) {
-            ToastUtils.showShort("验证码为空,请重新填写验证码");
-            return;
-        }
-
-//        BmobSMS.verifySmsCode(this, phone, register_code, new VerifySMSCodeListener() {
-//
-//
-//            @Override
-//            public void done(cn.bmob.sms.exception.BmobException ex) {
-//                if (ex == null) {//短信验证码已验证成功
-//                    Log.e("bmob", "验证通过");
-//                    ToastUtils.showShort("短信验证已通过");
-//                    //注册!
-//                    register();
-//                } else {
-//                    ToastUtils.showShort("短信验证失败");
-//                    Log.e("bmob", "验证失败：code =" + ex.getErrorCode() + ",msg = " + ex.getLocalizedMessage());
-//                }
-//            }
-//        });
-    }
-
-    //验证验证码
-    private void verifacityCode2() {
-        String register_code = et_register_code.getText().toString().trim();
-        String phone = et_phone_code.getText().toString().trim();
-        if (!NetworkUtil.isNetworkAvailable(this)) {
-            ToastUtils.showShort("网络连接异常");
-            return;
-        }
-        if (TextUtils.isEmpty(register_code)) {
-            ToastUtils.showShort("验证码为空,请重新填写验证码");
-            return;
-        }
-
-        BmobSMS.verifySmsCode(this, phone, register_code, new VerifySMSCodeListener() {
-
-
-            @Override
-            public void done(cn.bmob.sms.exception.BmobException ex) {
-                if (ex == null) {//短信验证码已验证成功
-                    Log.e("bmob", "验证通过");
-                    ToastUtils.showShort("短信验证已通过");
-                    //注册!
-                    register2();
-                } else {
-                    ToastUtils.showShort("短信验证失败");
-                    Log.e("bmob", "验证失败：code =" + ex.getErrorCode() + ",msg = " + ex.getLocalizedMessage());
-                }
-            }
-        });
     }
 
     public interface UpdateUIVericationCode {

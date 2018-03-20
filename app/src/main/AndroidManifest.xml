@@ -90,5 +90,6 @@
         <activity android:name=".activity.PerfectInfoActivity2" />
         <activity android:name=".activity.HelpDocsActivity" />
         <activity android:name=".activity.AboutUsActivity" />
+        <activity android:name=".activity.ValidateActivity" />
     </application>
 </manifest>

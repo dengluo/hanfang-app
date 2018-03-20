@@ -59,8 +59,11 @@ public class PersonInfoActivity extends BaseActivity {
     TextView tv_person_t4;
     @BindView(R.id.tv_person_t5)
     TextView tv_person_t5;
+    @BindView(R.id.ll_fragme_validate)
+    LinearLayout ll_fragme_validate;
 
     private Context ctx;
+    private User mUser;
 
     @Override
     protected int getLayoutRes() {
@@ -80,11 +83,20 @@ public class PersonInfoActivity extends BaseActivity {
     @Override
     protected void initData() {
         BmobSMS.initialize(this, Constants.BMOB_ID);
+        mUser = getUserEntity();
+        Log.e("getObjectId======",mUser.getObjectId());
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        queryData();
     }
 
     /*
-    Bmob查询数据
-     */
+        Bmob查询数据
+         */
     public void queryData(){
         if (!NetworkUtil.isNetworkAvailable(this)){
             ToastUtil.showShortToast(ctx,"网络连接异常!");
@@ -123,6 +135,12 @@ public class PersonInfoActivity extends BaseActivity {
                         tv_personinfo_height.setText(object.optJSONArray("info").getString(3));
                         tv_personinfo_weight.setText(object.optJSONArray("info").getString(4));
 
+                        if (object.getBoolean("SMSBOOL")){
+                            ll_fragme_validate.setVisibility(View.GONE);
+                        }else {
+                            ll_fragme_validate.setVisibility(View.VISIBLE);
+                        }
+
                     } catch (JSONException e1) {
                         e1.printStackTrace();
                     }
@@ -143,7 +161,7 @@ public class PersonInfoActivity extends BaseActivity {
         ctx = PersonInfoActivity.this;
     }
 
-    @OnClick({R.id.iv_return, R.id.ll_fragme_accountinfo})
+    @OnClick({R.id.iv_return, R.id.ll_fragme_accountinfo,R.id.ll_fragme_validate})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_return:
@@ -152,6 +170,9 @@ public class PersonInfoActivity extends BaseActivity {
             case R.id.ll_fragme_accountinfo:
                 Intent intent = new Intent(PersonInfoActivity.this, ChangePwdActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.ll_fragme_validate:
+                startActivity(new Intent(PersonInfoActivity.this, ValidateActivity.class));
                 break;
 
             default:

@@ -59,6 +59,7 @@
 
                 <!--验证码部分-->
                 <LinearLayout
+                    android:id="@+id/ll_register_code"
                     style="@style/login_item_ll"
                     android:layout_height="40dp"
                     android:layout_marginTop="15dp">
@@ -89,6 +90,33 @@
                         android:textSize="14dp" />
 
                 </LinearLayout>
+
+                <RelativeLayout
+                    style="@style/register_ll_height"
+                    android:gravity="right"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
+
+                    <CheckBox
+                        android:id="@+id/chekbox_agreement_myz"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/selector_chekbox"
+                        android:button="@null" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@id/chekbox_agreement_myz"
+                        android:text="@string/text_agreement_myz_tips"
+                        android:textColor="@color/black_trans60"
+                        android:textSize="12sp" />
+
+                </RelativeLayout>
 
                 <View style="@style/vertical_line" />
                 <!--新密码部分-->

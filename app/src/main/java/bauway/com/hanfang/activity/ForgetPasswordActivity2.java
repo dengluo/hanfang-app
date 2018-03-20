@@ -253,6 +253,8 @@ public class ForgetPasswordActivity2 extends BaseActivity {
                     Log.e(TAG, "done: " + e.getErrorCode() + ":" + e.getMessage());
                     if (203 == e.getErrorCode()) {
                         ToastUtils.showShort(R.string.phone_already_register);
+                    } else if(207 == e.getErrorCode()) {
+                        ToastUtils.showShort(R.string.code_error);
                     } else {
                         ToastUtils.showShort(R.string.reset_failure);
                     }

@@ -34,18 +34,34 @@ import android.widget.TextView;
 import com.bestmafen.smablelib.component.SimpleSmaCallback;
 import com.bestmafen.smablelib.component.SmaManager;
 import com.blankj.utilcode.util.ToastUtils;
+import com.f2prateek.rx.preferences2.RxSharedPreferences;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
+import bauway.com.hanfang.App.Constants;
 import bauway.com.hanfang.BuildConfig;
 import bauway.com.hanfang.R;
 import bauway.com.hanfang.activity.BindDeviceActivity;
 import bauway.com.hanfang.activity.DeviceListActivity;
 import bauway.com.hanfang.activity.DeviceSettingActivity;
+import bauway.com.hanfang.activity.ValidateActivity;
 import bauway.com.hanfang.adapter.MyFragmentPagerAdapter;
+import bauway.com.hanfang.interfaces.DialogCallback;
+import bauway.com.hanfang.util.DateUtils;
+import bauway.com.hanfang.util.DialogUtil;
+import bauway.com.hanfang.util.NetworkUtil;
 import bauway.com.hanfang.util.ToastUtil;
 import bauway.com.hanfang.zxing.activity.CaptureActivity;
 import butterknife.BindView;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.QueryListener;
 
 /**
  * Created by danny on 2017/12/28.
@@ -75,6 +91,10 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
     public static final int PAGE_ONE = 0;
     public static final int PAGE_TWO = 1;
     public static final int PAGE_THREE = 2;
+    public RxSharedPreferences userRxPreferences;
+
+    int num = 0;
+    private Boolean isok = true;//是否没有验证,并且已经过期
 
     public static Handler mHandler;//接受MyFragment1发送过来的消息
     String getProduct = "";
@@ -100,19 +120,19 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                 @Override
                 public void onWrite(byte[] data) {
                     if (BuildConfig.DEBUG) {
-    //                    append("  ->  onWrite", data);
+                        //                    append("  ->  onWrite", data);
                     }
                 }
 
                 @Override
                 public void onRead(byte[] data) {
-    //                if (BuildConfig.DEBUG) {
-    ////                    append("  ->  onRead", data);
-    //                }
+                    //                if (BuildConfig.DEBUG) {
+                    ////                    append("  ->  onRead", data);
+                    //                }
                     try {
-                        getProduct=new String(data,"Utf-8").trim();
+                        getProduct = new String(data, "Utf-8").trim();
                         Log.e("read==", getProduct.trim() + "///");
-                        if (getProduct.equals("00mini.")){
+                        if (getProduct.equals("00mini.")) {
                             Message message = new Message();
                             message.what = 9;
                             message.obj = getProduct;
@@ -122,7 +142,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                             message2.what = 9;
                             message2.obj = getProduct;
                             MyFragment1.mHandler.sendMessage(message2);
-                        }else {
+                        } else {
                             Message message = new Message();
                             message.what = 19;
                             message.obj = getProduct;
@@ -245,17 +265,17 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                         if (mSmaManager.getNameAndAddress()[0].equals("")) {
                             tv_frag_device_name.setText("未连接");
                         } else {
-                            if (msg.obj.equals("1")){
+                            if (msg.obj.equals("1")) {
                                 tv_frag_wendu.setText("一 档");
-                            }else if(msg.obj.equals("2")){
+                            } else if (msg.obj.equals("2")) {
                                 tv_frag_wendu.setText("二 档");
-                            }else if(msg.obj.equals("3")){
+                            } else if (msg.obj.equals("3")) {
                                 tv_frag_wendu.setText("三 档");
-                            }else if(msg.obj.equals("4")){
+                            } else if (msg.obj.equals("4")) {
                                 tv_frag_wendu.setText("四 档");
-                            }else if(msg.obj.equals("5")){
+                            } else if (msg.obj.equals("5")) {
                                 tv_frag_wendu.setText("五 档");
-                            }else if(msg.obj.equals("6")){
+                            } else if (msg.obj.equals("6")) {
                                 tv_frag_wendu.setText("六 档");
                             }
 
@@ -265,11 +285,11 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                         if (mSmaManager.getNameAndAddress()[0].equals("")) {
                             tv_frag_device_name.setText("未连接");
                         } else {
-                            if (msg.obj.equals("1")){
+                            if (msg.obj.equals("1")) {
                                 tv_frag_fengsu.setText("低 档");
-                            }else if(msg.obj.equals("2")){
+                            } else if (msg.obj.equals("2")) {
                                 tv_frag_fengsu.setText("中 档");
-                            }else if(msg.obj.equals("3")){
+                            } else if (msg.obj.equals("3")) {
                                 tv_frag_fengsu.setText("高 档");
                             }
                         }
@@ -278,13 +298,18 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                         if (mSmaManager.getNameAndAddress()[0].equals("")) {
                             tv_frag_device_name.setText("未连接");
                         } else {
-                            tv_frag_time.setText(msg.obj+" min");
+                            tv_frag_time.setText(msg.obj + " min");
                         }
                         break;
                 }
             }
         };
         inintView();
+        if (userRxPreferences == null) {
+            SharedPreferences preferences = context.getSharedPreferences(Constants.USER_INFO, Context.MODE_PRIVATE);
+            userRxPreferences = RxSharedPreferences.create(preferences);
+        }
+        queryData();
         rb_channel.setChecked(true);
         return view_main;
     }
@@ -401,12 +426,25 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_device_drug_codesss:
-                startActivity(new Intent(context, CaptureActivity.class).putExtra("shebei", "device1"));
+                if (isok){
+                    startActivity(new Intent(context, CaptureActivity.class).putExtra("shebei", "device1"));
+                }else {
+                    ToastUtils.showShortSafe(R.string.tip_validate);
+                }
+
                 break;
             case R.id.iv_device_bluetooth:
-                startActivity(new Intent(context, DeviceListActivity.class));
+                if (isok){
+                    startActivity(new Intent(context, DeviceListActivity.class));
+                }else {
+                    ToastUtils.showShortSafe(R.string.tip_validate);
+                }
                 break;
             case R.id.iv_find_play1:
+                if (!isok){
+                    ToastUtils.showShortSafe(R.string.tip_validate);
+                    return;
+                }
                 checkBluetoothValid();
                 if (!mSmaManager.isConnected) {
                     ToastUtils.showShortSafe(R.string.device_not_connected);
@@ -449,5 +487,65 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                     .create();
             dialog.show();
         }
+    }
+
+    /*
+        Bmob查询数据
+         */
+    public void queryData() {
+        if (!NetworkUtil.isNetworkAvailable(context)) {
+            ToastUtil.showShortToast(context, "网络连接异常!");
+            return;
+        }
+        String phone = userRxPreferences.getString(Constants.LOGIN_EMAIL).get();
+        BmobQuery query = new BmobQuery("_User");
+        query.addWhereEqualTo("username", phone);
+        query.setLimit(2);
+        query.order("createdAt");
+        //v3.5.0版本提供`findObjectsByTable`方法查询自定义表名的数据
+        query.findObjectsByTable(new QueryListener<JSONArray>() {
+            @Override
+            public void done(JSONArray ary, BmobException e) {
+                if (e == null) {
+                    Log.i("bmob", "查询成功：" + ary.toString());
+                    try {
+                        JSONObject object = (JSONObject) ary.get(0);
+                        Log.i("createdAt", object.optString("createdAt"));
+                        isVerify(object);
+                    } catch (JSONException e1) {
+                        e1.printStackTrace();
+                    }
+                } else {
+                    Log.i("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
+                }
+            }
+        });
+    }
+
+    private Boolean isVerify(JSONObject object) {
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// HH:mm:ss
+            Date date = new Date(System.currentTimeMillis());
+            DateUtils.daysBetween(DateUtils.ConverToDate(object.optString("createdAt")), DateUtils.ConverToDate(simpleDateFormat.format(date)));
+            Log.i("createdAt2", "" + DateUtils.daysBetween(DateUtils.ConverToDate(object.optString("createdAt")), DateUtils.ConverToDate(simpleDateFormat.format(date))));
+            Log.i("SMSBOOL", object.optBoolean("SMSBOOL") + "");
+            num = DateUtils.daysBetween(DateUtils.ConverToDate(object.optString("createdAt")), DateUtils.ConverToDate(simpleDateFormat.format(date)));
+            if (num > 10 && !object.optBoolean("SMSBOOL")) {
+                DialogUtil.defaultDialog(context, getString(R.string.confirm_validate), null, null, new
+                        DialogCallback() {
+
+                            @Override
+                            public void execute(Object dialog, Object content) {
+                                //验证
+                                startActivity(new Intent(context, ValidateActivity.class));
+                            }
+                        });
+                isok = false;
+                return true;
+            }
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        return false;
     }
 }

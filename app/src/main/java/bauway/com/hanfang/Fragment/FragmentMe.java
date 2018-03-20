@@ -19,6 +19,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import bauway.com.hanfang.App.Constants;
 import bauway.com.hanfang.MyApplication;
 import bauway.com.hanfang.R;
@@ -29,7 +32,9 @@ import bauway.com.hanfang.activity.LoginActivity;
 import bauway.com.hanfang.activity.LoginActivity2;
 import bauway.com.hanfang.activity.PersonInfoActivity;
 import bauway.com.hanfang.activity.RegisterActivity2;
+import bauway.com.hanfang.activity.ValidateActivity;
 import bauway.com.hanfang.interfaces.DialogCallback;
+import bauway.com.hanfang.util.DateUtils;
 import bauway.com.hanfang.util.DialogUtil;
 import bauway.com.hanfang.util.MyUtil;
 import bauway.com.hanfang.util.NetworkUtil;
@@ -50,11 +55,13 @@ public class FragmentMe extends Fragment implements View.OnClickListener {
     private Context context;
     private View view_main;
     private LinearLayout ll_fragme_exit;
-    private Intent csintent,piintent;
-    private LinearLayout ll_fragme_accountinfo,ll_fragme_help_docs,ll_fragme_about_us;
-    private TextView tv_account_name,tv_account_nick,tv_version_num;
+    private Intent csintent, piintent;
+    private LinearLayout ll_fragme_accountinfo, ll_fragme_help_docs, ll_fragme_about_us;
+    private TextView tv_account_name, tv_account_nick, tv_version_num;
     public RxSharedPreferences userRxPreferences;
     public MyApplication myApplication;
+    int num = 0;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -74,7 +81,7 @@ public class FragmentMe extends Fragment implements View.OnClickListener {
         ll_fragme_about_us = (LinearLayout) view_main.findViewById(R.id.ll_fragme_about_us);
         tv_account_name = (TextView) view_main.findViewById(R.id.tv_account_name);
         tv_account_nick = (TextView) view_main.findViewById(R.id.tv_account_nick);
-        tv_version_num  = (TextView) view_main.findViewById(R.id.tv_version_num);
+        tv_version_num = (TextView) view_main.findViewById(R.id.tv_version_num);
         ll_fragme_exit.setOnClickListener(this);
         ll_fragme_accountinfo.setOnClickListener(this);
         ll_fragme_help_docs.setOnClickListener(this);
@@ -90,7 +97,7 @@ public class FragmentMe extends Fragment implements View.OnClickListener {
         } else {
             //不可见时执行的操作
 //            Log.e("isVisibleToUser22",hidden+"");
-            if (!NetworkUtil.isNetworkAvailable(context)){
+            if (!NetworkUtil.isNetworkAvailable(context)) {
                 ToastUtil.showShortToast(context, "网络连接异常!");
                 return;
             }
@@ -100,13 +107,13 @@ public class FragmentMe extends Fragment implements View.OnClickListener {
     /*
         Bmob查询数据
          */
-    public void queryData(){
-        if (!NetworkUtil.isNetworkAvailable(context)){
+    public void queryData() {
+        if (!NetworkUtil.isNetworkAvailable(context)) {
             ToastUtil.showShortToast(context, "网络连接异常!");
             return;
         }
         String phone = userRxPreferences.getString(Constants.LOGIN_EMAIL).get();
-        BmobQuery query =new BmobQuery("_User");
+        BmobQuery query = new BmobQuery("_User");
         query.addWhereEqualTo("username", phone);
         query.setLimit(2);
         query.order("createdAt");
@@ -114,31 +121,59 @@ public class FragmentMe extends Fragment implements View.OnClickListener {
         query.findObjectsByTable(new QueryListener<JSONArray>() {
             @Override
             public void done(JSONArray ary, BmobException e) {
-                if(e==null){
-                    Log.i("bmob","查询成功："+ary.toString());
+                if (e == null) {
+                    Log.i("bmob", "查询成功：" + ary.toString());
                     try {
                         JSONObject object = (JSONObject) ary.get(0);
+                        Log.i("createdAt", object.optString("createdAt"));
+                        isVerify(object);
                         tv_account_nick.setText(object.optJSONArray("info").getString(0));
                     } catch (JSONException e1) {
                         e1.printStackTrace();
                     }
-                }else{
-                    Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                } else {
+                    Log.i("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
                 }
             }
         });
     }
 
+    private Boolean isVerify(JSONObject object) {
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// HH:mm:ss
+            Date date = new Date(System.currentTimeMillis());
+            DateUtils.daysBetween(DateUtils.ConverToDate(object.optString("createdAt")), DateUtils.ConverToDate(simpleDateFormat.format(date)));
+            Log.i("createdAt2", "" + DateUtils.daysBetween(DateUtils.ConverToDate(object.optString("createdAt")), DateUtils.ConverToDate(simpleDateFormat.format(date))));
+            Log.i("SMSBOOL", object.optBoolean("SMSBOOL") + "");
+            num = DateUtils.daysBetween(DateUtils.ConverToDate(object.optString("createdAt")), DateUtils.ConverToDate(simpleDateFormat.format(date)));
+            if (num > 10 && !object.optBoolean("SMSBOOL")) {
+                DialogUtil.defaultDialog(context, getString(R.string.confirm_validate), null, null, new
+                        DialogCallback() {
+
+                            @Override
+                            public void execute(Object dialog, Object content) {
+                                //验证
+                                startActivity(new Intent(context, ValidateActivity.class));
+                            }
+                        });
+                return true;
+            }
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        return false;
+    }
+
     private void initDate() {
         String vsersion = MyUtil.getVersion(context);
-        tv_version_num.setText("V"+vsersion);
+        tv_version_num.setText("V" + vsersion);
         if (userRxPreferences == null) {
             SharedPreferences preferences = context.getSharedPreferences(Constants.USER_INFO, Context.MODE_PRIVATE);
             userRxPreferences = RxSharedPreferences.create(preferences);
         }
         String accountname = userRxPreferences.getString(Constants.LOGIN_EMAIL).get();
         String pwd = userRxPreferences.getString(Constants.LOGIN_PWD).get();
-        Log.e(TAG, accountname+"//"+pwd);
+        Log.e(TAG, accountname + "//" + pwd);
         tv_account_name.setText(accountname);
         queryData();
     }
