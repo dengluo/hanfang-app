@@ -211,7 +211,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dp10"
-                        android:text="药品码:"
+                        android:text="@string/product_code"
                         android:textColor="@color/text_color_2"
                         android:textSize="14dp" />
 

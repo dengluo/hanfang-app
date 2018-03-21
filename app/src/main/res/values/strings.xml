@@ -187,6 +187,7 @@
     <string name="please_enable_the_bluetooth">请打开蓝牙</string>
     <string name="device_not_connected">请先连接设备</string>
     <string name="code_not_scan">请扫描产品码</string>
+    <string name="product_code">产品码:</string>
     <string name="already_bind">已经绑定了设备</string>
     <string name="searching">正在搜索…</string>
     <string name="search_again">重试</string>

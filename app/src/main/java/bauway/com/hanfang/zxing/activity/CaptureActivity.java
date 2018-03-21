@@ -345,12 +345,12 @@ public final class CaptureActivity extends BaseActivity implements SurfaceHolder
                         message.obj = scanResult;
                         FragmentOrderTake.mHandler.sendMessage(message);
                     }else{
-                        ToastUtil.showShortToast(CaptureActivity.this,"药品码不存在或者过期");
+                        ToastUtil.showShortToast(CaptureActivity.this,"产品码不存在或者过期");
                     }
 
                 }else{
                     Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
-                    ToastUtil.showShortToast(CaptureActivity.this,"药品码不存在或者过期");
+                    ToastUtil.showShortToast(CaptureActivity.this,"产品码不存在或者过期");
                 }
             }
         });
@@ -521,10 +521,10 @@ public final class CaptureActivity extends BaseActivity implements SurfaceHolder
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            //提交药品码
+            //提交产品码
             case R.id.bt_submit_yaopin_code:
                 String code = inputCode.getText().toString();
-                validateCode(code);//验证药品码
+                validateCode(code);//验证产品码
                 break;
             // 返回按钮
             case R.id.action_back:
@@ -552,7 +552,7 @@ public final class CaptureActivity extends BaseActivity implements SurfaceHolder
 
     private void validateCode(final String code) {
         if (inputCode.getText().toString().trim().equals("")){
-            ToastUtil.showShortToast(CaptureActivity.this,"药品码不能为空");
+            ToastUtil.showShortToast(CaptureActivity.this,"产品码不能为空");
             return;
         }
         BmobQuery query =new BmobQuery("QRcode");
@@ -572,12 +572,12 @@ public final class CaptureActivity extends BaseActivity implements SurfaceHolder
                         FragmentOrderTake.mHandler.sendMessage(message);
                         finish();
                     }else{
-                        ToastUtil.showShortToast(CaptureActivity.this,"药品码不存在或者过期");
+                        ToastUtil.showShortToast(CaptureActivity.this,"产品码不存在或者过期");
                     }
 
                 }else{
                     Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
-                    ToastUtil.showShortToast(CaptureActivity.this,"药品码不存在或者过期");
+                    ToastUtil.showShortToast(CaptureActivity.this,"产品码不存在或者过期");
                 }
             }
         });

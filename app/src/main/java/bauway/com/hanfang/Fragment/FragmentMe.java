@@ -146,7 +146,7 @@ public class FragmentMe extends Fragment implements View.OnClickListener {
             Log.i("createdAt2", "" + DateUtils.daysBetween(DateUtils.ConverToDate(object.optString("createdAt")), DateUtils.ConverToDate(simpleDateFormat.format(date))));
             Log.i("SMSBOOL", object.optBoolean("SMSBOOL") + "");
             num = DateUtils.daysBetween(DateUtils.ConverToDate(object.optString("createdAt")), DateUtils.ConverToDate(simpleDateFormat.format(date)));
-            if (num > 10 && !object.optBoolean("SMSBOOL")) {
+            if (num > 30 && !object.optBoolean("SMSBOOL")) {
                 DialogUtil.defaultDialog(context, getString(R.string.confirm_validate), null, null, new
                         DialogCallback() {
 
