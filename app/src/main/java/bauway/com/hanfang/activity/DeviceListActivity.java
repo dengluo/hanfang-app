@@ -74,9 +74,6 @@ public class DeviceListActivity extends BaseActivity {
     protected void initView() {
         ACache aCache = ACache.get(DeviceListActivity.this);
         ArrayList<String> list2 = (ArrayList<String>) aCache.getAsObject("danny");
-
-//        Log.e("list2.toString()",list2.toString());
-//        Log.e("list22.toString()",list2.size()+"");
         mData = new ArrayList<ItemBean>();
         if (list2 == null) {
             Log.e("mxg", "list == null");
@@ -105,24 +102,16 @@ public class DeviceListActivity extends BaseActivity {
 
                         list.add(msg.obj.toString());
                         aCache.put("danny", list);
-
-//                        ToastUtil.showShortToast(DeviceListActivity.this, msg.obj + "");
                         break;
                     case 29:
-//                        Log.e("msg.arg1","=="+msg.arg1+"=="+msg.obj);
-//                        mSmaManager.mEaseConnector.closeConnect(true);
                         mSmaManager.unbind();
-//                        mSmaManager.exit();
                         ACache aCache2 = ACache.get(mContext);
                         ArrayList<String> list3 = (ArrayList<String>) aCache2.getAsObject("danny");
                         Log.e("list3.toString()", list3.toString());
-//                        String value = list2.get(msg.arg1).toString();
                         list3.remove(msg.arg1);
-//                        list3 = new ArrayList<>();
                         aCache2.put("danny", list3);
                         mAdapter.notifyDataSetChanged();
                         initView();
-//                        lv_device.setAdapter(mAdapter);
                         break;
                     case 39:
                         Message message = new Message();
@@ -146,7 +135,6 @@ public class DeviceListActivity extends BaseActivity {
                 if (isConnected) {
                     Log.e("device","==device=="+device.getName()+"=="+device.getAddress());
                     mSmaManager.setNameAndAddress(device.getName(), device.getAddress());
-//                    mSmaManager.mEaseConnector.setAddress(device.getAddress());
                 }
             }
 

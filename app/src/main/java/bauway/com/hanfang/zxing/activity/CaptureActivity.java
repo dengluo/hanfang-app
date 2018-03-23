@@ -54,8 +54,6 @@ import com.google.zxing.Result;
 import com.squareup.otto.Subscribe;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -63,14 +61,11 @@ import java.lang.reflect.Field;
 import bauway.com.hanfang.App.Constants;
 import bauway.com.hanfang.Fragment.FragmentOrderTake;
 import bauway.com.hanfang.R;
-import bauway.com.hanfang.activity.DisplayScanResultActivity;
 import bauway.com.hanfang.activity.LocalAlbumActivity;
 import bauway.com.hanfang.activity.MyDialogActivitySingle;
 import bauway.com.hanfang.base.BaseActivity;
 import bauway.com.hanfang.bean.Event.ScanCodeEvent;
-import bauway.com.hanfang.bean.QRCode;
 import bauway.com.hanfang.util.AudioPlayer;
-import bauway.com.hanfang.util.LogUtil;
 import bauway.com.hanfang.util.MyUtil;
 import bauway.com.hanfang.util.OttoAppConfig;
 import bauway.com.hanfang.util.ToastUtil;
@@ -303,7 +298,7 @@ public final class CaptureActivity extends BaseActivity implements SurfaceHolder
                     intent.setData(uri);
                     myFinish(intent);
                 } catch (Exception e) {
-                    LogUtil.e(LOG_TAG, "handleDecode: " + e.toString());
+                    L.e(LOG_TAG, "handleDecode: " + e.toString());
                     displayResult(scanResult, 0);
                 }
             } else {

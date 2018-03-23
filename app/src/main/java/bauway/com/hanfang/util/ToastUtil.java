@@ -25,6 +25,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bestmafen.easeblelib.util.L;
+
 import bauway.com.hanfang.App.Constants;
 import bauway.com.hanfang.R;
 
@@ -53,7 +55,7 @@ public class ToastUtil {
                 // toast隐藏后，将其置为null
                 sToast = null;
             } catch (Exception e) {
-                LogUtil.e(LOG_TAG, "run方法出现错误：" + e.toString());
+                L.e(LOG_TAG, "run方法出现错误：" + e.toString());
             }
         }
     };

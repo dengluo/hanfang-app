@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="@string/fragme_personinfo"
+            android:text="@string/account_info"
             android:textColor="@color/white"
             android:textSize="18sp" />
     </RelativeLayout>
@@ -254,6 +254,47 @@
             android:paddingTop="8dp">
 
             <TextView
+                android:id="@+id/tv_person_t5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp10"
+                android:text="@string/person_weight"
+                android:textColor="@color/text_color_2"
+                android:textSize="14dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:gravity="right">
+
+                <TextView
+                    android:id="@+id/tv_personinfo_weight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@color/text_color_4" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="8dp"
+            android:paddingLeft="15dp"
+            android:paddingTop="8dp">
+
+            <TextView
                 android:id="@+id/tv_person_t4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -280,47 +321,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:background="@color/text_color_4" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingBottom="8dp"
-            android:paddingLeft="15dp"
-            android:paddingTop="8dp">
-
-            <TextView
-                android:id="@+id/tv_person_t5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp10"
-                android:text="@string/person_weight"
-                android:textColor="@color/text_color_2"
-                android:textSize="14dp" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:gravity="right">
-
-                <TextView
-                    android:id="@+id/tv_personinfo_weight"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:text=""/>
-            </RelativeLayout>
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:visibility="gone"
             android:background="@color/text_color_4" />
 
         <LinearLayout

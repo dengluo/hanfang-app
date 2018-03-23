@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,7 +82,6 @@ public class BindDeviceActivity extends BaseActivity {
             isFailed = true;
             mSmaManager.close(true);
             mSmaManager.unbind();
-
             showProgress(null);
         }
     };
@@ -277,10 +275,6 @@ public class BindDeviceActivity extends BaseActivity {
         mScanner.exit();
 
         unregisterReceiver(mReceiver);
-//        Log.e(TAG, "lololo="+mSmaManager.getNameAndAddress()[1]);
-//        if (TextUtils.isEmpty(mSmaManager.getNameAndAddress()[1])) {
-//            mSmaManager.unbind();
-//        }
         super.onDestroy();
     }
 
@@ -330,7 +324,6 @@ public class BindDeviceActivity extends BaseActivity {
 
             vh.tv_name.setText(device.device.getName());
             vh.tv_address.setText(device.device.getAddress());
-//            vh.iv_rssi.setImageLevel(-device.rssi);
             return v;
         }
 

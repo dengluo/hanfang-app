@@ -39,6 +39,8 @@ import android.text.TextUtils;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
+import com.bestmafen.easeblelib.util.L;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -116,7 +118,7 @@ public class MyUtil {
             resId = field.getInt(field.getName());
         } catch (Exception e) {
             resId = R.mipmap.ic_launcher;
-            LogUtil.e(LOG_TAG, "setWallPaper(Context context): " + e.toString());
+            L.e(LOG_TAG, "setWallPaper(Context context): " + e.toString());
         }
         return resId;
     }
@@ -162,7 +164,7 @@ public class MyUtil {
                         null, options);
                 bitmap = fastBlur(context, 0, value, bitmap, 20);
             } catch (FileNotFoundException e) {
-                LogUtil.e(LOG_TAG, "getWallPaperBlurDrawable(Context context): " + e.toString());
+                L.e(LOG_TAG, "getWallPaperBlurDrawable(Context context): " + e.toString());
                 bitmap = setWallpaperBlur(context, options, share);
             }
         } else {
@@ -401,7 +403,7 @@ public class MyUtil {
             bitmap.setPixels(pix, 0, w, 0, 0, w, h);
             return (bitmap);
         } catch (Exception e) {
-            LogUtil.e("MyUtil", e.toString());
+            L.e("MyUtil", e.toString());
 /*            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN) {
                 return blurBitmap(context, sentBitmap, radius);
             } else {*/
@@ -851,7 +853,7 @@ public class MyUtil {
             PackageInfo packInfo = packageManager.getPackageInfo(context.getPackageName(), 0);
             version = packInfo.versionName;
         } catch (PackageManager.NameNotFoundException e) {
-            LogUtil.e(LOG_TAG, "assignViews: " + e.toString());
+            L.e(LOG_TAG, "assignViews: " + e.toString());
             version = context.getString(R.string.version);
         }
         return version;

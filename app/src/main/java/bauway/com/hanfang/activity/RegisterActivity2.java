@@ -304,28 +304,55 @@ public class RegisterActivity2 extends BaseActivity {
             mUser.setSMSBOOL(true);
         }
 
-        mUser.signOrLogin(register_code, new SaveListener<User>() {
-            @Override
-            public void done(User user, BmobException e) {
-                if (e == null) {
-                    // ToastUtils.showShort(R.string.register_success_plz_check_email);
-                    ToastUtils.showShort(R.string.register_success_plz_check_phone);
-                    userRxPreferences.getString(Constants.LOGIN_PHONE).set(et_phone_code.getText().toString().trim());
-                    startActivity(new Intent(mContext, PerfectInfoActivity.class));
-                    RegisterActivity2.this.finish();
-                } else {
-                    Log.e(TAG, "done: " + e.getErrorCode() + ":" + e.getMessage());
-                    if (203 == e.getErrorCode()) {
-                        ToastUtils.showShort(R.string.phone_already_register);
-                    } else if(207 == e.getErrorCode()) {
-                        ToastUtils.showShort(R.string.code_error);
+        if (chekbox_agreement_myz.isChecked()){
+            mUser.signUp( new SaveListener<User>() {
+                @Override
+                public void done(User user, BmobException e) {
+                    if (e == null) {
+                        // ToastUtils.showShort(R.string.register_success_plz_check_email);
+                        ToastUtils.showShort(R.string.register_success_plz_check_phone);
+                        userRxPreferences.getString(Constants.LOGIN_PHONE).set(et_phone_code.getText().toString().trim());
+                        startActivity(new Intent(mContext, PerfectInfoActivity.class));
+                        RegisterActivity2.this.finish();
                     } else {
-                        ToastUtils.showShort(R.string.register_failure);
+                        Log.e(TAG, "done: " + e.getErrorCode() + ":" + e.getMessage());
+                        if (203 == e.getErrorCode()) {
+                            ToastUtils.showShort(R.string.phone_already_register);
+                        } else if(207 == e.getErrorCode()) {
+                            ToastUtils.showShort(R.string.code_error);
+                        } else {
+                            ToastUtils.showShort(R.string.register_failure);
+                        }
                     }
+                    DialogUtil.hide();
                 }
-                DialogUtil.hide();
-            }
-        });
+            });
+        }else{
+            mUser.signOrLogin(register_code, new SaveListener<User>() {
+                @Override
+                public void done(User user, BmobException e) {
+                    if (e == null) {
+                        // ToastUtils.showShort(R.string.register_success_plz_check_email);
+                        ToastUtils.showShort(R.string.register_success_plz_check_phone);
+                        userRxPreferences.getString(Constants.LOGIN_PHONE).set(et_phone_code.getText().toString().trim());
+                        startActivity(new Intent(mContext, PerfectInfoActivity.class));
+                        RegisterActivity2.this.finish();
+                    } else {
+                        Log.e(TAG, "done: " + e.getErrorCode() + ":" + e.getMessage());
+                        if (203 == e.getErrorCode()) {
+                            ToastUtils.showShort(R.string.phone_already_register);
+                        } else if(207 == e.getErrorCode()) {
+                            ToastUtils.showShort(R.string.code_error);
+                        } else {
+                            ToastUtils.showShort(R.string.register_failure);
+                        }
+                    }
+                    DialogUtil.hide();
+                }
+            });
+        }
+
+
 
     }
 

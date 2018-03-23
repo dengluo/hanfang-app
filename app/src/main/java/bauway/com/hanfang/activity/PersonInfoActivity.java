@@ -129,11 +129,14 @@ public class PersonInfoActivity extends BaseActivity {
                             tv_person_t4.setText(getResources().getText(R.string.person_height));
                             tv_person_t5.setText(getResources().getText(R.string.person_weight));
                         }
-                        tv_personinfo_name.setText(object.optJSONArray("info").getString(0));
-                        tv_personinfo_sex.setText(object.optJSONArray("info").getString(1));
-                        tv_personinfo_age.setText(object.optJSONArray("info").getString(2));
-                        tv_personinfo_height.setText(object.optJSONArray("info").getString(3));
-                        tv_personinfo_weight.setText(object.optJSONArray("info").getString(4));
+                        if (object.has("info")){
+                            tv_personinfo_name.setText(object.optJSONArray("info").getString(0));
+                            tv_personinfo_sex.setText(object.optJSONArray("info").getString(1));
+                            tv_personinfo_age.setText(object.optJSONArray("info").getString(2));
+                            tv_personinfo_height.setText(object.optJSONArray("info").getString(3));
+                            tv_personinfo_weight.setText(object.optJSONArray("info").getString(4));
+                        }
+
 
                         if (object.getBoolean("SMSBOOL")){
                             ll_fragme_validate.setVisibility(View.GONE);

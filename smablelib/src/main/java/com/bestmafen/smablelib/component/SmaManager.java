@@ -78,6 +78,8 @@ public class SmaManager {
         public static final byte PLAY_WORKE           = 0x3B;
         public static final byte PLAY_WORKE2           = 0x26;
         public static final byte GET_PRODUCT          = 0x3C;
+        public static final byte _PRODUCT          = 0x3C;
+        public static final byte EDIT_DEVICE_BLUETOOTH_NAME          = 0x5C;
     }
 
     public static final class BACK {
@@ -487,6 +489,43 @@ public class SmaManager {
             }
         }
         data[8] = (byte) (sum & 0xff);
+
+        mSmaMessenger.addMessage(new SmaMessenger.SmaMessage(mEaseConnector.mGatt, mEaseConnector.getGattCharacteristic
+                (UUID_SERVICE, UUID_CHARACTER_WRITE), data, SmaMessenger.MessageType.WRITE));
+    }
+
+    /**
+     * 写入命令到设备
+     *
+     * @param cmd   命令
+     * @param value 值，长度为6
+     */
+    public void write1(byte cmd, byte[] value) {
+        if (!isConnected) {
+            for (SmaCallback callback : mSmaCallbacks) {
+                callback.notConnected();
+            }
+            return;
+        }
+
+//        if (value.length != 6) {
+//            throw new IllegalArgumentException("value的长度必须为6");
+//        }
+
+        byte[] data = new byte[11];
+        System.arraycopy(value, 0, data, 2, value.length);
+        data[0] = 0x02;
+        data[1] = cmd;
+        data[9] = 0x0D;
+        data[10] = 0x0A;
+
+//        int sum = 0;
+//        for (int i = 0; i < data.length; i++) {
+//            if (i != 18) {
+//                sum += (data[i] & 0xff);
+//            }
+//        }
+//        data[8] = (byte) (sum & 0xff);
 
         mSmaMessenger.addMessage(new SmaMessenger.SmaMessage(mEaseConnector.mGatt, mEaseConnector.getGattCharacteristic
                 (UUID_SERVICE, UUID_CHARACTER_WRITE), data, SmaMessenger.MessageType.WRITE));

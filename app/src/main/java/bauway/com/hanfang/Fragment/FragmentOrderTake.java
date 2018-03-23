@@ -15,6 +15,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,12 +25,14 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bestmafen.smablelib.component.SimpleSmaCallback;
 import com.bestmafen.smablelib.component.SmaManager;
@@ -352,11 +355,14 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
         tv_frag_device_name = (TextView) view_main.findViewById(R.id.tv_frag_device_name);
         tv_frag_device_ypcode = (TextView) view_main.findViewById(R.id.tv_frag_device_ypcode);
         ll_hongguang = (LinearLayout) view_main.findViewById(R.id.ll_hongguang);
+
         if (mSmaManager.getNameAndAddress()[0].equals("")) {
             tv_frag_device_name.setText("未连接");
         } else {
             tv_frag_device_name.setText(mSmaManager.getNameAndAddress()[0]);
+
         }
+        tv_frag_device_name.setOnClickListener(this);
         if (mSmaManager.getNameAndAddress()[0].equals("")) {
             tv_frag_device_ypcode.setText("");
         } else {
@@ -425,13 +431,20 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.tv_frag_device_name:
+                if (!mSmaManager.isConnected) {
+                    ToastUtils.showShortSafe(R.string.device_not_connected);
+                    return;
+                }
+                EditText et = new EditText(context);
+                editname(et);
+                break;
             case R.id.iv_device_drug_codesss:
                 if (isok){
                     startActivity(new Intent(context, CaptureActivity.class).putExtra("shebei", "device1"));
                 }else {
                     ToastUtils.showShortSafe(R.string.tip_validate);
                 }
-
                 break;
             case R.id.iv_device_bluetooth:
                 if (isok){
@@ -547,5 +560,31 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
             e1.printStackTrace();
         }
         return false;
+    }
+
+//    View contents = View.inflate(context, R.layout.change_device_name, null);
+//    EditText et = (EditText) contents.findViewById(R.id.et_device_name);
+    private void editname(final EditText et){
+        et.setFilters(new InputFilter[]{new InputFilter.LengthFilter(7)});
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("修改设备蓝牙名称");
+        builder.setIcon(android.R.drawable.ic_dialog_info);
+        builder.setView(et);
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                //按下确定键后的事件
+//                                    Toast.makeText(context, et.getText().toString(),Toast.LENGTH_LONG).show();
+                if (et.getText().toString().trim().equals("")){
+                    ToastUtils.showShortSafe("蓝牙名称不能为空");
+                }else {
+                    mSmaManager.write1(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME,et.getText().toString().trim().getBytes());
+                    tv_frag_device_name.setText(et.getText().toString().trim());
+                }
+            }
+        });
+        builder.setNegativeButton("取消",null);
+        builder.create();
+        builder.show();
     }
 }

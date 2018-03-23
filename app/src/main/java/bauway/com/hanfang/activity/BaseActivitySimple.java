@@ -19,7 +19,7 @@ package bauway.com.hanfang.activity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
-import bauway.com.hanfang.util.LogUtil;
+import com.bestmafen.easeblelib.util.L;
 
 
 /**
@@ -34,7 +34,7 @@ public class BaseActivitySimple extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LogUtil.i(LOG_TAG, getClass().getSimpleName());
+        L.i(LOG_TAG, getClass().getSimpleName());
     }
 
     @Override

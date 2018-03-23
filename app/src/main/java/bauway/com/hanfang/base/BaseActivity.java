@@ -24,7 +24,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
- * Created by zhaotaotao on 2017/8/9.
+ * Created by danny on 2018/1/9.
  */
 
 public abstract class BaseActivity extends AppCompatActivity {

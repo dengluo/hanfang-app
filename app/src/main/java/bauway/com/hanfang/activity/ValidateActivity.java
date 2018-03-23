@@ -1,36 +1,26 @@
 package bauway.com.hanfang.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.ToastUtils;
-
 import bauway.com.hanfang.App.Constants;
 import bauway.com.hanfang.R;
 import bauway.com.hanfang.base.BaseActivity;
 import bauway.com.hanfang.bean.User;
 import bauway.com.hanfang.util.CountDownTimerUtils;
-import bauway.com.hanfang.util.DialogUtil;
 import bauway.com.hanfang.util.NetworkUtil;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.bmob.sms.BmobSMS;
 import cn.bmob.sms.listener.RequestSMSCodeListener;
 import cn.bmob.sms.listener.VerifySMSCodeListener;
-import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 public class ValidateActivity extends BaseActivity {
@@ -77,7 +67,6 @@ public class ValidateActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        String emailHistory = userRxPreferences.getString(Constants.LOGIN_PHONE).get();
     }
 
     @Override
@@ -136,10 +125,8 @@ public class ValidateActivity extends BaseActivity {
         BmobSMS.requestSMSCode(this, phone, "register", new RequestSMSCodeListener() {
             @Override
             public void done(Integer smsId, cn.bmob.sms.exception.BmobException ex) {
-                Log.e("bmob", ex + "短信id11：" + smsId);//用于查询本次短信发送详情
                 if (ex == null) {//验证码发送成功
                     Log.e("bmob", "短信id：" + smsId);//用于查询本次短信发送详情
-                    //erificationCode.setText("已发送");
                     myListener.setupdateUIVericationCode();
                 } else {
                     ToastUtils.showShort("必须是有效的手机号码");
