@@ -18,33 +18,33 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_centerInParent="true"
             android:background="@drawable/shop_return2" />
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
+            android:layout_centerInParent="true"
             android:text="@string/account_info"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_personinfo_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="right|center_vertical"
+            android:layout_alignParentRight="true"
+            android:text="@string/edit"
+            android:padding="@dimen/dp5"
             android:textColor="@color/white"
             android:textSize="18sp" />
     </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/gray_divider_line"
-        android:orientation="vertical"
-        android:paddingBottom="5dp"
-        android:paddingLeft="15dp"
-        android:paddingTop="5dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:textColor="@color/text_color_2"
-            android:textSize="12dp" />
+        android:layout_height="10dp"
+        android:background="@color/gray_divider_line">
     </LinearLayout>
 
     <LinearLayout
@@ -101,19 +101,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/gray_divider_line"
-        android:orientation="vertical"
-        android:paddingBottom="5dp"
-        android:paddingLeft="15dp"
-        android:paddingTop="5dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:textColor="@color/text_color_2"
-            android:textSize="12dp" />
+        android:layout_height="10dp"
+        android:background="@color/gray_divider_line">
     </LinearLayout>
 
     <LinearLayout
@@ -129,16 +118,16 @@
             android:background="@color/white"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingBottom="8dp"
+            android:paddingBottom="5dp"
             android:paddingLeft="15dp"
-            android:paddingTop="8dp">
+            android:paddingTop="5dp">
 
             <TextView
                 android:id="@+id/tv_person_t1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp10"
-                android:text="@string/person_name"
+                android:text="@string/person_name1"
                 android:textColor="@color/text_color_2"
                 android:textSize="14dp" />
             <RelativeLayout
@@ -169,16 +158,16 @@
             android:background="@color/white"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingBottom="8dp"
+            android:paddingBottom="5dp"
             android:paddingLeft="15dp"
-            android:paddingTop="8dp">
+            android:paddingTop="5dp">
 
             <TextView
                 android:id="@+id/tv_person_t2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp10"
-                android:text="@string/person_sex"
+                android:text="@string/person_sex1"
                 android:textColor="@color/text_color_2"
                 android:textSize="14dp" />
             <RelativeLayout
@@ -209,16 +198,16 @@
             android:background="@color/white"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingBottom="8dp"
+            android:paddingBottom="5dp"
             android:paddingLeft="15dp"
-            android:paddingTop="8dp">
+            android:paddingTop="5dp">
 
             <TextView
                 android:id="@+id/tv_person_t3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp10"
-                android:text="@string/person_age"
+                android:text="@string/person_age1"
                 android:textColor="@color/text_color_2"
                 android:textSize="14dp" />
             <RelativeLayout
@@ -249,16 +238,16 @@
             android:background="@color/white"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingBottom="8dp"
+            android:paddingBottom="5dp"
             android:paddingLeft="15dp"
-            android:paddingTop="8dp">
+            android:paddingTop="5dp">
 
             <TextView
                 android:id="@+id/tv_person_t5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp10"
-                android:text="@string/person_weight"
+                android:text="@string/person_weight1"
                 android:textColor="@color/text_color_2"
                 android:textSize="14dp" />
 
@@ -290,16 +279,16 @@
             android:background="@color/white"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingBottom="8dp"
+            android:paddingBottom="5dp"
             android:paddingLeft="15dp"
-            android:paddingTop="8dp">
+            android:paddingTop="5dp">
 
             <TextView
                 android:id="@+id/tv_person_t4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp10"
-                android:text="@string/person_height"
+                android:text="@string/person_height1"
                 android:textColor="@color/text_color_2"
                 android:textSize="14dp" />
 
@@ -321,14 +310,16 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:visibility="gone"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:background="@color/text_color_4" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/gray_divider_line"
-            android:orientation="vertical"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
             android:paddingBottom="5dp"
             android:paddingLeft="15dp"
             android:paddingTop="5dp">
@@ -336,9 +327,193 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=""
+                android:layout_marginLeft="@dimen/dp10"
+                android:text="@string/organization_name1"
                 android:textColor="@color/text_color_2"
-                android:textSize="12dp" />
+                android:textSize="14dp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:gravity="right">
+
+                <TextView
+                    android:id="@+id/tv_personinfo_dwmc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text=""/>
+            </RelativeLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@color/text_color_4" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="5dp"
+            android:paddingLeft="15dp"
+            android:paddingTop="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp10"
+                android:text="@string/legal_representative1"
+                android:textColor="@color/text_color_2"
+                android:textSize="14dp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:gravity="right">
+
+                <TextView
+                    android:id="@+id/tv_personinfo_frdb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text=""/>
+            </RelativeLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@color/text_color_4" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="5dp"
+            android:paddingLeft="15dp"
+            android:paddingTop="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp10"
+                android:text="@string/personinfo_head1"
+                android:textColor="@color/text_color_2"
+                android:textSize="14dp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:gravity="right">
+
+                <TextView
+                    android:id="@+id/tv_personinfo_fzr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text=""/>
+            </RelativeLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@color/text_color_4" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="5dp"
+            android:paddingLeft="15dp"
+            android:paddingTop="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp10"
+                android:text="@string/registration_mark1"
+                android:textColor="@color/text_color_2"
+                android:textSize="14dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:gravity="right">
+
+                <TextView
+                    android:id="@+id/tv_personinfo_zzh"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@color/text_color_4" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="5dp"
+            android:paddingLeft="15dp"
+            android:paddingTop="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp10"
+                android:text="@string/address1"
+                android:textColor="@color/text_color_2"
+                android:textSize="14dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:gravity="right">
+
+                <TextView
+                    android:id="@+id/tv_personinfo_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text=""/>
+            </RelativeLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:visibility="gone"
+            android:background="@color/text_color_4" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/gray_divider_line">
         </LinearLayout>
 
         <LinearLayout

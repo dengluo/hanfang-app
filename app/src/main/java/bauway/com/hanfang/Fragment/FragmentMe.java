@@ -28,7 +28,6 @@ import bauway.com.hanfang.R;
 import bauway.com.hanfang.activity.AboutUsActivity;
 import bauway.com.hanfang.activity.AgreementActivity;
 import bauway.com.hanfang.activity.HelpDocsActivity;
-import bauway.com.hanfang.activity.LoginActivity;
 import bauway.com.hanfang.activity.LoginActivity2;
 import bauway.com.hanfang.activity.PersonInfoActivity;
 import bauway.com.hanfang.activity.RegisterActivity2;

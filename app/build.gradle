@@ -7,8 +7,8 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 15
-        versionName "1.5"
+        versionCode 17
+        versionName "1.7"
         vectorDrawables.useSupportLibrary = true
         aaptOptions.cruncherEnabled = false
         aaptOptions.useNewCruncher = false
@@ -42,7 +42,7 @@ android {
         }
 
         release {
-//            buildConfigField "boolean", "LOG_DEBUG", "true"
+            buildConfigField "boolean", "LOG_DEBUG", "true"
             debuggable false
             zipAlignEnabled true
             //请使用第三方加固，例如360加固、乐固，无需本地混淆

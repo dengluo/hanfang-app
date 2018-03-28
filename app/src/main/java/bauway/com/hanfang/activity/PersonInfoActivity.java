@@ -49,18 +49,20 @@ public class PersonInfoActivity extends BaseActivity {
     TextView tv_personinfo_height;
     @BindView(R.id.tv_personinfo_weight)
     TextView tv_personinfo_weight;
-    @BindView(R.id.tv_person_t1)
-    TextView tv_person_t1;
-    @BindView(R.id.tv_person_t2)
-    TextView tv_person_t2;
-    @BindView(R.id.tv_person_t3)
-    TextView tv_person_t3;
-    @BindView(R.id.tv_person_t4)
-    TextView tv_person_t4;
-    @BindView(R.id.tv_person_t5)
-    TextView tv_person_t5;
     @BindView(R.id.ll_fragme_validate)
     LinearLayout ll_fragme_validate;
+    @BindView(R.id.tv_personinfo_dwmc)
+    TextView tv_personinfo_dwmc;
+    @BindView(R.id.tv_personinfo_frdb)
+    TextView tv_personinfo_frdb;
+    @BindView(R.id.tv_personinfo_fzr)
+    TextView tv_personinfo_fzr;
+    @BindView(R.id.tv_personinfo_zzh)
+    TextView tv_personinfo_zzh;
+    @BindView(R.id.tv_personinfo_address)
+    TextView tv_personinfo_address;
+    @BindView(R.id.tv_personinfo_edit)
+    TextView tv_personinfo_edit;
 
     private Context ctx;
     private User mUser;
@@ -72,12 +74,10 @@ public class PersonInfoActivity extends BaseActivity {
 
     @Override
     protected void initComplete(Bundle savedInstanceState) {
-
     }
 
     @Override
     protected void initEvent() {
-
     }
 
     @Override
@@ -85,7 +85,6 @@ public class PersonInfoActivity extends BaseActivity {
         BmobSMS.initialize(this, Constants.BMOB_ID);
         mUser = getUserEntity();
         Log.e("getObjectId======",mUser.getObjectId());
-
     }
 
     @Override
@@ -116,34 +115,23 @@ public class PersonInfoActivity extends BaseActivity {
                     Log.i("bmob","查询成功："+ary.toString());
                     try {
                         JSONObject object = (JSONObject) ary.get(0);
-                        if (!object.optBoolean("isPerson")){
-                            tv_person_t1.setText(getResources().getText(R.string.organization_name1));
-                            tv_person_t2.setText(getResources().getText(R.string.legal_representative1));
-                            tv_person_t3.setText(getResources().getText(R.string.personinfo_head1));
-                            tv_person_t4.setText(getResources().getText(R.string.registration_mark1));
-                            tv_person_t5.setText(getResources().getText(R.string.address1));
-                        }else {
-                            tv_person_t1.setText(getResources().getText(R.string.person_name));
-                            tv_person_t2.setText(getResources().getText(R.string.person_sex));
-                            tv_person_t3.setText(getResources().getText(R.string.person_age));
-                            tv_person_t4.setText(getResources().getText(R.string.person_height));
-                            tv_person_t5.setText(getResources().getText(R.string.person_weight));
-                        }
                         if (object.has("info")){
                             tv_personinfo_name.setText(object.optJSONArray("info").getString(0));
                             tv_personinfo_sex.setText(object.optJSONArray("info").getString(1));
                             tv_personinfo_age.setText(object.optJSONArray("info").getString(2));
                             tv_personinfo_height.setText(object.optJSONArray("info").getString(3));
                             tv_personinfo_weight.setText(object.optJSONArray("info").getString(4));
+                            tv_personinfo_dwmc.setText(object.optJSONArray("info").getString(5));
+                            tv_personinfo_frdb.setText(object.optJSONArray("info").getString(6));
+                            tv_personinfo_fzr.setText(object.optJSONArray("info").getString(7));
+                            tv_personinfo_zzh.setText(object.optJSONArray("info").getString(8));
+                            tv_personinfo_address.setText(object.optJSONArray("info").getString(9));
                         }
-
-
                         if (object.getBoolean("SMSBOOL")){
                             ll_fragme_validate.setVisibility(View.GONE);
                         }else {
                             ll_fragme_validate.setVisibility(View.VISIBLE);
                         }
-
                     } catch (JSONException e1) {
                         e1.printStackTrace();
                     }
@@ -164,7 +152,7 @@ public class PersonInfoActivity extends BaseActivity {
         ctx = PersonInfoActivity.this;
     }
 
-    @OnClick({R.id.iv_return, R.id.ll_fragme_accountinfo,R.id.ll_fragme_validate})
+    @OnClick({R.id.iv_return, R.id.ll_fragme_accountinfo,R.id.ll_fragme_validate,R.id.tv_personinfo_edit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_return:
@@ -177,7 +165,9 @@ public class PersonInfoActivity extends BaseActivity {
             case R.id.ll_fragme_validate:
                 startActivity(new Intent(PersonInfoActivity.this, ValidateActivity.class));
                 break;
-
+            case R.id.tv_personinfo_edit:
+                startActivity(new Intent(PersonInfoActivity.this, EditInfoActivity.class));
+                break;
             default:
                 break;
         }

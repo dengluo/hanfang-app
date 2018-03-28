@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="@string/register"
+            android:text="@string/change"
             android:textColor="@color/white"
             android:textSize="18sp" />
     </RelativeLayout>
@@ -430,7 +430,7 @@
                 <Button
                     android:id="@+id/bt_perfectinfo_register"
                     style="@style/bt_style"
-                    android:text="@string/register" />
+                    android:text="@string/change" />
             </LinearLayout>
 
         </LinearLayout>

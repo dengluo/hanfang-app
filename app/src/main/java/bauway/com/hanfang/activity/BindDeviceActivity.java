@@ -47,7 +47,7 @@ import butterknife.OnClick;
 import static bauway.com.hanfang.R.id.lv;
 
 /**
- * Created by zhaotaotao on 2017/8/10.
+ * Created by danny on 2017/8/10.
  * 绑定设备
  */
 

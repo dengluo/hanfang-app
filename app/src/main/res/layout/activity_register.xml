@@ -159,6 +159,7 @@
                 <!--按钮部分-->
                 <LinearLayout
                     style="@style/login_ll_two"
+                    android:visibility="gone"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp">
 
