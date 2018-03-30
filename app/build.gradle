@@ -42,7 +42,7 @@ android {
         }
 
         release {
-            buildConfigField "boolean", "LOG_DEBUG", "true"
+//            buildConfigField "boolean", "LOG_DEBUG", "true"
             debuggable false
             zipAlignEnabled true
             //请使用第三方加固，例如360加固、乐固，无需本地混淆
@@ -50,30 +50,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
-
     }
-//    android {
-//        productFlavors {
-//            p1 {
-//                applicationId "bauway.com.hanfang"
-//                versionCode 11
-//                versionName "1.1"
-//                buildConfigField "int", "PROJECT_NO", "1"
-//            }
-//            p2 {
-//                applicationId "bauway.com.electroniccigarettes2"
-//                versionCode 17
-//                versionName "1.7"
-//                buildConfigField "int", "PROJECT_NO", "2"
-//            }
-//            p3 {
-//                applicationId "bauway.com.electroniccigarettes3"
-//                versionCode 11
-//                versionName "1.1"
-//                buildConfigField "int", "PROJECT_NO", "3"
-//            }
-//        }
-//    }
     packagingOptions {
         exclude 'META-INF/rxjava.properties'
     }

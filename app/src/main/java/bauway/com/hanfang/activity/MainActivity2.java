@@ -31,14 +31,11 @@ import java.util.List;
 
 import bauway.com.hanfang.Fragment.FragmentOrderTake;
 import bauway.com.hanfang.Fragment.MyFragment1;
-import bauway.com.hanfang.Fragment.MyFragment2;
 import bauway.com.hanfang.Fragment.MyFragment3;
 import bauway.com.hanfang.adapter.FragmentTabAdapter;
 import bauway.com.hanfang.base.BaseActivity;
 import bauway.com.hanfang.BuildConfig;
-import bauway.com.hanfang.Fragment.FragmentFind;
 import bauway.com.hanfang.Fragment.FragmentMe;
-import bauway.com.hanfang.Fragment.FragmentStudio;
 import bauway.com.hanfang.R;
 import bauway.com.hanfang.util.PreferencesUtils;
 import butterknife.BindView;
@@ -257,18 +254,7 @@ public class MainActivity2 extends BaseActivity implements View.OnClickListener 
 
     private List<Fragment> getFragments() {
         List<Fragment> list_fm = new ArrayList<Fragment>();
-//        FragmentStudio fg_studio=new FragmentStudio();
-//        fg_studio.setDoGo(new DoGoJieDan() {
-//
-//            @Override
-//            public void doGo() {
-//                // TODO Auto-generated method stub
-//                radio_order_take.setChecked(true);
-//            }
-//        });
-//        list_fm.add(fg_studio);// 工作室
         list_fm.add(new FragmentOrderTake());// 治疗
-//        list_fm.add(new FragmentFind());// 设备
         list_fm.add(new FragmentMe());// 我
         return list_fm;
     }
@@ -277,14 +263,6 @@ public class MainActivity2 extends BaseActivity implements View.OnClickListener 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-
-//            case R.id.btn:
-//                startActivity(new Intent(this, CaptureActivity.class));
-//                break;
-//            case R.id.start_bluetooth:
-//                //startActivity(new Intent(this, BluetoothActivity.class));
-//                startActivity(new Intent(this, DeviceScanActivity.class));
-//                break;
         }
     }
 

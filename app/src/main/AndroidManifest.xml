@@ -16,14 +16,14 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <!--获取sd卡写的权限，用于文件上传和下载-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!--<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />-->
     <!--允许读取手机状态 用于创建BmobInstallation-->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_LOGS" />
     <!-- 操作SD卡 -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <!--<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />-->
+    <!--<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />-->
+    <!--<uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />-->
     <!-- 扫描二维码 -->
     <uses-permission android:name="android.permission.CAMERA" />
     <!-- 开启闪光灯 -->
@@ -32,7 +32,6 @@
 
     <uses-permission android:name="android.permission.FLASHLIGHT" />
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:name=".MyApplication"
@@ -61,19 +60,9 @@
         <activity android:name=".activity.ForgetPasswordActivity2" />
         <activity android:name=".activity.LoginActivity2" />
         <activity android:name=".activity.BindDeviceActivity" />
-        <activity android:name=".activity.CommonSetActivity" />
-        <activity android:name=".activity.ConcernUsActivity" />
         <activity android:name=".activity.EvaluationActivity" />
-        <activity android:name=".activity.UserUseNumberActivity" />
         <activity android:name=".activity.SetActivity" />
-        <activity android:name=".activity.NotificationActivity" />
-        <activity android:name=".activity.NotesActivity" />
         <activity android:name=".activity.AppUserInfoActivity" />
-        <activity android:name=".activity.DeviceSettingActivity" />
-        <activity android:name=".activity.DeviceSettingActivity2" />
-        <activity android:name=".activity.DeviceSettingActivity3" />
-        <activity android:name=".activity.DeviceSettingActivity4" />
-        <activity android:name=".activity.DeviceSettingActivity5" />
         <activity android:name=".activity.ChangePasswordActivity" />
         <activity android:name=".activity.PersonInfoActivity" />
         <activity android:name=".activity.ChangePwdActivity" />
