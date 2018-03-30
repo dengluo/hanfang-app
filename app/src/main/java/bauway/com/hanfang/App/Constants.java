@@ -7,6 +7,7 @@ package bauway.com.hanfang.App;
 public class Constants {
     public static final String LOGIN_EMAIL = "login_email"; //登录邮箱
     public static final String LOGIN_PWD = "login_pwd"; //登录密码
+    public static final String SessionToken = "SessionToken"; //登录SessionToken
     public static  String LOGIN_PHONE = "login_phone"; //登录电话号码
     public static final String USER_INFO = "user_info";
     public static final int HTTP_TIME_OUT = 30; //网络请求超时时间

@@ -24,6 +24,7 @@
     <string name="register_failure">注册失败,请检查注册信息</string>
     <string name="register_success_plz_check_email">注册成功，请注意查收验证邮件</string>
     <string name="register_now">正在注册…</string>
+    <string name="change_now">正在修改…</string>
     <string name="email_pwd_input_err">邮箱／密码错误</string>
     <string name="email_need_check">邮箱未验证，请验证邮箱后登录</string>
     <string name="reset_password">重置密码</string>

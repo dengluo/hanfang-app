@@ -400,11 +400,13 @@ public class EditInfoActivity extends BaseActivity implements WheelNumDialog.OnD
         }
         String[] arr = {pname, sex, age, height, weight,name, representative, head, mark, address};
 
-        DialogUtil.progressDialog(EditInfoActivity.this, getString(R.string.register_now), false);
+        DialogUtil.progressDialog(EditInfoActivity.this, getString(R.string.change_now), false);
         String objectId = BmobUser.getCurrentUser().getObjectId();
         final String phoneNumber = BmobUser.getCurrentUser().getMobilePhoneNumber();
         final User user = new User();
         user.setInfo(arr);
+        Log.e("getSessionToken222",userRxPreferences.getString(Constants.SessionToken).get());
+        user.setSessionToken(userRxPreferences.getString(Constants.SessionToken).get());
         user.update(objectId, new UpdateListener() {
             @Override
             public void done(BmobException e) {
