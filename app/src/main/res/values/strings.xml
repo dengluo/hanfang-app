@@ -223,7 +223,7 @@
     <string name="input_new_pwd">新密码(6-12位字母和数字组合)</string>
     <string name="confirm_pwd">确认密码</string>
     <string name="register_success_plz_check_phone">注册成功</string>
-    <string name="phone_already_register">手机已被注册</string>
+    <string name="phone_already_register">该号码已被注册</string>
     <string name="and" translatable="false"><![CDATA[&]]></string>
     <string name="pwd_again">确认新密码</string>
     <string name="pwd_new">新密码</string>
@@ -242,6 +242,9 @@
     <string name="pwd">密码</string>
     <string name="error_bluetooth_not_supported">error_bluetooth_not_supported</string>
     <string name="unknown_device">未知设备</string>
+    <string name="code_is_send_error_plz_try">验证码请求失败，请重试</string>
+    <string name="second">秒</string>
+    <string name="code_is_send_plz_check">验证码已发送，请注意查收</string>
     <!--扫描二维码-->
     <string name="album">相册</string>
     <string name="scan_result">扫描结果</string>

@@ -13,7 +13,6 @@ import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
 import com.f2prateek.rx.preferences2.RxSharedPreferences;
-import com.tencent.bugly.crashreport.CrashReport;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -130,7 +129,7 @@ public class MyApplication extends MultiDexApplication {
     }
 
     private void initBugly() {
-        CrashReport.initCrashReport(getApplicationContext(), "c7802b564f", true);
+//        CrashReport.initCrashReport(getApplicationContext(), "c7802b564f", true);
 //        CrashReport.testJavaCrash();
     }
 

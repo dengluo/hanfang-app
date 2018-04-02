@@ -7,8 +7,8 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 17
-        versionName "1.7"
+        versionCode 18
+        versionName "1.8"
         vectorDrawables.useSupportLibrary = true
         aaptOptions.cruncherEnabled = false
         aaptOptions.useNewCruncher = false
@@ -66,7 +66,6 @@ dependencies {
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile project(':smablelib')
-    compile 'com.tencent.bugly:crashreport:latest.release'
     //bmob-sdk：Bmob的android sdk包，包含了Bmob的数据存储、文件等服务，以下是最新的bmob-sdk:
     compile 'cn.bmob.android:bmob-sdk:3.5.5'
     compile 'cn.bmob.android:bmob-sms:1.0.1'
