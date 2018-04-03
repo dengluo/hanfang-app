@@ -22,7 +22,6 @@ import bauway.com.hanfang.bean.User;
 import bauway.com.hanfang.util.DialogUtil;
 import butterknife.BindView;
 import butterknife.OnClick;
-import cn.bmob.sms.BmobSMS;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.UpdateListener;
@@ -86,7 +85,7 @@ public class PerfectInfoActivity2 extends BaseActivity implements WheelNumDialog
 
     @Override
     protected void initData() {
-        BmobSMS.initialize(this, Constants.BMOB_ID);
+
     }
 
     @Override

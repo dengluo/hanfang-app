@@ -14,6 +14,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.util.Arrays;
+import java.util.List;
+
 import bauway.com.hanfang.App.Constants;
 import bauway.com.hanfang.base.BaseActivity;
 import bauway.com.hanfang.R;
@@ -23,10 +26,11 @@ import bauway.com.hanfang.util.NetworkUtil;
 import bauway.com.hanfang.util.ToastUtil;
 import butterknife.BindView;
 import butterknife.OnClick;
-import cn.bmob.sms.BmobSMS;
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.exception.BmobException;
+import rx.Subscriber;
 
 import static com.wx.wheelview.util.WheelUtils.log;
 
@@ -82,9 +86,8 @@ public class PersonInfoActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        BmobSMS.initialize(this, Constants.BMOB_ID);
         mUser = getUserEntity();
-        Log.e("getObjectId======",mUser.getObjectId());
+        Log.e("getObjectId======", mUser.getObjectId());
     }
 
     @Override
@@ -96,47 +99,54 @@ public class PersonInfoActivity extends BaseActivity {
     /*
         Bmob查询数据
          */
-    public void queryData(){
-        if (!NetworkUtil.isNetworkAvailable(this)){
-            ToastUtil.showShortToast(ctx,"网络连接异常!");
+    public void queryData() {
+        if (!NetworkUtil.isNetworkAvailable(this)) {
+            ToastUtil.showShortToast(ctx, "网络连接异常!");
             return;
         }
         String phone = userRxPreferences.getString(Constants.LOGIN_EMAIL).get();
         tv_personinfo_phone.setText(phone);
-        BmobQuery query =new BmobQuery("_User");
-        query.addWhereEqualTo("username", phone);
-        query.setLimit(2);
-        query.order("createdAt");
-        //v3.5.0版本提供`findObjectsByTable`方法查询自定义表名的数据
-        query.findObjectsByTable(new QueryListener<JSONArray>() {
+        queryPersonInfo(phone);
+    }
+
+    public void queryPersonInfo(String phone) {
+        final BmobQuery<User> bmobQuery = new BmobQuery<User>();
+        bmobQuery.addWhereEqualTo("username", phone);
+        bmobQuery.setLimit(2);
+        bmobQuery.order("createdAt");
+        //先判断是否有缓存
+//        boolean isCache = bmobQuery.hasCachedResult(User.class);
+//        if (isCache) {
+//            bmobQuery.setCachePolicy(BmobQuery.CachePolicy.CACHE_ELSE_NETWORK);    // 先从缓存取数据，如果没有的话，再从网络取。
+//        } else {
+//            bmobQuery.setCachePolicy(BmobQuery.CachePolicy.NETWORK_ELSE_CACHE);    // 如果没有缓存的话，则先从网络中取
+//        }
+//		observable形式
+        bmobQuery.findObjects(new FindListener<User>() {
             @Override
-            public void done(JSONArray ary, BmobException e) {
-                if(e==null){
-                    Log.i("bmob","查询成功："+ary.toString());
-                    try {
-                        JSONObject object = (JSONObject) ary.get(0);
-                        if (object.has("info")){
-                            tv_personinfo_name.setText(object.optJSONArray("info").getString(0));
-                            tv_personinfo_sex.setText(object.optJSONArray("info").getString(1));
-                            tv_personinfo_age.setText(object.optJSONArray("info").getString(2));
-                            tv_personinfo_height.setText(object.optJSONArray("info").getString(3));
-                            tv_personinfo_weight.setText(object.optJSONArray("info").getString(4));
-                            tv_personinfo_dwmc.setText(object.optJSONArray("info").getString(5));
-                            tv_personinfo_frdb.setText(object.optJSONArray("info").getString(6));
-                            tv_personinfo_fzr.setText(object.optJSONArray("info").getString(7));
-                            tv_personinfo_zzh.setText(object.optJSONArray("info").getString(8));
-                            tv_personinfo_address.setText(object.optJSONArray("info").getString(9));
-                        }
-                        if (object.getBoolean("SMSBOOL")){
+            public void done(List<User> list, BmobException e) {
+                if (e == null) {
+                    for (User user : list) {
+                        String str = Arrays.asList(user.getInfo()).get(0);
+                        tv_personinfo_name.setText(Arrays.asList(user.getInfo()).get(0));
+                        tv_personinfo_sex.setText(Arrays.asList(user.getInfo()).get(1));
+                        tv_personinfo_age.setText(Arrays.asList(user.getInfo()).get(2));
+                        tv_personinfo_height.setText(Arrays.asList(user.getInfo()).get(3));
+                        tv_personinfo_weight.setText(Arrays.asList(user.getInfo()).get(4));
+                        Log.e("dwmc===",Arrays.asList(user.getInfo()).get(5));
+                        tv_personinfo_dwmc.setText(Arrays.asList(user.getInfo()).get(5));
+                        tv_personinfo_frdb.setText(Arrays.asList(user.getInfo()).get(6));
+                        tv_personinfo_fzr.setText(Arrays.asList(user.getInfo()).get(7));
+                        tv_personinfo_zzh.setText(Arrays.asList(user.getInfo()).get(8));
+                        tv_personinfo_address.setText(Arrays.asList(user.getInfo()).get(9));
+                        if (user.getSMSBOOL()) {
                             ll_fragme_validate.setVisibility(View.GONE);
-                        }else {
+                        } else {
                             ll_fragme_validate.setVisibility(View.VISIBLE);
                         }
-                    } catch (JSONException e1) {
-                        e1.printStackTrace();
                     }
-                }else{
-                    Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                } else {
+                    Log.i("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
                 }
             }
         });
@@ -152,7 +162,7 @@ public class PersonInfoActivity extends BaseActivity {
         ctx = PersonInfoActivity.this;
     }
 
-    @OnClick({R.id.iv_return, R.id.ll_fragme_accountinfo,R.id.ll_fragme_validate,R.id.tv_personinfo_edit})
+    @OnClick({R.id.iv_return, R.id.ll_fragme_accountinfo, R.id.ll_fragme_validate, R.id.tv_personinfo_edit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_return:

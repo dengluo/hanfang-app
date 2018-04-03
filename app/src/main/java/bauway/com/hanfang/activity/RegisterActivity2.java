@@ -28,9 +28,6 @@ import bauway.com.hanfang.bean.User;
 import bauway.com.hanfang.util.DialogUtil;
 import butterknife.BindView;
 import butterknife.OnClick;
-import cn.bmob.sms.BmobSMS;
-import cn.bmob.sms.listener.RequestSMSCodeListener;
-import cn.bmob.sms.listener.VerifySMSCodeListener;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.listener.SaveListener;
@@ -89,7 +86,6 @@ public class RegisterActivity2 extends BaseActivity {
 
     @Override
     protected void initData() {
-        BmobSMS.initialize(this, Constants.BMOB_ID);
         mUser = getUserEntity();
     }
 

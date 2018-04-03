@@ -8,7 +8,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.blankj.utilcode.util.ToastUtils;
+
 import bauway.com.hanfang.App.Constants;
 import bauway.com.hanfang.R;
 import bauway.com.hanfang.base.BaseActivity;
@@ -17,10 +19,9 @@ import bauway.com.hanfang.util.CountDownTimerUtils;
 import bauway.com.hanfang.util.NetworkUtil;
 import butterknife.BindView;
 import butterknife.OnClick;
-import cn.bmob.sms.BmobSMS;
-import cn.bmob.sms.listener.RequestSMSCodeListener;
-import cn.bmob.sms.listener.VerifySMSCodeListener;
+import cn.bmob.v3.BmobSMS;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.listener.UpdateListener;
 
 public class ValidateActivity extends BaseActivity {
@@ -61,7 +62,6 @@ public class ValidateActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        BmobSMS.initialize(this, Constants.BMOB_ID);
         mUser = getUserEntity();
     }
 
@@ -122,18 +122,19 @@ public class ValidateActivity extends BaseActivity {
             ToastUtils.showShort("手机号码输入错误!");
             return;
         }
-        BmobSMS.requestSMSCode(this, phone, "register", new RequestSMSCodeListener() {
+        BmobSMS.requestSMSCode(phone, "register", new QueryListener<Integer>() {
+
             @Override
-            public void done(Integer smsId, cn.bmob.sms.exception.BmobException ex) {
+            public void done(Integer smsId, BmobException ex) {
                 if (ex == null) {//验证码发送成功
                     Log.e("bmob", "短信id：" + smsId);//用于查询本次短信发送详情
                     myListener.setupdateUIVericationCode();
                 } else {
+//                    toast("errorCode = "+ex.getErrorCode()+",errorMsg = "+ex.getLocalizedMessage());
                     ToastUtils.showShort("必须是有效的手机号码");
                 }
             }
         });
-
     }
 
     //验证验证码
@@ -157,11 +158,10 @@ public class ValidateActivity extends BaseActivity {
             return;
         }
 
-        BmobSMS.verifySmsCode(this, phone, validate_code, new VerifySMSCodeListener() {
-
+        BmobSMS.verifySmsCode(phone, validate_code, new UpdateListener() {
 
             @Override
-            public void done(cn.bmob.sms.exception.BmobException ex) {
+            public void done(BmobException ex) {
                 if (ex == null) {//短信验证码已验证成功
                     Log.e("bmob", "验证通过");
                     mUser.setSMSBOOL(true);
@@ -178,13 +178,11 @@ public class ValidateActivity extends BaseActivity {
                         }
                     });
                 } else {
+//                    toast("验证失败：code ="+ex.getErrorCode()+",msg = "+ex.getLocalizedMessage());
                     ToastUtils.showShort("短信验证失败");
-                    Log.e("bmob", "验证失败：code =" + ex.getErrorCode() + ",msg = " + ex.getLocalizedMessage());
                 }
             }
         });
-
-
     }
 
     public interface UpdateUIVericationCode {

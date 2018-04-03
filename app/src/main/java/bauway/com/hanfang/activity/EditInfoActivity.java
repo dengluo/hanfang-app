@@ -26,6 +26,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import bauway.com.hanfang.App.Constants;
 import bauway.com.hanfang.R;
@@ -39,10 +41,10 @@ import bauway.com.hanfang.util.NetworkUtil;
 import bauway.com.hanfang.util.ToastUtil;
 import butterknife.BindView;
 import butterknife.OnClick;
-import cn.bmob.sms.BmobSMS;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.listener.UpdateListener;
 
@@ -50,7 +52,7 @@ import cn.bmob.v3.listener.UpdateListener;
  * 编辑注册信息
  * danny
  */
-public class EditInfoActivity extends BaseActivity implements WheelNumDialog.OnDialogBackListener{
+public class EditInfoActivity extends BaseActivity implements WheelNumDialog.OnDialogBackListener {
 
     private static final String TAG = "EditInfoActivity";
 
@@ -265,7 +267,7 @@ public class EditInfoActivity extends BaseActivity implements WheelNumDialog.OnD
 
     @Override
     protected void initData() {
-        BmobSMS.initialize(this, Constants.BMOB_ID);
+
     }
 
     @Override
@@ -289,48 +291,54 @@ public class EditInfoActivity extends BaseActivity implements WheelNumDialog.OnD
     /*
         Bmob查询数据
          */
-    public void queryData(){
-        if (!NetworkUtil.isNetworkAvailable(this)){
-            ToastUtil.showShortToast(ctx,"网络连接异常!");
+    public void queryData() {
+        if (!NetworkUtil.isNetworkAvailable(this)) {
+            ToastUtil.showShortToast(ctx, "网络连接异常!");
             return;
         }
         String phone = userRxPreferences.getString(Constants.LOGIN_EMAIL).get();
-        BmobQuery query =new BmobQuery("_User");
-        query.addWhereEqualTo("username", phone);
-        query.setLimit(2);
-        query.order("createdAt");
-        //v3.5.0版本提供`findObjectsByTable`方法查询自定义表名的数据
-        query.findObjectsByTable(new QueryListener<JSONArray>() {
+        queryPersonInfo(phone);
+    }
+
+    public void queryPersonInfo(String phone) {
+        final BmobQuery<User> bmobQuery = new BmobQuery<User>();
+        bmobQuery.addWhereEqualTo("username", phone);
+        bmobQuery.setLimit(2);
+        bmobQuery.order("createdAt");
+        //先判断是否有缓存
+//        boolean isCache = bmobQuery.hasCachedResult(User.class);
+//        if (isCache) {
+//            bmobQuery.setCachePolicy(BmobQuery.CachePolicy.CACHE_ELSE_NETWORK);    // 先从缓存取数据，如果没有的话，再从网络取。
+//        } else {
+//            bmobQuery.setCachePolicy(BmobQuery.CachePolicy.NETWORK_ELSE_CACHE);    // 如果没有缓存的话，则先从网络中取
+//        }
+//		observable形式
+        bmobQuery.findObjects(new FindListener<User>() {
             @Override
-            public void done(JSONArray ary, BmobException e) {
-                if(e==null){
-                    Log.i("bmob","查询成功："+ary.toString());
-                    try {
-                        JSONObject object = (JSONObject) ary.get(0);
-                        if (object.has("info")){
-                            et_perfectinfo_name.setText(object.optJSONArray("info").getString(0));
-                            if (object.optJSONArray("info").getString(1).equals("男")){
-                                radio0.setChecked(true);
-                                radio0.isChecked();
-                            }else {
-                                radio1.setChecked(true);
-                                radio1.isChecked();
-                            }
-//                            tv_personinfo_sex.setText(object.optJSONArray("info").getString(1));
-                            et_perfectinfo_age.setText(object.optJSONArray("info").getString(2));
-                            tv_perfectinfo_height.setText(object.optJSONArray("info").getString(3));
-                            tv_perfectinfo_weight.setText(object.optJSONArray("info").getString(4));
-                            et_perfectinfo_organization_name.setText(object.optJSONArray("info").getString(5));
-                            et_perfectinfo_legal_representative.setText(object.optJSONArray("info").getString(6));
-                            et_perfectinfo_personinfo_head.setText(object.optJSONArray("info").getString(7));
-                            et_perfectinfo_registration_mark.setText(object.optJSONArray("info").getString(8));
-                            tv_perfectinfo_address.setText(object.optJSONArray("info").getString(9));
+            public void done(List<User> list, BmobException e) {
+                if (e == null) {
+                    for (User user : list) {
+                        String str = Arrays.asList(user.getInfo()).get(0);
+                        et_perfectinfo_name.setText(Arrays.asList(user.getInfo()).get(0));
+                        if (Arrays.asList(user.getInfo()).get(1).equals("男")) {
+                            radio0.setChecked(true);
+                            radio0.isChecked();
+                        } else {
+                            radio1.setChecked(true);
+                            radio1.isChecked();
                         }
-                    } catch (JSONException e1) {
-                        e1.printStackTrace();
+//                            tv_personinfo_sex.setText(object.optJSONArray("info").getString(1));
+                        et_perfectinfo_age.setText(Arrays.asList(user.getInfo()).get(2));
+                        tv_perfectinfo_height.setText(Arrays.asList(user.getInfo()).get(3));
+                        tv_perfectinfo_weight.setText(Arrays.asList(user.getInfo()).get(4));
+                        et_perfectinfo_organization_name.setText(Arrays.asList(user.getInfo()).get(5));
+                        et_perfectinfo_legal_representative.setText(Arrays.asList(user.getInfo()).get(6));
+                        et_perfectinfo_personinfo_head.setText(Arrays.asList(user.getInfo()).get(7));
+                        et_perfectinfo_registration_mark.setText(Arrays.asList(user.getInfo()).get(8));
+                        tv_perfectinfo_address.setText(Arrays.asList(user.getInfo()).get(9));
                     }
-                }else{
-                    Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                } else {
+                    Log.i("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
                 }
             }
         });
@@ -343,7 +351,7 @@ public class EditInfoActivity extends BaseActivity implements WheelNumDialog.OnD
     }
 
 
-    @OnClick({R.id.iv_return, R.id.bt_perfectinfo_register, R.id.tv_perfectinfo_address,R.id.tv_perfectinfo_height,R.id.tv_perfectinfo_weight})
+    @OnClick({R.id.iv_return, R.id.bt_perfectinfo_register, R.id.tv_perfectinfo_address, R.id.tv_perfectinfo_height, R.id.tv_perfectinfo_weight})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_perfectinfo_height:
@@ -398,14 +406,14 @@ public class EditInfoActivity extends BaseActivity implements WheelNumDialog.OnD
             ToastUtils.showShort(R.string.plz_input_address);
             return;
         }
-        String[] arr = {pname, sex, age, height, weight,name, representative, head, mark, address};
+        String[] arr = {pname, sex, age, height, weight, name, representative, head, mark, address};
 
         DialogUtil.progressDialog(EditInfoActivity.this, getString(R.string.change_now), false);
         String objectId = BmobUser.getCurrentUser().getObjectId();
         final String phoneNumber = BmobUser.getCurrentUser().getMobilePhoneNumber();
         final User user = new User();
         user.setInfo(arr);
-        Log.e("getSessionToken222",userRxPreferences.getString(Constants.SessionToken).get());
+        Log.e("getSessionToken222", userRxPreferences.getString(Constants.SessionToken).get());
         user.setSessionToken(userRxPreferences.getString(Constants.SessionToken).get());
         user.update(objectId, new UpdateListener() {
             @Override

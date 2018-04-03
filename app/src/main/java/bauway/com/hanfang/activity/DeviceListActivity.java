@@ -32,7 +32,6 @@ import bauway.com.hanfang.util.ACache;
 import bauway.com.hanfang.util.ToastUtil;
 import butterknife.BindView;
 import butterknife.OnClick;
-import cn.bmob.sms.BmobSMS;
 
 public class DeviceListActivity extends BaseActivity {
 
@@ -66,7 +65,7 @@ public class DeviceListActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        BmobSMS.initialize(this, Constants.BMOB_ID);
+
     }
 
     @SuppressLint("HandlerLeak")

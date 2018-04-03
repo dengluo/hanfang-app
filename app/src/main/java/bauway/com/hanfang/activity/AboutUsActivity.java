@@ -9,7 +9,6 @@ import bauway.com.hanfang.R;
 import bauway.com.hanfang.base.BaseActivity;
 import butterknife.BindView;
 import butterknife.OnClick;
-import cn.bmob.sms.BmobSMS;
 
 public class AboutUsActivity extends BaseActivity {
 
@@ -39,7 +38,7 @@ public class AboutUsActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        BmobSMS.initialize(this, Constants.BMOB_ID);
+
     }
 
     @Override
