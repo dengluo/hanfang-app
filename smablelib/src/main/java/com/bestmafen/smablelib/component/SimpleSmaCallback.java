@@ -40,6 +40,11 @@ public class SimpleSmaCallback implements SmaCallback {
     }
 
     @Override
+    public void onReadDeviceName(byte[] name) {
+
+    }
+
+    @Override
     public void onReadProduct(int count) {
 
     }

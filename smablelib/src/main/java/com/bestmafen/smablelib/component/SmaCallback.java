@@ -49,6 +49,11 @@ public interface SmaCallback {
     void onReadProduct(int count);
 
     /**
+     * 蓝牙设备名称
+     */
+    void onReadDeviceName(byte[] data);
+
+    /**
      * 风速
      */
     void onReadFengsu(int count);

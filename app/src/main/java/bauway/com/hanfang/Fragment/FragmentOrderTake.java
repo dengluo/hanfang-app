@@ -28,8 +28,10 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bestmafen.smablelib.component.SimpleSmaCallback;
+import com.bestmafen.smablelib.component.SmaCallback;
 import com.bestmafen.smablelib.component.SmaManager;
 import com.blankj.utilcode.util.ToastUtils;
 import com.f2prateek.rx.preferences2.RxSharedPreferences;
@@ -74,11 +76,13 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
     private RadioButton rb_better;
     private TextView tv_frag_wendu, tv_frag_time, tv_frag_fengsu, tv_frag_device_name, tv_frag_device_ypcode;
     private ImageView iv_device_drug_codesss, iv_device_bluetooth, iv_find_play1;
+    private LinearLayout ll_unbind_device;
     private ViewPager vpager;
     private CheckBox checkbox_dengguang;
 
     private MyFragmentPagerAdapter mAdapter;
     private SmaManager mSmaManager;
+    private SmaCallback mSmaCallback;
     private Boolean iswork = true;
     private LinearLayout ll_hongguang;
 
@@ -89,6 +93,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
     public RxSharedPreferences userRxPreferences;
 
     int num = 0;
+    String devicename = "";
     private Boolean isok = true;//是否没有验证,并且已经过期
 
     public static Handler mHandler;//接受MyFragment1发送过来的消息
@@ -100,61 +105,37 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                              Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         context = this.getActivity();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            mSmaManager = SmaManager.getInstance().init(context).addSmaCallback(new SimpleSmaCallback() {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+        mSmaManager = SmaManager.getInstance().addSmaCallback(mSmaCallback = new SimpleSmaCallback() {
+            @Override
+            public void onConnected(BluetoothDevice device, boolean isConnected) {
 
-                @Override
-                public void onConnected(BluetoothDevice device, boolean isConnected) {
-                    if (isConnected) {
-                        Log.e("device", "==device==" + device.getName() + "==" + device.getAddress());
-                        mSmaManager.setNameAndAddress(device.getName(), device.getAddress());
-                        mSmaManager.mEaseConnector.setAddress(device.getAddress());
+            }
+
+            @Override
+            public void onReadDeviceName(final byte[] data) {
+                getActivity().runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        Log.e("222", "2222");
                     }
-                }
+                });
+            }
 
-                @Override
-                public void onWrite(byte[] data) {
-                    if (BuildConfig.DEBUG) {
-                        //                    append("  ->  onWrite", data);
+            @Override
+            public void onReadFengsu(final int fengsu) {
+                getActivity().runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        Log.e("2223", "2222");
+                        Log.e("name===", fengsu + "");
                     }
-                }
-
-                @Override
-                public void onRead(byte[] data) {
-                    //                if (BuildConfig.DEBUG) {
-                    ////                    append("  ->  onRead", data);
-                    //                }
-                    try {
-                        getProduct = new String(data, "Utf-8").trim();
-                        Log.e("read==", getProduct.trim() + "///");
-                        if (getProduct.equals("00mini.")) {
-                            Message message = new Message();
-                            message.what = 9;
-                            message.obj = getProduct;
-                            FragmentOrderTake.mHandler.sendMessage(message);
-
-                            Message message2 = new Message();
-                            message2.what = 9;
-                            message2.obj = getProduct;
-                            MyFragment1.mHandler.sendMessage(message2);
-                        } else {
-                            Message message = new Message();
-                            message.what = 19;
-                            message.obj = getProduct;
-                            FragmentOrderTake.mHandler.sendMessage(message);
-
-                            Message message2 = new Message();
-                            message2.what = 19;
-                            message2.obj = getProduct;
-                            MyFragment1.mHandler.sendMessage(message2);
-                        }
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-            });
-        }
+                });
+            }
+        });
+//        }
         mSmaManager.connect(true);
 
         mSmaManager = SmaManager.getInstance();
@@ -243,23 +224,28 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                             return;
                         }
                         tv_frag_device_name.setText(deviceName);
+                        ll_unbind_device.setVisibility(View.VISIBLE);
                         mSmaManager.setNameAndAddress(deviceName, deviceAddress);
                         mSmaManager.mEaseConnector.setAddress(deviceAddress);
-                        mSmaManager.write(SmaManager.SET.GET_PRODUCT);
+//                        mSmaManager.write(SmaManager.SET.GET_PRODUCT);
 
                         break;
                     case 15:
                         Log.e("15", "15");
                         if (mSmaManager.getNameAndAddress()[0].equals("")) {
                             tv_frag_device_name.setText("未连接");
+                            ll_unbind_device.setVisibility(View.GONE);
                         } else {
                             tv_frag_device_name.setText(mSmaManager.getNameAndAddress()[0]);
+                            ll_unbind_device.setVisibility(View.VISIBLE);
                         }
                         break;
                     case 21:
                         if (mSmaManager.getNameAndAddress()[0].equals("")) {
                             tv_frag_device_name.setText("未连接");
+                            ll_unbind_device.setVisibility(View.GONE);
                         } else {
+                            ll_unbind_device.setVisibility(View.VISIBLE);
                             if (msg.obj.equals("1")) {
                                 tv_frag_wendu.setText("一 档");
                             } else if (msg.obj.equals("2")) {
@@ -279,7 +265,9 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                     case 22:
                         if (mSmaManager.getNameAndAddress()[0].equals("")) {
                             tv_frag_device_name.setText("未连接");
+                            ll_unbind_device.setVisibility(View.GONE);
                         } else {
+                            ll_unbind_device.setVisibility(View.VISIBLE);
                             if (msg.obj.equals("1")) {
                                 tv_frag_fengsu.setText("低 档");
                             } else if (msg.obj.equals("2")) {
@@ -292,8 +280,10 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                     case 23:
                         if (mSmaManager.getNameAndAddress()[0].equals("")) {
                             tv_frag_device_name.setText("未连接");
+                            ll_unbind_device.setVisibility(View.GONE);
                         } else {
                             tv_frag_time.setText(msg.obj + " min");
+                            ll_unbind_device.setVisibility(View.VISIBLE);
                         }
                         break;
                 }
@@ -307,6 +297,35 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
         queryData();
         rb_channel.setChecked(true);
         return view_main;
+    }
+
+    private void sendToKernel(final String str) {
+        if (mSmaManager.isConnected) {
+            Log.e("fas", "fas");
+            if (str.length() < 6) {
+                mSmaManager.write2(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME2, str.substring(0, str.length()).getBytes());
+            }else{
+                mSmaManager.write2(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME2, str.substring(0, 6).getBytes());
+            }
+
+            new Thread() {
+                @Override
+                public void run() {
+                    super.run();
+                    try {
+                        Thread.sleep(200);//休眠200毫秒
+                        if (str.length() > 6) {
+                            Log.e("substring22=", str.substring(6, str.length()));
+                            mSmaManager.write2(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME2, str.substring(6, str.length()).getBytes());
+                        } else {
+                            mSmaManager.write2(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME2, "0x00".getBytes());
+                        }
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }.start();
+        }
     }
 
     private void inintView() {
@@ -328,7 +347,6 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                         checkbox_dengguang.setChecked(false);
                         return;
                     }
-                    ToastUtil.showShortToast(context, "open");
                     mSmaManager.write(SmaManager.SET.ENABLE_GOAL_LIGHT);
                 } else {
                     if (!mSmaManager.isConnected) {
@@ -347,13 +365,16 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
         tv_frag_device_name = (TextView) view_main.findViewById(R.id.tv_frag_device_name);
         tv_frag_device_ypcode = (TextView) view_main.findViewById(R.id.tv_frag_device_ypcode);
         ll_hongguang = (LinearLayout) view_main.findViewById(R.id.ll_hongguang);
+        ll_unbind_device = (LinearLayout) view_main.findViewById(R.id.ll_unbind_device);
 
         if (mSmaManager.getNameAndAddress()[0].equals("")) {
             tv_frag_device_name.setText("未连接");
+            ll_unbind_device.setVisibility(View.GONE);
         } else {
             tv_frag_device_name.setText(mSmaManager.getNameAndAddress()[0]);
-
+            ll_unbind_device.setVisibility(View.VISIBLE);
         }
+
         tv_frag_device_name.setOnClickListener(this);
         if (mSmaManager.getNameAndAddress()[0].equals("")) {
             tv_frag_device_ypcode.setText("");
@@ -368,6 +389,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
         iv_device_bluetooth = (ImageView) view_main.findViewById(R.id.iv_device_bluetooth);
         iv_device_drug_codesss.setOnClickListener(this);
         iv_device_bluetooth.setOnClickListener(this);
+        ll_unbind_device.setOnClickListener(this);
         iv_find_play1.setOnClickListener(this);
         rg_tab_bar.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -424,7 +446,13 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_frag_device_name:
+                Log.e("11**",mSmaManager.isConnected+"");
+                Log.e("22**",mSmaManager.getNameAndAddress()[0]+"");
                 if (!mSmaManager.isConnected) {
+                    ToastUtils.showShortSafe(R.string.device_not_connected);
+                    return;
+                }
+                if (mSmaManager.getNameAndAddress()[0].equals("")) {
                     ToastUtils.showShortSafe(R.string.device_not_connected);
                     return;
                 }
@@ -432,21 +460,34 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                 editname(et);
                 break;
             case R.id.iv_device_drug_codesss:
-                if (isok){
+                if (isok) {
                     startActivity(new Intent(context, CaptureActivity.class).putExtra("shebei", "device1"));
-                }else {
+                } else {
                     ToastUtils.showShortSafe(R.string.tip_validate);
                 }
                 break;
             case R.id.iv_device_bluetooth:
-                if (isok){
+                if (isok) {
                     startActivity(new Intent(context, DeviceListActivity.class));
-                }else {
+                } else {
                     ToastUtils.showShortSafe(R.string.tip_validate);
                 }
                 break;
+            case R.id.ll_unbind_device:
+                DialogUtil.defaultDialog(context, getString(R.string.confirm_unbind_device), null, null, new
+                        DialogCallback() {
+
+                            @Override
+                            public void execute(Object dialog, Object content) {
+                                //确认解绑
+                                SmaManager.getInstance().unbind();
+                                ll_unbind_device.setVisibility(View.GONE);
+                                tv_frag_device_name.setText("未连接");
+                            }
+                        });
+                break;
             case R.id.iv_find_play1:
-                if (!isok){
+                if (!isok) {
                     ToastUtils.showShortSafe(R.string.tip_validate);
                     return;
                 }
@@ -554,10 +595,10 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
         return false;
     }
 
-//    View contents = View.inflate(context, R.layout.change_device_name, null);
+    //    View contents = View.inflate(context, R.layout.change_device_name, null);
 //    EditText et = (EditText) contents.findViewById(R.id.et_device_name);
-    private void editname(final EditText et){
-        et.setFilters(new InputFilter[]{new InputFilter.LengthFilter(7)});
+    private void editname(final EditText et) {
+        et.setFilters(new InputFilter[]{new InputFilter.LengthFilter(11)});
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("修改设备蓝牙名称");
         builder.setIcon(android.R.drawable.ic_dialog_info);
@@ -567,15 +608,31 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
             public void onClick(DialogInterface dialogInterface, int i) {
                 //按下确定键后的事件
 //                                    Toast.makeText(context, et.getText().toString(),Toast.LENGTH_LONG).show();
-                if (et.getText().toString().trim().equals("")){
+                if (et.getText().toString().trim().equals("")) {
                     ToastUtils.showShortSafe("蓝牙名称不能为空");
-                }else {
-                    mSmaManager.write1(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME,et.getText().toString().trim().getBytes());
+                } else {
+                    final String str = et.getText().toString().trim();
+                    sendToKernel(str);
+                    new Thread() {
+                        @Override
+                        public void run() {
+                            super.run();
+                            try {
+                                Thread.sleep(200);//休眠200毫秒
+                                mSmaManager.write1(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME, str.getBytes());
+//                                Toast.makeText(context,R.string.tip_rename_ble_device,Toast.LENGTH_LONG).show();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }.start();
+
+                    ToastUtils.showShortSafe("修改成功!蓝牙设备正在重新连接,请耐心等待");
                     tv_frag_device_name.setText(et.getText().toString().trim());
                 }
             }
         });
-        builder.setNegativeButton("取消",null);
+        builder.setNegativeButton("取消", null);
         builder.create();
         builder.show();
     }

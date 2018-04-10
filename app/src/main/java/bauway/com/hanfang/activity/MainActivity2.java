@@ -112,7 +112,7 @@ public class MainActivity2 extends BaseActivity implements View.OnClickListener 
             @Override
             public void onConnected(BluetoothDevice device, boolean isConnected) {
                 if (isConnected) {
-                    mSmaManager.write(SmaManager.SET.GET_PRODUCT);
+//                    mSmaManager.write(SmaManager.SET.GET_PRODUCT);
                 }
             }
 

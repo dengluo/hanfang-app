@@ -57,6 +57,8 @@ import org.json.JSONArray;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.List;
 
 import bauway.com.hanfang.App.Constants;
 import bauway.com.hanfang.Fragment.FragmentOrderTake;
@@ -65,6 +67,7 @@ import bauway.com.hanfang.activity.LocalAlbumActivity;
 import bauway.com.hanfang.activity.MyDialogActivitySingle;
 import bauway.com.hanfang.base.BaseActivity;
 import bauway.com.hanfang.bean.Event.ScanCodeEvent;
+import bauway.com.hanfang.bean.QRcode;
 import bauway.com.hanfang.util.AudioPlayer;
 import bauway.com.hanfang.util.MyUtil;
 import bauway.com.hanfang.util.OttoAppConfig;
@@ -77,8 +80,10 @@ import bauway.com.hanfang.zxing.utils.CaptureActivityHandler;
 import bauway.com.hanfang.zxing.utils.InactivityTimer;
 import butterknife.BindView;
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.exception.BmobException;
+import rx.Subscriber;
 
 /**
  * This activity opens the camera and does the actual scanning on a background
@@ -322,47 +327,47 @@ public final class CaptureActivity extends BaseActivity implements SurfaceHolder
      * @param type       扫描类型：0，二维码；1，条形码
      */
     private void displayResult(final String scanResult, int type) {
-        L.e("scanResult____"+scanResult);
-//        BmobQuery<QRCode> query = new BmobQuery<QRCode>();
-        BmobQuery query =new BmobQuery("QRcode");
-        query.addWhereEqualTo("code", scanResult);
-        query.setLimit(2);
-        query.order("createdAt");
-        //v3.5.0版本提供`findObjectsByTable`方法查询自定义表名的数据
-        query.findObjectsByTable(new QueryListener<JSONArray>() {
-            @Override
-            public void done(JSONArray ary, BmobException e) {
-                if(e==null){
-                    Log.i("bmob","查询成功："+ary.toString());
-                    if (ary.length()>0) {
+        L.e("scanResult____" + scanResult);
+        BmobQuery<QRcode> bmobQuery = new BmobQuery<QRcode>();
+        bmobQuery.addWhereEqualTo("code", scanResult);
+        bmobQuery.setLimit(1);
+        bmobQuery.order("createdAt");
+        bmobQuery.findObjectsObservable(QRcode.class)
+                .subscribe(new Subscriber<List<QRcode>>() {
+                    @Override
+                    public void onCompleted() {
+                        Log.e("scanResult===", "scanResult：" + scanResult);
                         Message message = new Message();
                         message.what = 10;
                         message.obj = scanResult;
                         FragmentOrderTake.mHandler.sendMessage(message);
-                    }else{
-                        ToastUtil.showShortToast(CaptureActivity.this,"产品码不存在或者过期");
                     }
 
-                }else{
-                    Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
-                    ToastUtil.showShortToast(CaptureActivity.this,"产品码不存在或者过期");
-                }
-            }
-        });
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.i("bmob", "失败：" + e.getMessage() + ",");
+                        ToastUtil.showShortToast(CaptureActivity.this, "产品码不存在或者过期");
+                    }
+
+                    @Override
+                    public void onNext(List<QRcode> persons) {
+                        Log.e("查询成功：共", persons.size() + "条数据。");
+                    }
+                });
 
         SharedPreferences sp = this.getSharedPreferences("SCAN",
                 Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         String str = getIntent().getStringExtra("shebei");
-        if (str.equals("device1")){
+        if (str.equals("device1")) {
             editor.putString("scanResult1", scanResult);
-        }else if (str.equals("device2")){
+        } else if (str.equals("device2")) {
             editor.putString("scanResult2", scanResult);
-        }else if (str.equals("device3")){
+        } else if (str.equals("device3")) {
             editor.putString("scanResult3", scanResult);
-        }else if (str.equals("device4")){
+        } else if (str.equals("device4")) {
             editor.putString("scanResult4", scanResult);
-        }else if (str.equals("device5")){
+        } else if (str.equals("device5")) {
             editor.putString("scanResult5", scanResult);
         }
         editor.commit();
@@ -546,11 +551,11 @@ public final class CaptureActivity extends BaseActivity implements SurfaceHolder
     }
 
     private void validateCode(final String code) {
-        if (inputCode.getText().toString().trim().equals("")){
-            ToastUtil.showShortToast(CaptureActivity.this,"产品码不能为空");
+        if (inputCode.getText().toString().trim().equals("")) {
+            ToastUtil.showShortToast(CaptureActivity.this, "产品码不能为空");
             return;
         }
-        BmobQuery query =new BmobQuery("QRcode");
+        BmobQuery query = new BmobQuery("QRcode");
         query.addWhereEqualTo("code", code);
         query.setLimit(2);
         query.order("createdAt");
@@ -558,21 +563,21 @@ public final class CaptureActivity extends BaseActivity implements SurfaceHolder
         query.findObjectsByTable(new QueryListener<JSONArray>() {
             @Override
             public void done(JSONArray ary, BmobException e) {
-                if(e==null){
-                    Log.i("bmob","查询成功："+ary.toString());
-                    if (ary.length()>0) {
+                if (e == null) {
+                    Log.i("bmob", "查询成功：" + ary.toString());
+                    if (ary.length() > 0) {
                         Message message = new Message();
                         message.what = 10;
                         message.obj = code;
                         FragmentOrderTake.mHandler.sendMessage(message);
                         finish();
-                    }else{
-                        ToastUtil.showShortToast(CaptureActivity.this,"产品码不存在或者过期");
+                    } else {
+                        ToastUtil.showShortToast(CaptureActivity.this, "产品码不存在或者过期");
                     }
 
-                }else{
-                    Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
-                    ToastUtil.showShortToast(CaptureActivity.this,"产品码不存在或者过期");
+                } else {
+                    Log.i("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
+                    ToastUtil.showShortToast(CaptureActivity.this, "产品码不存在或者过期");
                 }
             }
         });

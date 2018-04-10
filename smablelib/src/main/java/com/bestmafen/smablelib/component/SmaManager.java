@@ -79,6 +79,7 @@ public class SmaManager {
         public static final byte PLAY_WORKE2           = 0x26;
         public static final byte GET_PRODUCT          = 0x3C;
         public static final byte EDIT_DEVICE_BLUETOOTH_NAME          = 0x5C;
+        public static final byte EDIT_DEVICE_BLUETOOTH_NAME2          = 0x5D;
     }
 
     public static final class BACK {
@@ -86,6 +87,7 @@ public class SmaManager {
         public static final byte WENDU    = 0x05;
         public static final byte FENGSU   = 0x06;
         public static final byte PRODUCT   = 0x3C;
+        public static final byte DEVICE_NAME   = 0x5D;//接收蓝牙设备名称
         public static final byte VOLTAGE       = 0x1F;
         public static final byte PUFF          = 0x20;
         public static final byte SMOKE_COUNT   = 0x23;
@@ -219,11 +221,7 @@ public class SmaManager {
                     if (data == null) return;
 
                     L.d("SmaManager onCharacteristicChanged " + EaseUtils.byteArray2HexString(data));
-                    try {
-                        parseData(data);
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    }
+                    parseData(data);
                     for (SmaCallback callback : mSmaCallbacks) {
                         callback.onRead(data);
                     }
@@ -304,7 +302,7 @@ public class SmaManager {
     /**
      * Parse the data received.
      */
-    private synchronized void parseData(byte[] data) throws UnsupportedEncodingException {
+    private synchronized void parseData(byte[] data){
         if (data == null || data.length != 11) return;
         if (data[1] == 0x8) return;
 
@@ -314,73 +312,90 @@ public class SmaManager {
         for (byte b : valuePart) {
             sb.append((char) b);
         }
-        Log.e("sb.toString()==",sb.toString());
-//        float value;
-//        if (!sb.toString().isEmpty()){
-//            value = Float.parseFloat(new String(sb.toString().getBytes("gbk"),"utf-8"));
-//        }else{
-//            value = Float.parseFloat("");
-//        }
-//        new String(sb.toString().getBytes("gbk"),"utf-8");
-        float value = Float.parseFloat(sb.toString());
+
+
         L.d("parseData " + EaseUtils.byteArray2HexString(data) + " , valuePart = " + sb.toString());
         switch (cmd) {
+            case BACK.DEVICE_NAME:
+
+                try {
+                    String str = new String(sb.toString().getBytes(), "Utf-8").trim();
+                    Log.e("sb.toString()==",str);
+                    for (SmaCallback bc : mSmaCallbacks) {
+                        bc.onReadDeviceName(sb.toString().getBytes());
+                    }
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                break;
             case BACK.PRODUCT:
+                float value = Float.parseFloat(sb.toString())+0.0f;
                 for (SmaCallback bc : mSmaCallbacks) {
                     bc.onReadProduct((int) value);
                 }
                 break;
             case BACK.FENGSU:
+                value = Float.parseFloat(sb.toString()) + 0.0f;
                 for (SmaCallback bc : mSmaCallbacks) {
                     bc.onReadFengsu((int) value);
                 }
                 break;
             case BACK.WENDU:
+                value = Float.parseFloat(sb.toString()) + 0.0f;
                 for (SmaCallback bc : mSmaCallbacks) {
                     bc.onReadWendu((int) value);
                 }
                 break;
             case BACK.TIME:
+                value = Float.parseFloat(sb.toString()) + 0.0f;
                 for (SmaCallback bc : mSmaCallbacks) {
                     bc.onReadTime((int) value);
                 }
                 break;
             case BACK.BEING_DORMANT:
+                value = Float.parseFloat(sb.toString()) + 0.0f;
                 for (SmaCallback bc : mSmaCallbacks) {
                     bc.onBeingDormant();
                 }
                 break;
             case BACK.CHARGING:
+                value = Float.parseFloat(sb.toString()) + 0.0f;
                 for (SmaCallback bc : mSmaCallbacks) {
                     bc.onCharging(value);
                 }
                 break;
             case BACK.NTC:
+                value = Float.parseFloat(sb.toString()) + 0.0f;
                 for (SmaCallback bc : mSmaCallbacks) {
                     bc.onNtcSwitch(false);
                 }
                 break;
             case BACK.PUFF:
+                value = Float.parseFloat(sb.toString()) + 0.0f;
                 for (SmaCallback bc : mSmaCallbacks) {
                     bc.onReadPuffCount((int) value);
                 }
                 break;
             case BACK.SMOKE_COUNT:
+                value = Float.parseFloat(sb.toString()) + 0.0f;
                 for (SmaCallback bc : mSmaCallbacks) {
                     bc.onReadSmokeCount((int) value);
                 }
                 break;
             case BACK.TEMPERATURE:
+                value = Float.parseFloat(sb.toString()) + 0.0f;
                 for (SmaCallback bc : mSmaCallbacks) {
                     bc.onReadTemperature((int) value);
                 }
                 break;
             case BACK.VOLTAGE:
+                value = Float.parseFloat(sb.toString()) + 0.0f;
                 for (SmaCallback bc : mSmaCallbacks) {
                     bc.onReadVoltage(value);
                 }
                 break;
             case BACK.CHARGE_COUNT:
+                value = Float.parseFloat(sb.toString()) + 0.0f;
                 for (SmaCallback bc : mSmaCallbacks) {
                     bc.onReadChargeCount((int) value);
                 }
@@ -507,9 +522,28 @@ public class SmaManager {
             return;
         }
 
-//        if (value.length != 6) {
-//            throw new IllegalArgumentException("value的长度必须为6");
-//        }
+        byte[] data = new byte[16];
+        System.arraycopy(value, 0, data, 2, value.length);
+        data[0] = 0x02;
+        data[1] = cmd;
+
+        mSmaMessenger.addMessage(new SmaMessenger.SmaMessage(mEaseConnector.mGatt, mEaseConnector.getGattCharacteristic
+                (UUID_SERVICE, UUID_CHARACTER_WRITE), data, SmaMessenger.MessageType.WRITE));
+    }
+
+    /**
+     * 写入命令到设备
+     *
+     * @param cmd   命令
+     * @param value 值，长度为6
+     */
+    public void write2(byte cmd, byte[] value) {
+        if (!isConnected) {
+            for (SmaCallback callback : mSmaCallbacks) {
+                callback.notConnected();
+            }
+            return;
+        }
 
         byte[] data = new byte[11];
         System.arraycopy(value, 0, data, 2, value.length);
@@ -518,13 +552,13 @@ public class SmaManager {
         data[9] = 0x0D;
         data[10] = 0x0A;
 
-//        int sum = 0;
-//        for (int i = 0; i < data.length; i++) {
-//            if (i != 18) {
-//                sum += (data[i] & 0xff);
-//            }
-//        }
-//        data[8] = (byte) (sum & 0xff);
+        int sum = 0;
+        for (int i = 0; i < data.length; i++) {
+            if (i != 8) {
+                sum += (data[i] & 0xff);
+            }
+        }
+        data[8] = (byte) (sum & 0xff);
 
         mSmaMessenger.addMessage(new SmaMessenger.SmaMessage(mEaseConnector.mGatt, mEaseConnector.getGattCharacteristic
                 (UUID_SERVICE, UUID_CHARACTER_WRITE), data, SmaMessenger.MessageType.WRITE));
