@@ -2,20 +2,17 @@
     <string name="app_name">瀚方</string>
     <string name="version">1.4</string>
     <string name="loading">正在加载…</string>
-
     <string name="just_now">刚刚</string>
     <string name="sec_before">%d秒前</string>
     <string name="min_before">%d分钟前</string>
     <string name="today">今天%tR</string>
     <string name="yesterday">昨天%tR</string>
     <string name="mill" translatable="false">%tc</string>
-
     <string name="tab_menu_wendu">温度</string>
     <string name="tab_menu_shijian">时间</string>
     <string name="tab_menu_fengsu">速度</string>
     <string name="toast_yzm_1">验证码为空,请重新填写验证码</string>
     <string name="toast_yzm_2">网络连接异常</string>
-
     <string name="plz_input_pwd_again">请再次输入密码</string>
     <string name="pwd_input_diff">两次输入的密码不一致</string>
     <string name="no_set">未设置</string>
@@ -81,27 +78,6 @@
     <string name="plz_input_feedback">请输入反馈内容</string>
     <string name="send_feedback_msg_success">感谢您的反馈，我们会悉心听取您的意见。</string>
     <string name="send_feedback_msg_failure">反馈提交失败，请重试</string>
-    <string name="notes_info">
-        \n
-        1:使用该APP前,你必须先用私人邮箱注册，且该邮箱将为密码恢复邮箱。
-        \n
-        \n
-        2:你必须选择正确的产品名
-        \n
-        \n
-        3:每循环口数计划是对每次通电时口数限制的计划。
-        \n
-        \n
-        4:温度选择其实是轻度抽烟者和重度抽烟者的选择，重度抽烟者用高温，轻度抽烟者用低温。
-        \n
-        \n
-        5:如果你不需要振动功能，可以关掉。
-        \n
-        \n
-        6:提醒页面有充电提醒，口数限制和设备维护这些信息。
-        \n
-        \n
-        7:充电维护是30天未充电的提醒。</string>
     <string name="company_name" translatable="false">葆威道科技有限公司</string>
     <string name="all_sum_num">总计节省费用</string>
     <string name="save">省钱</string>
@@ -130,7 +106,6 @@
     <string name="hk">港币</string>
     <string name="sure">确定</string>
     <string name="roger">知道了</string>
-
     <string name="telphone">电话号码</string>
     <string name="forget_pwd">忘记密码</string>
     <string name="login">登陆</string>
@@ -142,7 +117,6 @@
     <string name="text_agreement_myz_tips">我要开启30天免验证</string>
     <string name="text_agreement"> 《服务条款》 </string>
     <string name="text_user_agreement"> 服务条款 </string>
-
     <string name="fragme_personinfo">个人信息</string>
     <string name="fragme_device">设备</string>
     <string name="account_info">账号信息</string>
@@ -150,7 +124,6 @@
     <string name="fragme_about">关于</string>
     <string name="fragme_exit">退出登陆</string>
     <string name="account_validate">账号验证</string>
-
     <string name="organization_name1">单位名称</string>
     <string name="legal_representative1">法人代表</string>
     <string name="personinfo_head1">负责人</string>
@@ -166,7 +139,6 @@
     <string name="plz_input_personinfo_head">请输入负责人</string>
     <string name="plz_input_registration_mark">请输入执照号</string>
     <string name="plz_input_address">请输入地址</string>
-
     <string name="person_name">姓名:</string>
     <string name="person_sex">性别:</string>
     <string name="person_age">年龄:</string>
@@ -177,13 +149,11 @@
     <string name="person_age1">年龄</string>
     <string name="person_height1">身高</string>
     <string name="person_weight1">体重</string>
-
     <string name="plz_input_person_name">请输入姓名</string>
     <string name="plz_input_person_sex">性别</string>
     <string name="plz_input_person_age">年龄</string>
     <string name="plz_input_person_height">身高</string>
     <string name="plz_input_person_weight">体重</string>
-
     <string name="change_pwd">更改密码</string>
     <string name="change">修改</string>
     <string name="device_setting">设置</string>
@@ -203,7 +173,6 @@
     <string name="confirm_unbind_device">确认解绑当前设备？</string>
     <string name="connect_device">连接设备</string>
     <string name="scan">扫描</string>
-
     <string name="menu_scan">Scan</string>
     <string name="menu_stop">Stop</string>
     <string name="menu_connect">Connect</string>
@@ -271,7 +240,6 @@
     <string name="logo_open_status">打开状态下，二维码图片中央区域显示Logo</string>
     <string name="qrcode_fore_color">二维码前景色</string>
     <string name="qrcode_back_color">二维码背景色</string>
-
     <!--本地相册-->
     <string name="local_album">本地相册</string>
     <string name="picture_name_number">%1$s(%2$d张)</string>
@@ -287,13 +255,11 @@
     <string name="picture">图片</string>
     <string name="no_crop_action">您的设备没有提供裁剪图片功能</string>
     <string name="no_browser">您的设备没有提供内置浏览器</string>
-
     <!-- 音频播放 -->
     <string name="play_fail">播放失败</string>
     <string name="help_docs">帮助文档</string>
     <string name="version_num">版本</string>
     <string name="about_us">关于我们</string>
-
     <string name="company_web">www.bauway.com</string>
     <string name="company_phone">0755–29089555</string>
     <string name="company_address">广东省深圳市沙井街道南浦路蚝三林坡第一工业区B5栋</string>
@@ -319,40 +285,66 @@
 3、用户通过使用瀚方App的过程中所制作、上载、复制、发布、传播的任何内容，包括但不限于账号头像、名称、用户说明等注册信息及认证资料，或文字、语音、图片、视频、图文等发送、回复和相关链接页面，以及其他使用账号或本服务所产生的内容，不得违反国家相关法律制度，包含但不限于如下原则：  （1）反对宪法所确定的基本原则的；  （2）危害国家安全，泄露国家秘密，颠覆国家政权，破坏国家统一的； （3）损害国家荣誉和利益的；  （4）煽动民族仇恨、民族歧视，破坏民族团结的； （5）破坏国家宗教政策，宣扬邪教和封建迷信的； （6）散布谣言，扰乱社会秩序，破坏社会稳定的；  （7）散布淫秽、色情、赌博、暴力、凶杀、恐怖或者教唆犯罪的； （8）侮辱或者诽谤他人，侵害他人合法权益的； （9）含有法律、行政法规禁止的其他内容的。  \n
 4、用户不得利用瀚方App账号或本服务制作、上载、复制、发布、传播下干扰瀚方App正常运营，以及侵犯其他用户或第三方合法权益的内容：  （1）含有任何性或性暗示的； （2）含有辱骂、恐吓、威胁内容的；  （3）含有骚扰、垃圾广告、恶意信息、诱骗信息的。\n</string>
     <string name="tips_help_docs">
-        1,注册\n
-个人注册和单位注册\n
-2,忘记密码\n
+\t\t中医科技化,从瀚方开始.本产品根据传统中医药导理论、结合人体经络学、热敷穴位原理、生物药物动力学及现代微电子技术，运用靶向药离子导入、热能促进渗透等方式，模拟传统中医治疗方法，为激发人体组织的活力，提高人体新陈代谢. 设计先进：融合多种微电子技术，性能可靠和稳定，申请了专利保护； 操作简单：多种参数的设置快速便捷； 安全环保：13.4v的安全电压，安全有保障； 配置人性化：配有专属支架，便于使用
+Hanfang app主要服务瀚方熏疗系列产品, 通过蓝牙连接接收和发送指令控制熏疗仪的开关,温度,时间,风速的设定.支持添加多个设备,删除设备,修改设备信息,设备列表展示,记录缓存等主要功能.通过扫描获取产品码, 判断产品码的时效性,让用户更简单舒适的操作使用.\n
+1, 下载渠道\n
+360,百度,小米,华为,VIVO各大应用商店均可下载\n
+http://www.bauway.cn 官网下载\n
+2,注册\n
+个人注册和单位注册(支持30天免验证)\n
+3,完善注册信息\n
+个人信息和单位信息\n
+4,免验证到期提醒,以及手机验证\n
+允许用户30天无需验证,注册成功后再进行验证,如果30天之内账号没有验证通过,系统会提醒用户,并且不验证身份,将被限制使用设备的主要功能\n
+5,忘记密码\n
 通过验证码重置密码\n
-3,首页\n
+6,首页\n
 轮滑选择温度档位,设定时间,风速档位\n
 设备标签:点击进入设备列表界面,成功连接设备后显示设备名称\n
 产品码标签:点击进入扫码功能界面,成功扫码获取并显示\n
 红光开关:调节设备红光开关的按钮,只有在设备工作时有效\n
 开始工作,暂停工作点击切换\n
-4,扫码\n
+7,我\n
+显示账号信息\n
+帮助文档入口\n
+版本号查看\n
+关于我们入口\n
+8,扫码\n
 扫码完成后会回到首页\n
 可以调用系统相册里的产品码图片进行扫码\n
 可以手动输入正确的产品码\n
 右下角的图标表示,光线昏暗时开启灯光方便扫码\n
-5,个人信息\n
+9,个人信息\n
 显示登录账号的详细信息\n
 如果登录账号为单位注册账号,则显示单位相关信息\n
 如果登录账号为个人注册账号,则显示个人相关信息\n
-6,更改密码\n
+10,更改密码\n
 可以通过输入旧密码,直接设置新密码,完成后重新进入登录界面\n
-7,登录\n
+11,登录\n
 登录成功后进到首页\n
 包含”忘记密码”,”注册”的入口\n
-8,设备列表\n
+12,设备列表\n
 包含增加,删除,查询功能\n
 设备信息包括设备蓝牙名称(黑色字体显示)和设备蓝牙地址(灰色字体显示)\n
 设备信息栏左滑可以删除\n
-9, 连接设备\n
+13, 修改设备蓝牙名称\n
+方便用户记忆以及区分各个设备\n
+14, 连接设备\n
 扫描附近蓝牙设备,获取名称和地址,选择即可连接\n
-10, 下载渠道\n
-360,百度,小米各大应用商店均可下载\n
-http://www.bauway.cn 官网下载\n
-
-</string>
+15, 服务条款\n
+注册用户需阅读并同意以上协议方可注册\n
+16, 关于我们\n
+展示官方网址,联系电话,联系地址\n
+17, 常见问题解答\n
+Q:点击验证码无反应\n
+A: 一天一个应用给同一手机号发送的短信不能超过10条\n
+Q:设备切换后,设备无法正常工作\n
+A:设备切换是一个重新连接的过程,这个过程不是实时的,根据手机配置,根据测试环境等因素,时间上会有差距,正常是10秒钟.切换设备时要确保选择的设备是正确的\n
+Q:安装时检测到瀚方App高风险,甚至有病毒\n
+A:首先瀚方App是绝对绿色实用的应用程序,不会包含任何吸费陷阱或广告,更加不会存在病毒.然后各个平台的应用商店,对于上架的APP都有严格的审核和检查机制的,因此App本身是不可能有病毒风险\n
+Q:切换设备时,操作APP设备无反应\n
+A:可能出现设备信息一直在获取,指令一直在收发,进程处于拥挤状态,一直在请求加载,这时候可以放弃等待,让设备断电重启或者关闭APP进程\n
+Q:修改设备名后,操作APP设备无反应\n
+A:修改设备名后,设备会断开重连,这个过程需要大概1~20秒时间\n</string>
 
 </resources>
