@@ -175,15 +175,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dp10"
-                        android:text="产品码:"
+                        android:text="授权时间:"
                         android:textColor="@color/text_color_2"
                         android:textSize="14dp" />
 
                     <TextView
                         android:id="@+id/tv_frag_device_ypcode"
-                        android:layout_width="wrap_content"
+                        android:layout_width="180dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
+                        android:maxLines="3"
                         android:text=""
                         android:textColor="@color/text_color_2"
                         android:textSize="14dp" />
@@ -208,13 +209,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:orientation="horizontal">
-            <LinearLayout
-                android:id="@+id/ll_hongguang"
-                android:layout_width="0dp"
-                android:layout_height="55dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="2dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
@@ -229,11 +224,20 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/tv_account_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dp10"
-                        android:text="红光"
+                        android:text="授权设备:"
+                        android:textColor="@color/text_color_2"
+                        android:textSize="14dp" />
+
+                    <TextView
+                        android:id="@+id/tv_frag_device_ypcode2"
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:maxLines="3"
+                        android:text=""
                         android:textColor="@color/text_color_2"
                         android:textSize="14dp" />
 
@@ -243,45 +247,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="right">
-                    <CheckBox
-                        android:id="@+id/checkbox_dengguang"
-                        android:layout_width="45dp"
-                        android:layout_height="23dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
+
+                    <ImageView
+                        android:id="@+id/iv_device_drug_codesss2"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="5dp"
                         android:layout_marginRight="@dimen/dp10"
-                        android:background="@drawable/selector_chekbox_follow"
-                        android:button="@null" />
+                        android:background="@drawable/icon_device_drug_code" />
                 </RelativeLayout>
-            </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/ll_unbind_device"
-                    android:layout_width="0dp"
-                    android:layout_height="55dp"
-                    android:visibility="gone"
-                    android:layout_weight="1"
-                    android:layout_marginBottom="2dp"
-                    android:layout_marginRight="15dp"
-                    android:padding="2dp"
-                    android:background="@drawable/shape_circle_edt_input"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/bluetooth_off"/>
-
-                    </LinearLayout>
-                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -295,11 +270,15 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:id="@+id/iv_find_play1"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:background="@drawable/play" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:text="授权"
+                    android:padding="@dimen/dp_10"
+                    android:background="@drawable/shape_circle_edt_input"
+                    android:textColor="@drawable/tab_menu_text"
+                    android:textSize="16dp" />
             </LinearLayout>
 
         </LinearLayout>

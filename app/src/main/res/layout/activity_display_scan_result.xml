@@ -16,7 +16,7 @@
             android:id="@+id/action_back"
             style="@style/action_icon"
             android:layout_alignParentLeft="true"
-            android:src="@drawable/ic_action_previous_item"/>
+            android:src="@drawable/selector_radio_return"/>
 
         <TextView
             style="@style/action_title"

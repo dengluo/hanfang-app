@@ -56,6 +56,7 @@ import bauway.com.hanfang.util.DialogUtil;
 import bauway.com.hanfang.util.NetworkUtil;
 import bauway.com.hanfang.util.ToastUtil;
 import bauway.com.hanfang.zxing.activity.CaptureActivity;
+import bauway.com.hanfang.zxing.encoding.IsChineseOrNot;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.QueryListener;
@@ -74,17 +75,17 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
     private RadioButton rb_channel;
     private RadioButton rb_message;
     private RadioButton rb_better;
-    private TextView tv_frag_wendu, tv_frag_time, tv_frag_fengsu, tv_frag_device_name, tv_frag_device_ypcode;
-    private ImageView iv_device_drug_codesss, iv_device_bluetooth, iv_find_play1;
-    private LinearLayout ll_unbind_device;
+    private TextView tv_frag_wendu, tv_frag_time, tv_frag_fengsu, tv_frag_device_name, tv_frag_device_ypcode,tv_frag_device_ypcode2;
+    private ImageView iv_device_drug_codesss, iv_device_drug_codesss2, iv_device_bluetooth;
+//    private LinearLayout ll_unbind_device;
     private ViewPager vpager;
-    private CheckBox checkbox_dengguang;
+//    private CheckBox checkbox_dengguang;
 
     private MyFragmentPagerAdapter mAdapter;
     private SmaManager mSmaManager;
     private SmaCallback mSmaCallback;
     private Boolean iswork = true;
-    private LinearLayout ll_hongguang;
+//    private LinearLayout ll_hongguang;
 
     //几个代表页面的常量
     public static final int PAGE_ONE = 0;
@@ -143,13 +144,60 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
             public void handleMessage(Message msg) {
                 switch (msg.what) {
                     case 19:
-                        ll_hongguang.setVisibility(View.VISIBLE);
+//                        ll_hongguang.setVisibility(View.VISIBLE);
                         break;
                     case 9:
-                        ll_hongguang.setVisibility(View.GONE);
+//                        ll_hongguang.setVisibility(View.GONE);
                         break;
                     case 10:
-                        tv_frag_device_ypcode.setText(msg.obj.toString());
+                        String UTF_Str="";
+                        String GB_Str="";
+                        boolean is_cN=false;
+                        try {
+                            System.out.println("------------"+msg.obj.toString());
+                            UTF_Str=new String(msg.obj.toString().getBytes("ISO-8859-1"),"UTF-8");
+                            System.out.println("这是转了UTF-8的"+UTF_Str);
+                            is_cN= IsChineseOrNot.isChineseCharacter(UTF_Str);
+                            //防止有人特意使用乱码来生成二维码来判断的情况
+                            boolean b=IsChineseOrNot.isSpecialCharacter(msg.obj.toString());
+                            if(b){
+                                is_cN=true;
+                            }
+                            System.out.println("是为:"+is_cN);
+                            if(!is_cN){
+                                GB_Str=new String(msg.obj.toString().getBytes("ISO-8859-1"),"GB2312");
+                                System.out.println("这是转了GB2312的"+GB_Str);
+                            }
+                        } catch (UnsupportedEncodingException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                        tv_frag_device_ypcode.setText(GB_Str);
+                        break;
+                    case 100:
+                        String UTF_Str2="";
+                        String GB_Str2="";
+                        boolean is_cN2=false;
+                        try {
+                            System.out.println("------------"+msg.obj.toString());
+                            UTF_Str2=new String(msg.obj.toString().getBytes("ISO-8859-1"),"UTF-8");
+                            System.out.println("这是转了UTF-8的"+UTF_Str2);
+                            is_cN2= IsChineseOrNot.isChineseCharacter(UTF_Str2);
+                            //防止有人特意使用乱码来生成二维码来判断的情况
+                            boolean b=IsChineseOrNot.isSpecialCharacter(msg.obj.toString());
+                            if(b){
+                                is_cN2=true;
+                            }
+                            System.out.println("是为:"+is_cN2);
+                            if(!is_cN2){
+                                GB_Str2=new String(msg.obj.toString().getBytes("ISO-8859-1"),"GB2312");
+                                System.out.println("这是转了GB2312的"+GB_Str2);
+                            }
+                        } catch (UnsupportedEncodingException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                        tv_frag_device_ypcode2.setText(GB_Str2);
                         break;
                     case 11:
                         SharedPreferences sharedPreferencesWendu1 = context.getSharedPreferences(
@@ -220,11 +268,11 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
 
                         if (!mSmaManager.isConnected) {
                             ToastUtils.showShortSafe(R.string.device_not_connected);
-                            checkbox_dengguang.setChecked(false);
+//                            checkbox_dengguang.setChecked(false);
                             return;
                         }
                         tv_frag_device_name.setText(deviceName);
-                        ll_unbind_device.setVisibility(View.VISIBLE);
+//                        ll_unbind_device.setVisibility(View.VISIBLE);
                         mSmaManager.setNameAndAddress(deviceName, deviceAddress);
                         mSmaManager.mEaseConnector.setAddress(deviceAddress);
 //                        mSmaManager.write(SmaManager.SET.GET_PRODUCT);
@@ -234,18 +282,18 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                         Log.e("15", "15");
                         if (mSmaManager.getNameAndAddress()[0].equals("")) {
                             tv_frag_device_name.setText("未连接");
-                            ll_unbind_device.setVisibility(View.GONE);
+//                            ll_unbind_device.setVisibility(View.GONE);
                         } else {
                             tv_frag_device_name.setText(mSmaManager.getNameAndAddress()[0]);
-                            ll_unbind_device.setVisibility(View.VISIBLE);
+//                            ll_unbind_device.setVisibility(View.VISIBLE);
                         }
                         break;
                     case 21:
                         if (mSmaManager.getNameAndAddress()[0].equals("")) {
                             tv_frag_device_name.setText("未连接");
-                            ll_unbind_device.setVisibility(View.GONE);
+//                            ll_unbind_device.setVisibility(View.GONE);
                         } else {
-                            ll_unbind_device.setVisibility(View.VISIBLE);
+//                            ll_unbind_device.setVisibility(View.VISIBLE);
                             if (msg.obj.equals("1")) {
                                 tv_frag_wendu.setText("一 档");
                             } else if (msg.obj.equals("2")) {
@@ -265,9 +313,9 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                     case 22:
                         if (mSmaManager.getNameAndAddress()[0].equals("")) {
                             tv_frag_device_name.setText("未连接");
-                            ll_unbind_device.setVisibility(View.GONE);
+//                            ll_unbind_device.setVisibility(View.GONE);
                         } else {
-                            ll_unbind_device.setVisibility(View.VISIBLE);
+//                            ll_unbind_device.setVisibility(View.VISIBLE);
                             if (msg.obj.equals("1")) {
                                 tv_frag_fengsu.setText("低 档");
                             } else if (msg.obj.equals("2")) {
@@ -280,10 +328,10 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                     case 23:
                         if (mSmaManager.getNameAndAddress()[0].equals("")) {
                             tv_frag_device_name.setText("未连接");
-                            ll_unbind_device.setVisibility(View.GONE);
+//                            ll_unbind_device.setVisibility(View.GONE);
                         } else {
                             tv_frag_time.setText(msg.obj + " min");
-                            ll_unbind_device.setVisibility(View.VISIBLE);
+//                            ll_unbind_device.setVisibility(View.VISIBLE);
                         }
                         break;
                 }
@@ -336,61 +384,88 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
         rb_channel = (RadioButton) view_main.findViewById(R.id.rb_channel);
         rb_message = (RadioButton) view_main.findViewById(R.id.rb_message);
         rb_better = (RadioButton) view_main.findViewById(R.id.rb_better);
-        iv_find_play1 = (ImageView) view_main.findViewById(R.id.iv_find_play1);
-        checkbox_dengguang = (CheckBox) view_main.findViewById(R.id.checkbox_dengguang);
-        checkbox_dengguang.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (checkbox_dengguang.isChecked()) {
-                    if (!mSmaManager.isConnected) {
-                        ToastUtils.showShortSafe(R.string.device_not_connected);
-                        checkbox_dengguang.setChecked(false);
-                        return;
-                    }
-                    mSmaManager.write(SmaManager.SET.ENABLE_GOAL_LIGHT);
-                } else {
-                    if (!mSmaManager.isConnected) {
-                        ToastUtils.showShortSafe(R.string.device_not_connected);
-                        checkbox_dengguang.setChecked(false);
-                        return;
-                    }
-//                    ToastUtil.showShortToast(context, "close");
-                    mSmaManager.write(SmaManager.SET.DISABLE_GOAL_LIGHT);
-                }
-            }
-        });
+//        iv_find_play1 = (ImageView) view_main.findViewById(R.id.iv_find_play1);
+//        checkbox_dengguang = (CheckBox) view_main.findViewById(R.id.checkbox_dengguang);
+//        checkbox_dengguang.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (checkbox_dengguang.isChecked()) {
+//                    if (!mSmaManager.isConnected) {
+//                        ToastUtils.showShortSafe(R.string.device_not_connected);
+//                        checkbox_dengguang.setChecked(false);
+//                        return;
+//                    }
+//                    mSmaManager.write(SmaManager.SET.ENABLE_GOAL_LIGHT);
+//                } else {
+//                    if (!mSmaManager.isConnected) {
+//                        ToastUtils.showShortSafe(R.string.device_not_connected);
+//                        checkbox_dengguang.setChecked(false);
+//                        return;
+//                    }
+////                    ToastUtil.showShortToast(context, "close");
+//                    mSmaManager.write(SmaManager.SET.DISABLE_GOAL_LIGHT);
+//                }
+//            }
+//        });
         tv_frag_wendu = (TextView) view_main.findViewById(R.id.tv_frag_wendu);
         tv_frag_time = (TextView) view_main.findViewById(R.id.tv_frag_time);
         tv_frag_fengsu = (TextView) view_main.findViewById(R.id.tv_frag_fengsu);
         tv_frag_device_name = (TextView) view_main.findViewById(R.id.tv_frag_device_name);
         tv_frag_device_ypcode = (TextView) view_main.findViewById(R.id.tv_frag_device_ypcode);
-        ll_hongguang = (LinearLayout) view_main.findViewById(R.id.ll_hongguang);
-        ll_unbind_device = (LinearLayout) view_main.findViewById(R.id.ll_unbind_device);
+        tv_frag_device_ypcode2 = (TextView) view_main.findViewById(R.id.tv_frag_device_ypcode2);
+//        ll_hongguang = (LinearLayout) view_main.findViewById(R.id.ll_hongguang);
+//        ll_unbind_device = (LinearLayout) view_main.findViewById(R.id.ll_unbind_device);
 
         if (mSmaManager.getNameAndAddress()[0].equals("")) {
             tv_frag_device_name.setText("未连接");
-            ll_unbind_device.setVisibility(View.GONE);
+//            ll_unbind_device.setVisibility(View.GONE);
         } else {
             tv_frag_device_name.setText(mSmaManager.getNameAndAddress()[0]);
-            ll_unbind_device.setVisibility(View.VISIBLE);
+//            ll_unbind_device.setVisibility(View.VISIBLE);
         }
 
         tv_frag_device_name.setOnClickListener(this);
         if (mSmaManager.getNameAndAddress()[0].equals("")) {
             tv_frag_device_ypcode.setText("");
+            tv_frag_device_ypcode2.setText("");
         } else {
             SharedPreferences mSpScan = context.getSharedPreferences(
                     "SCAN", Activity.MODE_PRIVATE);
             String scanResult1 = mSpScan.getString("scanResult1", "未输入");
-            tv_frag_device_ypcode.setText(scanResult1);
+            String UTF_Str="";
+            String GB_Str="";
+            boolean is_cN=false;
+            try {
+                System.out.println("------------"+scanResult1);
+                UTF_Str=new String(scanResult1.getBytes("ISO-8859-1"),"UTF-8");
+                System.out.println("这是转了UTF-8的"+UTF_Str);
+                is_cN= IsChineseOrNot.isChineseCharacter(UTF_Str);
+                //防止有人特意使用乱码来生成二维码来判断的情况
+                boolean b=IsChineseOrNot.isSpecialCharacter(scanResult1);
+                if(b){
+                    is_cN=true;
+                }
+                System.out.println("是为:"+is_cN);
+                if(!is_cN){
+                    GB_Str=new String(scanResult1.getBytes("ISO-8859-1"),"GB2312");
+                    System.out.println("这是转了GB2312的"+GB_Str);
+                }
+            } catch (UnsupportedEncodingException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            tv_frag_device_ypcode.setText(GB_Str);
+            tv_frag_device_ypcode2.setText(UTF_Str);
 //            tv_frag_device_ypcode.setText(msg.obj.toString());
         }
         iv_device_drug_codesss = (ImageView) view_main.findViewById(R.id.iv_device_drug_codesss);
+        iv_device_drug_codesss2 = (ImageView) view_main.findViewById(R.id.iv_device_drug_codesss2);
         iv_device_bluetooth = (ImageView) view_main.findViewById(R.id.iv_device_bluetooth);
         iv_device_drug_codesss.setOnClickListener(this);
+        iv_device_drug_codesss2.setOnClickListener(this);
         iv_device_bluetooth.setOnClickListener(this);
-        ll_unbind_device.setOnClickListener(this);
-        iv_find_play1.setOnClickListener(this);
+//        ll_unbind_device.setOnClickListener(this);
+//        iv_find_play1.setOnClickListener(this);
         rg_tab_bar.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -466,6 +541,14 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                     ToastUtils.showShortSafe(R.string.tip_validate);
                 }
                 break;
+
+            case R.id.iv_device_drug_codesss2:
+                if (isok) {
+                    startActivity(new Intent(context, CaptureActivity.class).putExtra("shebei", "device2"));
+                } else {
+                    ToastUtils.showShortSafe(R.string.tip_validate);
+                }
+                break;
             case R.id.iv_device_bluetooth:
                 if (isok) {
                     startActivity(new Intent(context, DeviceListActivity.class));
@@ -473,42 +556,42 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                     ToastUtils.showShortSafe(R.string.tip_validate);
                 }
                 break;
-            case R.id.ll_unbind_device:
-                DialogUtil.defaultDialog(context, getString(R.string.confirm_unbind_device), null, null, new
-                        DialogCallback() {
-
-                            @Override
-                            public void execute(Object dialog, Object content) {
-                                //确认解绑
-                                SmaManager.getInstance().unbind();
-                                ll_unbind_device.setVisibility(View.GONE);
-                                tv_frag_device_name.setText("未连接");
-                            }
-                        });
-                break;
-            case R.id.iv_find_play1:
-                if (!isok) {
-                    ToastUtils.showShortSafe(R.string.tip_validate);
-                    return;
-                }
-                checkBluetoothValid();
-                if (!mSmaManager.isConnected) {
-                    ToastUtils.showShortSafe(R.string.device_not_connected);
-                    return;
-                }
-                if (tv_frag_device_ypcode.getText().toString().trim().equals("")) {
-                    ToastUtils.showShortSafe(R.string.code_not_scan);
-                    return;
-                }
-                if (iswork) {
-                    iv_find_play1.setBackgroundResource(R.drawable.pause);
-                    iswork = false;
-                } else {
-                    iv_find_play1.setBackgroundResource(R.drawable.play);
-                    iswork = true;
-                }
-                mSmaManager.write(SmaManager.SET.PLAY_WORKE);
-                break;
+//            case R.id.ll_unbind_device:
+//                DialogUtil.defaultDialog(context, getString(R.string.confirm_unbind_device), null, null, new
+//                        DialogCallback() {
+//
+//                            @Override
+//                            public void execute(Object dialog, Object content) {
+//                                //确认解绑
+//                                SmaManager.getInstance().unbind();
+//                                ll_unbind_device.setVisibility(View.GONE);
+//                                tv_frag_device_name.setText("未连接");
+//                            }
+//                        });
+//                break;
+//            case R.id.iv_find_play1:
+//                if (!isok) {
+//                    ToastUtils.showShortSafe(R.string.tip_validate);
+//                    return;
+//                }
+//                checkBluetoothValid();
+//                if (!mSmaManager.isConnected) {
+//                    ToastUtils.showShortSafe(R.string.device_not_connected);
+//                    return;
+//                }
+//                if (tv_frag_device_ypcode.getText().toString().trim().equals("")) {
+//                    ToastUtils.showShortSafe(R.string.code_not_scan);
+//                    return;
+//                }
+//                if (iswork) {
+//                    iv_find_play1.setBackgroundResource(R.drawable.pause);
+//                    iswork = false;
+//                } else {
+//                    iv_find_play1.setBackgroundResource(R.drawable.play);
+//                    iswork = true;
+//                }
+//                mSmaManager.write(SmaManager.SET.PLAY_WORKE);
+//                break;
         }
     }
 

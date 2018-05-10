@@ -47,14 +47,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.MainActivity2" />
-        <activity
-            android:name=".activity.LocalAlbumActivity"
-            android:launchMode="singleTop"
-            android:theme="@style/Transparent.Light" />
-        <activity
-            android:name=".activity.LocalAlbumDetailActivity"
-            android:launchMode="singleTop"
-            android:theme="@style/Transparent.Light" />
+        <activity android:name=".activity.LocalAlbumActivity" />
+        <activity android:name=".activity.LocalAlbumDetailActivity" />
         <activity android:name=".activity.RegisterActivity" />
         <activity android:name=".activity.ForgetPasswordActivity" />
         <activity android:name=".activity.ForgetPasswordActivity2" />

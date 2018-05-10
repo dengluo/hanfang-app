@@ -338,7 +338,11 @@ public final class CaptureActivity extends BaseActivity implements SurfaceHolder
                     public void onCompleted() {
                         Log.e("scanResult===", "scanResult：" + scanResult);
                         Message message = new Message();
-                        message.what = 10;
+                        if(getIntent().getStringExtra("shebei").equals("device1")){
+                            message.what = 10;
+                        }else {
+                            message.what = 100;
+                        }
                         message.obj = scanResult;
                         FragmentOrderTake.mHandler.sendMessage(message);
                     }
@@ -567,7 +571,11 @@ public final class CaptureActivity extends BaseActivity implements SurfaceHolder
                     Log.i("bmob", "查询成功：" + ary.toString());
                     if (ary.length() > 0) {
                         Message message = new Message();
-                        message.what = 10;
+                        if(getIntent().getStringExtra("shebei").equals("device1")){
+                            message.what = 10;
+                        }else {
+                            message.what = 100;
+                        }
                         message.obj = code;
                         FragmentOrderTake.mHandler.sendMessage(message);
                         finish();

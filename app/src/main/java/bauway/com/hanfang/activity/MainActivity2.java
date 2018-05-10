@@ -12,6 +12,8 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -79,8 +81,18 @@ public class MainActivity2 extends BaseActivity implements View.OnClickListener 
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void initView() {
+        //沉浸式状态栏设置
+//        this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        Window window = getWindow();
+        //取消设置透明状态栏,使 ContentView 内容不再覆盖状态栏
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        //需要设置这个 flag 才能调用 setStatusBarColor 来设置状态栏颜色
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        //设置状态栏颜色
+        window.setStatusBarColor(getColor(R.color.blue_ice));
         Intent intent =getIntent();
         strDevice1 = intent.getStringExtra("deviceName1");
         tabAdapter = new FragmentTabAdapter(this,

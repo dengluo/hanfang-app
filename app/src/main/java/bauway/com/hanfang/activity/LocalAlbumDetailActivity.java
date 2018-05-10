@@ -79,7 +79,7 @@ public class LocalAlbumDetailActivity extends BaseActivity implements View.OnCli
 
     @Override
     protected void initView() {
-        MyUtil.setBackgroundBlur(backGround, this);
+//        MyUtil.setBackgroundBlur(backGround, this);
         mRequestType = getIntent().getIntExtra(Constants.REQUEST_LOCAL_ALBUM_TYPE, 0);
         assignViews();
     }

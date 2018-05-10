@@ -135,14 +135,19 @@
         </LinearLayout>
 
         <RelativeLayout
-            style="@style/action_llyt"
-            android:background="@color/blue_ice">
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:background="@color/blue_ice"
+            android:padding="10dp">
 
             <ImageView
                 android:id="@+id/action_back"
-                style="@style/action_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
-                android:src="@drawable/ic_action_previous_item" />
+                android:background="@drawable/selector_radio_return"
+                android:gravity="left|center_vertical"
+                android:padding="@dimen/dp5"/>
 
             <TextView
                 style="@style/action_title"

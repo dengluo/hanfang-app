@@ -22,7 +22,7 @@ public final class L {
     /**
      * The default tag.
      */
-    private static final String TAG = "Alarm";
+    private static final String TAG = "hanfang-app";
 
     /**
      * Log.v().

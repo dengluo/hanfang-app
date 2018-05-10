@@ -1,32 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/background"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
-    >
+    android:background="@color/black">
 
     <RelativeLayout
         android:id="@+id/action_bar"
-        style="@style/action_llyt"
-        >
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:background="@color/blue_ice"
+        android:padding="10dp">
 
         <ImageView
             android:id="@+id/action_back"
-            style="@style/action_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
-            android:src="@drawable/ic_action_previous_item"/>
+            android:background="@drawable/selector_radio_return"
+            android:gravity="left|center_vertical"
+            android:padding="@dimen/dp5" />
 
         <TextView
             style="@style/action_title"
-            android:text="@string/local_album"/>
+            android:text="@string/local_album" />
 
         <TextView
             android:id="@+id/action_capture"
             style="@style/action_tv"
             android:layout_alignParentRight="true"
-            android:text="@string/capture"/>
+            android:text="@string/capture" />
 
     </RelativeLayout>
 
@@ -56,9 +59,9 @@
             android:text="@string/no_local_album"
             android:textColor="@color/white_trans90"
             android:textSize="16sp"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
-        <include layout="@layout/layout_loading"/>
+        <include layout="@layout/layout_loading" />
     </FrameLayout>
 </RelativeLayout>
 
