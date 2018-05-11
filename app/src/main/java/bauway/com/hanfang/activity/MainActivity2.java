@@ -92,7 +92,7 @@ public class MainActivity2 extends BaseActivity implements View.OnClickListener 
         //需要设置这个 flag 才能调用 setStatusBarColor 来设置状态栏颜色
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         //设置状态栏颜色
-        window.setStatusBarColor(getColor(R.color.blue_ice));
+//        window.setStatusBarColor(getColor(R.color.blue_ice));
         Intent intent =getIntent();
         strDevice1 = intent.getStringExtra("deviceName1");
         tabAdapter = new FragmentTabAdapter(this,
@@ -246,6 +246,38 @@ public class MainActivity2 extends BaseActivity implements View.OnClickListener 
                         Message message = new Message();
                         message.what = 23;
                         message.obj = String.valueOf(count);
+                        FragmentOrderTake.mHandler.sendMessage(message);
+                    }
+                });
+            }
+
+            @Override
+            public void onReadEmpowerTime(final int count) {
+                runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        //传递消息,接收设备发来的"授权使用时间"
+                        Log.e("empowerTime==",String.valueOf(count));
+                        Message message = new Message();
+                        message.what = 24;
+                        message.arg1 = count;
+                        FragmentOrderTake.mHandler.sendMessage(message);
+                    }
+                });
+            }
+
+            @Override
+            public void onReadEmpowerCount(final int count) {
+                runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        //传递消息,接收设备发来的"授权使用次数"
+                        Log.e("EmpowerCount==",String.valueOf(count));
+                        Message message = new Message();
+                        message.what = 25;
+                        message.arg1 = count;
                         FragmentOrderTake.mHandler.sendMessage(message);
                     }
                 });

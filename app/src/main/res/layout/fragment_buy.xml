@@ -58,8 +58,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.7"
-        android:orientation="vertical"
-        android:background="@color/gray_divider_line">
+        android:background="@color/gray_divider_line"
+        android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/ll_frag_text"
@@ -110,10 +110,10 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="10dp"
-                android:padding="2dp"
                 android:background="@drawable/shape_circle_edt_input"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="2dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -148,9 +148,9 @@
                         android:id="@+id/iv_device_bluetooth"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:layout_marginTop="5dp"
                         android:layout_marginBottom="5dp"
                         android:layout_marginRight="@dimen/dp10"
+                        android:layout_marginTop="5dp"
                         android:background="@drawable/icon_device_bluetooth" />
                 </RelativeLayout>
             </LinearLayout>
@@ -161,10 +161,10 @@
                 android:layout_marginBottom="2dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:padding="2dp"
                 android:background="@drawable/shape_circle_edt_input"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="2dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -172,6 +172,7 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/tv_empower_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dp10"
@@ -200,23 +201,24 @@
                         android:id="@+id/iv_device_drug_codesss"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:layout_marginTop="5dp"
                         android:layout_marginBottom="5dp"
                         android:layout_marginRight="@dimen/dp10"
+                        android:layout_marginTop="5dp"
                         android:background="@drawable/icon_device_drug_code" />
                 </RelativeLayout>
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_empower_device"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="2dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:padding="2dp"
                 android:background="@drawable/shape_circle_edt_input"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="2dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -252,33 +254,136 @@
                         android:id="@+id/iv_device_drug_codesss2"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:layout_marginTop="5dp"
                         android:layout_marginBottom="5dp"
                         android:layout_marginRight="@dimen/dp10"
+                        android:layout_marginTop="5dp"
                         android:background="@drawable/icon_device_drug_code" />
                 </RelativeLayout>
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_device_connect_state"
+                android:id="@+id/ll_empower"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="55dp"
+                android:layout_marginBottom="2dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginBottom="10dp"
                 android:background="@drawable/shape_circle_edt_input"
                 android:gravity="center"
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/empower"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp10"
-                    android:text="授权"
-                    android:padding="@dimen/dp_10"
                     android:background="@drawable/shape_circle_edt_input"
+                    android:padding="@dimen/dp_10"
+                    android:text="授权"
                     android:textColor="@drawable/tab_menu_text"
                     android:textSize="16dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_home_hg"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:visibility="gone"
+                android:layout_marginBottom="2dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/ll_hongguang"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_circle_edt_input"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="2dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_account_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp10"
+                            android:text="红光"
+                            android:textColor="@color/text_color_2"
+                            android:textSize="14dp" />
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="right">
+
+                        <CheckBox
+                            android:id="@+id/checkbox_dengguang"
+                            android:layout_width="45dp"
+                            android:layout_height="23dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginRight="@dimen/dp10"
+                            android:layout_marginTop="5dp"
+                            android:background="@drawable/selector_chekbox_follow"
+                            android:button="@null" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_unbind_device"
+                    android:layout_width="0dp"
+                    android:layout_height="55dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_circle_edt_input"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="2dp"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bluetooth_off" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_device_connect_state"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:visibility="gone"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/shape_circle_edt_input"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/iv_find_play1"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/play" />
             </LinearLayout>
 
         </LinearLayout>

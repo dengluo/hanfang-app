@@ -80,9 +80,11 @@ import bauway.com.hanfang.zxing.utils.CaptureActivityHandler;
 import bauway.com.hanfang.zxing.utils.InactivityTimer;
 import butterknife.BindView;
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.datatype.BmobQueryResult;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.SQLQueryListener;
 import rx.Subscriber;
 
 /**
@@ -337,11 +339,54 @@ public final class CaptureActivity extends BaseActivity implements SurfaceHolder
                     @Override
                     public void onCompleted() {
                         Log.e("scanResult===", "scanResult：" + scanResult);
+                        Log.e("substring===", "substring：" + scanResult.substring(0,4));
                         Message message = new Message();
                         if(getIntent().getStringExtra("shebei").equals("device1")){
-                            message.what = 10;
+                            if (scanResult.substring(0,4).equals("6970")){
+                                Log.e("2===", "scanResult：" + 23);
+                                SelectData1(scanResult);
+                                message.what = 101;
+                            }else if(scanResult.substring(0,5).equals("V0001")){
+                                SelectData2(scanResult);
+                                message.what = 102;
+                            }else if(scanResult.substring(0,5).equals("IIa01")){
+                                SelectData3(scanResult);
+                                message.what = 102;
+                            }else if(scanResult.substring(0,5).equals("Iva01")){
+                                SelectData4(scanResult);
+                                message.what = 102;
+                            }else if(scanResult.substring(0,5).equals("Ivb01")){
+                                SelectData5(scanResult);
+                                message.what = 102;
+                            }else if(scanResult.substring(0,5).equals("IIb01")){
+                                SelectData6(scanResult);
+                                message.what = 102;
+                            }else if(scanResult.substring(0,5).equals("B0001")){
+                                SelectData7(scanResult);
+                                message.what = 102;
+                            }else if(scanResult.substring(0,5).equals("T0001")){
+                                SelectData8(scanResult);
+                                message.what = 102;
+                            }else if(scanResult.substring(0,5).equals("A0001")){
+                                SelectData9(scanResult);
+                                message.what = 102;
+                            }else if(scanResult.substring(0,5).equals("VI001")){
+                                SelectData10(scanResult);
+                                message.what = 102;
+                            }else if(scanResult.substring(0,5).equals("Ib001")){
+                                SelectData11(scanResult);
+                                message.what = 102;
+                            }else if(scanResult.substring(0,5).equals("Ia001")){
+                                SelectData12(scanResult);
+                                message.what = 102;
+                            }else {
+                                SelectData1(scanResult);
+                                message.what = 102;
+                            }
+
                         }else {
-                            message.what = 100;
+                            SelectDataDeviceSN(scanResult);
+                            message.what = 18;
                         }
                         message.obj = scanResult;
                         FragmentOrderTake.mHandler.sendMessage(message);
@@ -359,23 +404,407 @@ public final class CaptureActivity extends BaseActivity implements SurfaceHolder
                     }
                 });
 
-        SharedPreferences sp = this.getSharedPreferences("SCAN",
-                Activity.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        String str = getIntent().getStringExtra("shebei");
-        if (str.equals("device1")) {
-            editor.putString("scanResult1", scanResult);
-        } else if (str.equals("device2")) {
-            editor.putString("scanResult2", scanResult);
-        } else if (str.equals("device3")) {
-            editor.putString("scanResult3", scanResult);
-        } else if (str.equals("device4")) {
-            editor.putString("scanResult4", scanResult);
-        } else if (str.equals("device5")) {
-            editor.putString("scanResult5", scanResult);
-        }
-        editor.commit();
+//        SharedPreferences sp = this.getSharedPreferences("SCAN",
+//                Activity.MODE_PRIVATE);
+//        SharedPreferences.Editor editor = sp.edit();
+//        String str = getIntent().getStringExtra("shebei");
+//        if (str.equals("device1")) {
+//            editor.putString("scanResult1", scanResult);
+//        } else if (str.equals("device2")) {
+//            editor.putString("scanResult2", scanResult);
+//        } else if (str.equals("device3")) {
+//            editor.putString("scanResult3", scanResult);
+//        } else if (str.equals("device4")) {
+//            editor.putString("scanResult4", scanResult);
+//        } else if (str.equals("device5")) {
+//            editor.putString("scanResult5", scanResult);
+//        }
+//        editor.commit();
         finish();
+    }
+
+    //手动输入产品码,验证code
+    private void SelectData(String code) {
+        final String bql ="select * from QRcode where code = '" + code +"'";
+        new BmobQuery<QRcode>().doSQLQuery(bql,new SQLQueryListener<QRcode>(){
+
+            @Override
+            public void done(BmobQueryResult<QRcode> result, BmobException e) {
+                if(e ==null){
+                    int count = result.getCount();//这里得到符合条件的记录数
+                    List<QRcode> list = (List<QRcode>) result.getResults();
+                    Log.i("count", ""+count);
+                    Log.i("list", ""+list.size());
+                    if(list.size()>0){
+
+                    }else{
+                        Log.i("smile", "查询成功，无数据");
+                        ToastUtil.showShortToast(CaptureActivity.this, "授权码无效");
+                        Message message = new Message();
+                        message.what = 16;
+                        FragmentOrderTake.mHandler.sendMessage(message);
+                    }
+
+                }else{
+                    Log.i("smile", "错误码："+e.getErrorCode()+"，错误描述："+e.getMessage());
+                }
+            }
+        });
+    }
+
+    //查询QRcode表中的code
+    private void SelectData1(String code) {
+        final String bql ="select * from QRcode where code = '" + code +"'";
+        new BmobQuery<QRcode>().doSQLQuery(bql,new SQLQueryListener<QRcode>(){
+
+            @Override
+            public void done(BmobQueryResult<QRcode> result, BmobException e) {
+                if(e ==null){
+                    int count = result.getCount();//这里得到符合条件的记录数
+                    List<QRcode> list = (List<QRcode>) result.getResults();
+                    Log.i("count", ""+count);
+                    Log.i("list", ""+list.size());
+                    if(list.size()>0){
+
+                    }else{
+                        Log.i("smile", "查询成功，无数据");
+                        ToastUtil.showShortToast(CaptureActivity.this, "授权码无效");
+                        Message message = new Message();
+                        message.what = 16;
+                        FragmentOrderTake.mHandler.sendMessage(message);
+                    }
+
+                }else{
+                    Log.i("smile", "错误码："+e.getErrorCode()+"，错误描述："+e.getMessage());
+                }
+            }
+        });
+    }
+
+    //查询V0001表中的code
+    private void SelectData2(String code) {
+        final String bql ="select * from V0001 where code = '" + code +"'";
+        new BmobQuery<QRcode>().doSQLQuery(bql,new SQLQueryListener<QRcode>(){
+
+            @Override
+            public void done(BmobQueryResult<QRcode> result, BmobException e) {
+                if(e ==null){
+                    int count = result.getCount();//这里得到符合条件的记录数
+                    List<QRcode> list = (List<QRcode>) result.getResults();
+                    if(list.size()>0){
+
+                    }else{
+                        Log.i("smile", "查询成功，无数据");
+                        ToastUtil.showShortToast(CaptureActivity.this, "授权码无效");
+                        Message message = new Message();
+                        message.what = 16;
+                        FragmentOrderTake.mHandler.sendMessage(message);
+                    }
+
+                }else{
+                    Log.i("smile", "错误码："+e.getErrorCode()+"，错误描述："+e.getMessage());
+                }
+            }
+        });
+    }
+
+    //查询IIa01表中的code
+    private void SelectData3(String code) {
+        final String bql ="select * from IIa01 where code = '" + code +"'";
+        new BmobQuery<QRcode>().doSQLQuery(bql,new SQLQueryListener<QRcode>(){
+
+            @Override
+            public void done(BmobQueryResult<QRcode> result, BmobException e) {
+                if(e ==null){
+                    int count = result.getCount();//这里得到符合条件的记录数
+                    List<QRcode> list = (List<QRcode>) result.getResults();
+                    if(list.size()>0){
+
+                    }else{
+                        Log.i("smile", "查询成功，无数据");
+                        ToastUtil.showShortToast(CaptureActivity.this, "授权码无效");
+                        Message message = new Message();
+                        message.what = 16;
+                        FragmentOrderTake.mHandler.sendMessage(message);
+                    }
+
+                }else{
+                    Log.i("smile", "错误码："+e.getErrorCode()+"，错误描述："+e.getMessage());
+                }
+            }
+        });
+    }
+
+    //查询Iva01表中的code
+    private void SelectData4(String code) {
+        final String bql ="select * from Iva01 where code = '" + code +"'";
+        new BmobQuery<QRcode>().doSQLQuery(bql,new SQLQueryListener<QRcode>(){
+
+            @Override
+            public void done(BmobQueryResult<QRcode> result, BmobException e) {
+                if(e ==null){
+                    int count = result.getCount();//这里得到符合条件的记录数
+                    List<QRcode> list = (List<QRcode>) result.getResults();
+                    if(list.size()>0){
+
+                    }else{
+                        Log.i("smile", "查询成功，无数据");
+                        ToastUtil.showShortToast(CaptureActivity.this, "授权码无效");
+                        Message message = new Message();
+                        message.what = 16;
+                        FragmentOrderTake.mHandler.sendMessage(message);
+                    }
+
+                }else{
+                    Log.i("smile", "错误码："+e.getErrorCode()+"，错误描述："+e.getMessage());
+                }
+            }
+        });
+    }
+
+    //查询Ivb01表中的code
+    private void SelectData5(String code) {
+        final String bql ="select * from Ivb01 where code = '" + code +"'";
+        new BmobQuery<QRcode>().doSQLQuery(bql,new SQLQueryListener<QRcode>(){
+
+            @Override
+            public void done(BmobQueryResult<QRcode> result, BmobException e) {
+                if(e ==null){
+                    int count = result.getCount();//这里得到符合条件的记录数
+                    List<QRcode> list = (List<QRcode>) result.getResults();
+                    if(list.size()>0){
+
+                    }else{
+                        Log.i("smile", "查询成功，无数据");
+                        ToastUtil.showShortToast(CaptureActivity.this, "授权码无效");
+                        Message message = new Message();
+                        message.what = 16;
+                        FragmentOrderTake.mHandler.sendMessage(message);
+                    }
+
+                }else{
+                    Log.i("smile", "错误码："+e.getErrorCode()+"，错误描述："+e.getMessage());
+                }
+            }
+        });
+    }
+
+    //查询IIb01表中的code
+    private void SelectData6(String code) {
+        final String bql ="select * from IIb01 where code = '" + code +"'";
+        new BmobQuery<QRcode>().doSQLQuery(bql,new SQLQueryListener<QRcode>(){
+
+            @Override
+            public void done(BmobQueryResult<QRcode> result, BmobException e) {
+                if(e ==null){
+                    int count = result.getCount();//这里得到符合条件的记录数
+                    List<QRcode> list = (List<QRcode>) result.getResults();
+                    if(list.size()>0){
+
+                    }else{
+                        Log.i("smile", "查询成功，无数据");
+                        ToastUtil.showShortToast(CaptureActivity.this, "授权码无效");
+                        Message message = new Message();
+                        message.what = 16;
+                        FragmentOrderTake.mHandler.sendMessage(message);
+                    }
+
+                }else{
+                    Log.i("smile", "错误码："+e.getErrorCode()+"，错误描述："+e.getMessage());
+                }
+            }
+        });
+    }
+
+    //查询B0001表中的code
+    private void SelectData7(String code) {
+        final String bql ="select * from B0001 where code = '" + code +"'";
+        new BmobQuery<QRcode>().doSQLQuery(bql,new SQLQueryListener<QRcode>(){
+
+            @Override
+            public void done(BmobQueryResult<QRcode> result, BmobException e) {
+                if(e ==null){
+                    int count = result.getCount();//这里得到符合条件的记录数
+                    List<QRcode> list = (List<QRcode>) result.getResults();
+                    if(list.size()>0){
+
+                    }else{
+                        Log.i("smile", "查询成功，无数据");
+                        ToastUtil.showShortToast(CaptureActivity.this, "授权码无效");
+                        Message message = new Message();
+                        message.what = 16;
+                        FragmentOrderTake.mHandler.sendMessage(message);
+                    }
+
+                }else{
+                    Log.i("smile", "错误码："+e.getErrorCode()+"，错误描述："+e.getMessage());
+                }
+            }
+        });
+    }
+
+    //查询T0001表中的code
+    private void SelectData8(String code) {
+        final String bql ="select * from T0001 where code = '" + code +"'";
+        new BmobQuery<QRcode>().doSQLQuery(bql,new SQLQueryListener<QRcode>(){
+
+            @Override
+            public void done(BmobQueryResult<QRcode> result, BmobException e) {
+                if(e ==null){
+                    int count = result.getCount();//这里得到符合条件的记录数
+                    List<QRcode> list = (List<QRcode>) result.getResults();
+                    if(list.size()>0){
+
+                    }else{
+                        Log.i("smile", "查询成功，无数据");
+                        ToastUtil.showShortToast(CaptureActivity.this, "授权码无效");
+                        Message message = new Message();
+                        message.what = 16;
+                        FragmentOrderTake.mHandler.sendMessage(message);
+                    }
+
+                }else{
+                    Log.i("smile", "错误码："+e.getErrorCode()+"，错误描述："+e.getMessage());
+                }
+            }
+        });
+    }
+
+    //查询A0001表中的code
+    private void SelectData9(String code) {
+        final String bql ="select * from A0001 where code = '" + code +"'";
+        new BmobQuery<QRcode>().doSQLQuery(bql,new SQLQueryListener<QRcode>(){
+
+            @Override
+            public void done(BmobQueryResult<QRcode> result, BmobException e) {
+                if(e ==null){
+                    int count = result.getCount();//这里得到符合条件的记录数
+                    List<QRcode> list = (List<QRcode>) result.getResults();
+                    if(list.size()>0){
+
+                    }else{
+                        Log.i("smile", "查询成功，无数据");
+                        ToastUtil.showShortToast(CaptureActivity.this, "授权码无效");
+                        Message message = new Message();
+                        message.what = 16;
+                        FragmentOrderTake.mHandler.sendMessage(message);
+                    }
+
+                }else{
+                    Log.i("smile", "错误码："+e.getErrorCode()+"，错误描述："+e.getMessage());
+                }
+            }
+        });
+    }
+
+    //查询VI001表中的code
+    private void SelectData10(String code) {
+        final String bql ="select * from VI001 where code = '" + code +"'";
+        new BmobQuery<QRcode>().doSQLQuery(bql,new SQLQueryListener<QRcode>(){
+
+            @Override
+            public void done(BmobQueryResult<QRcode> result, BmobException e) {
+                if(e ==null){
+                    int count = result.getCount();//这里得到符合条件的记录数
+                    List<QRcode> list = (List<QRcode>) result.getResults();
+                    if(list.size()>0){
+
+                    }else{
+                        Log.i("smile", "查询成功，无数据");
+                        ToastUtil.showShortToast(CaptureActivity.this, "授权码无效");
+                        Message message = new Message();
+                        message.what = 16;
+                        FragmentOrderTake.mHandler.sendMessage(message);
+                    }
+
+                }else{
+                    Log.i("smile", "错误码："+e.getErrorCode()+"，错误描述："+e.getMessage());
+                }
+            }
+        });
+    }
+
+    //查询Ib001表中的code
+    private void SelectData11(String code) {
+        final String bql ="select * from Ib001 where code = '" + code +"'";
+        new BmobQuery<QRcode>().doSQLQuery(bql,new SQLQueryListener<QRcode>(){
+
+            @Override
+            public void done(BmobQueryResult<QRcode> result, BmobException e) {
+                if(e ==null){
+                    int count = result.getCount();//这里得到符合条件的记录数
+                    List<QRcode> list = (List<QRcode>) result.getResults();
+                    if(list.size()>0){
+
+                    }else{
+                        Log.i("smile", "查询成功，无数据");
+                        ToastUtil.showShortToast(CaptureActivity.this, "授权码无效");
+                        Message message = new Message();
+                        message.what = 16;
+                        FragmentOrderTake.mHandler.sendMessage(message);
+                    }
+
+                }else{
+                    Log.i("smile", "错误码："+e.getErrorCode()+"，错误描述："+e.getMessage());
+                }
+            }
+        });
+    }
+
+    //查询Ia001表中的code
+    private void SelectData12(String code) {
+        final String bql ="select * from Ia001 where code = '" + code +"'";
+        new BmobQuery<QRcode>().doSQLQuery(bql,new SQLQueryListener<QRcode>(){
+
+            @Override
+            public void done(BmobQueryResult<QRcode> result, BmobException e) {
+                if(e ==null){
+                    int count = result.getCount();//这里得到符合条件的记录数
+                    List<QRcode> list = (List<QRcode>) result.getResults();
+                    if(list.size()>0){
+
+                    }else{
+                        Log.i("smile", "查询成功，无数据");
+                        ToastUtil.showShortToast(CaptureActivity.this, "授权码无效");
+                        Message message = new Message();
+                        message.what = 16;
+                        FragmentOrderTake.mHandler.sendMessage(message);
+                    }
+
+                }else{
+                    Log.i("smile", "错误码："+e.getErrorCode()+"，错误描述："+e.getMessage());
+                }
+            }
+        });
+    }
+
+    //查询Device_SN表中的code
+    private void SelectDataDeviceSN(String code) {
+        Log.i("code.substring", code.substring(code.length()-12,code.length()));
+        final String bql ="select * from Device_SN where SN = '" + code.substring(code.length()-12,code.length()) +"'";
+        new BmobQuery<QRcode>().doSQLQuery(bql,new SQLQueryListener<QRcode>(){
+
+            @Override
+            public void done(BmobQueryResult<QRcode> result, BmobException e) {
+                if(e ==null){
+                    int count = result.getCount();//这里得到符合条件的记录数
+                    List<QRcode> list = (List<QRcode>) result.getResults();
+                    Log.i("list.size", list.size()+"");
+                    if(list.size()>0){
+
+                    }else{
+                        Log.i("smile", "查询成功，无数据");
+                        ToastUtil.showShortToast(CaptureActivity.this, "授权码无效");
+                        Message message = new Message();
+                        message.what = 17;
+                        FragmentOrderTake.mHandler.sendMessage(message);
+                    }
+
+                }else{
+                    Log.i("smile", "错误码："+e.getErrorCode()+"，错误描述："+e.getMessage());
+                }
+            }
+        });
     }
 
     private void myFinish(Intent intent) {
@@ -572,9 +1001,9 @@ public final class CaptureActivity extends BaseActivity implements SurfaceHolder
                     if (ary.length() > 0) {
                         Message message = new Message();
                         if(getIntent().getStringExtra("shebei").equals("device1")){
-                            message.what = 10;
+                            message.what = 20;
                         }else {
-                            message.what = 100;
+                            message.what = 18;
                         }
                         message.obj = code;
                         FragmentOrderTake.mHandler.sendMessage(message);

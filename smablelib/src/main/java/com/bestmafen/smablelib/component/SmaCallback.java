@@ -68,6 +68,16 @@ public interface SmaCallback {
      */
     void onReadTime(int count);
 
+    /**
+     * 授权使用时间
+     */
+    void onReadEmpowerTime(int count);
+
+    /**
+     * 授权使用次数
+     */
+    void onReadEmpowerCount(int count);
+
 
 
     /**

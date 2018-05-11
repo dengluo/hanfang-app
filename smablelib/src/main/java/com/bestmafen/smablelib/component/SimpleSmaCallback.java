@@ -65,6 +65,16 @@ public class SimpleSmaCallback implements SmaCallback {
     }
 
     @Override
+    public void onReadEmpowerTime(int count) {
+
+    }
+
+    @Override
+    public void onReadEmpowerCount(int count) {
+
+    }
+
+    @Override
     public void onCharging(float voltage) {
 
     }

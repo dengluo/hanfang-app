@@ -70,6 +70,8 @@ public class SmaManager {
         public static final byte TIME_PER_LOOP      = 0x17;
         public static final byte PUFF_PER_LOOP      = 0x19;
         public static final byte TEMPERATURE        = 0x1C;
+        public static final byte EMPOWER_TIME        = 0x20;//授权时间
+
         //public static final byte VIBRATION_SWITCH = 0x21;
         //public static final byte STOP = 0x25;
         public static final byte VIBRATION_DISABLED = 0x27;
@@ -89,7 +91,9 @@ public class SmaManager {
         public static final byte PRODUCT   = 0x3C;
         public static final byte DEVICE_NAME   = 0x5D;//接收蓝牙设备名称
         public static final byte VOLTAGE       = 0x1F;
-        public static final byte PUFF          = 0x20;
+//        public static final byte PUFF          = 0x20;
+        public static final byte ETIME          = 0x20;//接收授权使用时间
+        public static final byte ECOUNT          = 0x2A;//接收授权使用次数
         public static final byte SMOKE_COUNT   = 0x23;
         public static final byte BEING_DORMANT = 0x1A;
         public static final byte CHARGING      = 0x1D;
@@ -352,6 +356,18 @@ public class SmaManager {
                     bc.onReadTime((int) value);
                 }
                 break;
+            case BACK.ETIME:
+                value = Float.parseFloat(sb.toString()) + 0.0f;
+                for (SmaCallback bc : mSmaCallbacks) {
+                    bc.onReadEmpowerTime((int) value);
+                }
+                break;
+            case BACK.ECOUNT:
+                value = Float.parseFloat(sb.toString()) + 0.0f;
+                for (SmaCallback bc : mSmaCallbacks) {
+                    bc.onReadEmpowerCount((int) value);
+                }
+                break;
             case BACK.BEING_DORMANT:
                 value = Float.parseFloat(sb.toString()) + 0.0f;
                 for (SmaCallback bc : mSmaCallbacks) {
@@ -370,12 +386,12 @@ public class SmaManager {
                     bc.onNtcSwitch(false);
                 }
                 break;
-            case BACK.PUFF:
-                value = Float.parseFloat(sb.toString()) + 0.0f;
-                for (SmaCallback bc : mSmaCallbacks) {
-                    bc.onReadPuffCount((int) value);
-                }
-                break;
+//            case BACK.PUFF:
+//                value = Float.parseFloat(sb.toString()) + 0.0f;
+//                for (SmaCallback bc : mSmaCallbacks) {
+//                    bc.onReadPuffCount((int) value);
+//                }
+//                break;
             case BACK.SMOKE_COUNT:
                 value = Float.parseFloat(sb.toString()) + 0.0f;
                 for (SmaCallback bc : mSmaCallbacks) {

@@ -6,18 +6,18 @@ import cn.bmob.v3.BmobObject;
  * Created by danny on 2018/1/31.
  */
 
-public class QRcode extends BmobObject {
+public class Ivb01 extends BmobObject {
     private String code;
     private Boolean Twice;
     private Boolean accredit;
     private String times;
 
-    public QRcode() {
-        this.setTableName("QRcode");
+    public Ivb01() {
+        this.setTableName("Ivb01");
     }
 
     public String getTableName() {
-        return "QRcode";
+        return "Ivb01";
     }
 
     public String getCode() {
