@@ -70,7 +70,8 @@ public class SmaManager {
         public static final byte TIME_PER_LOOP      = 0x17;
         public static final byte PUFF_PER_LOOP      = 0x19;
         public static final byte TEMPERATURE        = 0x1C;
-        public static final byte EMPOWER_TIME        = 0x29;//授权时间
+        public static final byte EMPOWER_TIME        = 0x29;//授权使用时间
+        public static final byte EMPOWER_COUNT       = 0x2A;//授权使用次数
 
         //public static final byte VIBRATION_SWITCH = 0x21;
         //public static final byte STOP = 0x25;
