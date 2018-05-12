@@ -108,14 +108,14 @@ public class LoginActivity2 extends BaseActivity implements View.OnClickListener
                 isopen = !isopen;
                 break;
             default:
-                ToastUtil.showLongToast(LoginActivity2.this, "id有误！");
+//                ToastUtil.showLongToast(LoginActivity2.this, "id有误！");
                 break;
         }
     }
 
     private void login() {
         if (!NetworkUtil.isNetworkAvailable(this)) {
-            ToastUtil.showShortToast(LoginActivity2.this, "网络连接异常!");
+            ToastUtil.showShortToast(LoginActivity2.this, getString(R.string.toast_yzm_2));
             return;
         }
         final String email = username.getText().toString().trim();
@@ -146,19 +146,19 @@ public class LoginActivity2 extends BaseActivity implements View.OnClickListener
                     Log.e(TAG, "done: " + e.getErrorCode() + ":" + e.getMessage());
                     switch (e.getErrorCode()) {
                         case 101:
-                            ToastUtil.showShortToast(LoginActivity2.this, "用户名或密码错误");
+                            ToastUtil.showShortToast(LoginActivity2.this, getString(R.string.login_error));
                             break;
                         case 9001:
-                            ToastUtil.showShortToast(LoginActivity2.this, "Application Id为空，请初始化");
+                            ToastUtil.showShortToast(LoginActivity2.this, getString(R.string.id_empty_initialize));
                             break;
                         case 9010:
-                            ToastUtil.showShortToast(LoginActivity2.this, "网络超时");
+                            ToastUtil.showShortToast(LoginActivity2.this, getString(R.string.network_timeout));
                             break;
                         case 9016:
-                            ToastUtil.showShortToast(LoginActivity2.this, "无网络连接，请检查您的手机网络.");
+                            ToastUtil.showShortToast(LoginActivity2.this, getString(R.string.toast_yzm_2));
                             break;
                         default:
-                            ToastUtil.showShortToast(LoginActivity2.this, "登录异常");
+                            ToastUtil.showShortToast(LoginActivity2.this, getString(R.string.login_exception));
                             break;
                     }
                 }

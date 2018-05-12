@@ -178,7 +178,7 @@
     <string name="menu_connect">Connect</string>
     <string name="menu_disconnect">Disconnect</string>
     <string name="plz_input_phone">请输入手机号码</string>
-    <string name="plz_phone_format">请输入有效的手机号码</string>
+    <string name="plz_phone_format">请输入正确的手机号码</string>
     <string name="plz_input_yzm">请输入验证码</string>
     <string name="code_error">验证码错误</string>
     <string name="plz_input_email">请输入邮箱</string>
@@ -346,5 +346,32 @@ Q:切换设备时,操作APP设备无反应\n
 A:可能出现设备信息一直在获取,指令一直在收发,进程处于拥挤状态,一直在请求加载,这时候可以放弃等待,让设备断电重启或者关闭APP进程\n
 Q:修改设备名后,操作APP设备无反应\n
 A:修改设备名后,设备会断开重连,这个过程需要大概1~20秒时间\n</string>
+    <string name="sent">已发送</string>
+    <string name="login_error">用户名或密码错误</string>
+    <string name="id_empty_initialize">Application Id为空，请初始化</string>
+    <string name="network_timeout">网络超时</string>
+    <string name="login_exception">登录异常</string>
+    <string name="please_check_tos">请勾选服务条款</string>
+    <string name="sms_validation_failure">短信验证失败</string>
+    <string name="authorized_time">授权时间:</string>
+    <string name="selector_authorized_time">请选择授权时间</string>
+    <string name="selector_authorized_device">请选择授权设备</string>
+    <string name="unconnected">未连接:</string>
+    <string name="congratulate_authorized_success">恭喜授权成功</string>
+    <string name="has_authorized">此授权码已被授权过,请使用新的授权码</string>
+    <string name="error">错误</string>
+    <string name="not_bluetooth_function">你的设备不具备蓝牙功能</string>
+    <string name="not_open_bluetooth">蓝牙设备未打开,请开启此功能后重试</string>
+    <string name="edit_bluetooth_name">修改设备蓝牙名称</string>
+    <string name="null_bluetooth_name">蓝牙名称不能为空</string>
+    <string name="product_code_error">产品码不存在或者过期</string>
+    <string name="product_code_null">产品码不能为空</string>
+    <string name="authorized_code_error">授权码无效</string>
+    <string name="yzm">验证码</string>
+    <string name="device">设备:</string>
+    <string name="no_connected">未连接</string>
+    <string name="authorized_device">授权设备:</string>
+    <string name="authorized">授权</string>
+    <string name="red_light">红光</string>
 
 </resources>

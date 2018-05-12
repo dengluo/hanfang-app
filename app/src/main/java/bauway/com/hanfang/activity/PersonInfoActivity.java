@@ -101,7 +101,7 @@ public class PersonInfoActivity extends BaseActivity {
          */
     public void queryData() {
         if (!NetworkUtil.isNetworkAvailable(this)) {
-            ToastUtil.showShortToast(ctx, "网络连接异常!");
+            ToastUtil.showShortToast(ctx, getString(R.string.toast_yzm_2));
             return;
         }
         String phone = userRxPreferences.getString(Constants.LOGIN_EMAIL).get();

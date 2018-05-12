@@ -132,12 +132,12 @@ public class ForgetPasswordActivity2 extends BaseActivity {
     //请求验证码
     private void requestVerificationCode() {
         if (!NetworkUtil.isNetworkAvailable(this)) {
-            ToastUtil.showShortToast(ForgetPasswordActivity2.this, "网络连接异常!");
+            ToastUtil.showShortToast(ForgetPasswordActivity2.this, getString(R.string.toast_yzm_2));
             return;
         }
         phone = username.getText().toString().trim();
         if (TextUtils.isEmpty(phone)) {
-            ToastUtil.showShortToast(mContext, "手机号码不能为空,请重新输入!");
+            ToastUtil.showShortToast(mContext, getString(R.string.plz_input_phone));
             return;
         }
         BmobSMS.requestSMSCode(phone, "register",new QueryListener<Integer>() {
@@ -162,7 +162,7 @@ public class ForgetPasswordActivity2 extends BaseActivity {
         phoneVerificationCode.post(new Runnable() {
             @Override
             public void run() {
-                phoneVerificationCode.setText("已发送");
+                phoneVerificationCode.setText(R.string.sent);
                 CountDownTimerUtils timer = new CountDownTimerUtils(phoneVerificationCode, 60000, 1000);
                 timer.start();
             }
@@ -173,43 +173,24 @@ public class ForgetPasswordActivity2 extends BaseActivity {
     //验证验证码
     private void verifacityCode() {
         if (!NetworkUtil.isNetworkAvailable(this)) {
-            ToastUtil.showShortToast(ForgetPasswordActivity2.this, "网络连接异常!");
+            ToastUtil.showShortToast(ForgetPasswordActivity2.this, getString(R.string.toast_yzm_2));
             return;
         }
         String register_code = verificationCode.getText().toString().trim();
         if (TextUtils.isEmpty(register_code)) {
-            ToastUtils.showShort("验证码为空,请重新填写验证码");
+            ToastUtils.showShort(R.string.toast_yzm_1);
             return;
         }
-
-//        BmobSMS.verifySmsCode(this, phone, register_code, new VerifySMSCodeListener() {
-//
-//
-//            @Override
-//            public void done(cn.bmob.sms.exception.BmobException ex) {
-//                if (ex == null) {//短信验证码已验证成功
-//                    Log.e("bmob", "验证通过");
-//                    ToastUtil.showShortToast(mContext, "短信验证已通过");
-//                    //重置密码!
-//                    resetPwd();
-//                } else {
-//                    ToastUtil.showShortToast(mContext, "短信验证失败");
-//                    Log.e("bmob", "验证失败：code =" + ex.getErrorCode() + ",msg = " + ex.getLocalizedMessage());
-//                }
-//            }
-//
-//
-//        });
     }
 
     private void resetPwd() {
         if (!NetworkUtil.isNetworkAvailable(this)) {
-            ToastUtil.showShortToast(ForgetPasswordActivity2.this, "网络连接异常!");
+            ToastUtil.showShortToast(ForgetPasswordActivity2.this, getString(R.string.toast_yzm_2));
             return;
         }
         String register_code = verificationCode.getText().toString().trim();
         if (TextUtils.isEmpty(register_code)) {
-            ToastUtils.showShort("验证码为空,请重新填写验证码");
+            ToastUtils.showShort(R.string.toast_yzm_1);
             return;
         }
         final String et_phone = username.getText().toString().trim();

@@ -97,7 +97,7 @@ public class FragmentMe extends Fragment implements View.OnClickListener {
             //不可见时执行的操作
 //            Log.e("isVisibleToUser22",hidden+"");
             if (!NetworkUtil.isNetworkAvailable(context)) {
-                ToastUtil.showShortToast(context, "网络连接异常!");
+                ToastUtil.showShortToast(context, getString(R.string.toast_yzm_2));
                 return;
             }
         }
@@ -108,7 +108,7 @@ public class FragmentMe extends Fragment implements View.OnClickListener {
          */
     public void queryData() {
         if (!NetworkUtil.isNetworkAvailable(context)) {
-            ToastUtil.showShortToast(context, "网络连接异常!");
+            ToastUtil.showShortToast(context, getString(R.string.toast_yzm_2));
             return;
         }
         String phone = userRxPreferences.getString(Constants.LOGIN_EMAIL).get();

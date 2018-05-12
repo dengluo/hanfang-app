@@ -109,7 +109,7 @@ public class ChangePwdActivity extends BaseActivity {
 
     private void changePwd() {
         if (!NetworkUtil.isNetworkAvailable(this)){
-            ToastUtil.showShortToast(ChangePwdActivity.this,"网络连接异常!");
+            ToastUtil.showShortToast(ChangePwdActivity.this,getString(R.string.toast_yzm_2));
             return;
         }
         final String oldpwd = mEtOldpwd.getText().toString().trim();

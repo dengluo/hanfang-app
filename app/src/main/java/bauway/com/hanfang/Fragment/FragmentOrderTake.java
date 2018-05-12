@@ -174,7 +174,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                         ll_home_hg.setVisibility(View.VISIBLE);
                         ll_empower.setVisibility(View.GONE);
                         ll_device_connect_state.setVisibility(View.VISIBLE);
-                        tv_empower_time.setText("产品码:");
+                        tv_empower_time.setText(getString(R.string.product_code));
                         break;
                     case 101:
                         parseDate(msg.obj.toString());
@@ -182,7 +182,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                         ll_home_hg.setVisibility(View.VISIBLE);
                         ll_empower.setVisibility(View.GONE);
                         ll_device_connect_state.setVisibility(View.VISIBLE);
-                        tv_empower_time.setText("产品码:");
+                        tv_empower_time.setText(getString(R.string.product_code));
                         break;
                     case 102:
                         parseDate(msg.obj.toString());
@@ -190,7 +190,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                         ll_home_hg.setVisibility(View.GONE);
                         ll_empower.setVisibility(View.VISIBLE);
                         ll_device_connect_state.setVisibility(View.GONE);
-                        tv_empower_time.setText("授权时间:");
+                        tv_empower_time.setText(getString(R.string.authorized_time));
                         break;
                     case 11:
                         SharedPreferences sharedPreferencesWendu1 = context.getSharedPreferences(
@@ -274,7 +274,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                     case 15:
                         Log.e("15", "15");
                         if (mSmaManager.getNameAndAddress()[0].equals("")) {
-                            tv_frag_device_name.setText("未连接");
+                            tv_frag_device_name.setText(getString(R.string.unconnected));
                             ll_unbind_device.setVisibility(View.GONE);
                         } else {
                             tv_frag_device_name.setText(mSmaManager.getNameAndAddress()[0]);
@@ -288,7 +288,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                         ll_empower.setVisibility(View.VISIBLE);
                         ll_device_connect_state.setVisibility(View.GONE);
                         tv_frag_device_ypcode.setText("");
-                        tv_empower_time.setText("授权时间:");
+                        tv_empower_time.setText(getString(R.string.authorized_time));
                         break;
                     case 17:
                         ll_empower_device.setVisibility(View.VISIBLE);
@@ -296,7 +296,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                         ll_empower.setVisibility(View.VISIBLE);
                         ll_device_connect_state.setVisibility(View.GONE);
                         tv_frag_device_ypcode2.setText("");
-                        tv_empower_time.setText("授权时间:");
+                        tv_empower_time.setText(getString(R.string.authorized_time));
                         break;
                     case 18:
                         parseDate2(msg.obj.toString().substring(msg.obj.toString().length() - 12, msg.obj.toString().length()));
@@ -304,7 +304,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                         ll_home_hg.setVisibility(View.GONE);
                         ll_empower.setVisibility(View.VISIBLE);
                         ll_device_connect_state.setVisibility(View.GONE);
-                        tv_empower_time.setText("授权时间:");
+                        tv_empower_time.setText(getString(R.string.authorized_time));
                         break;
                     case 20:
                         parseDate(msg.obj.toString());
@@ -312,11 +312,11 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                         ll_home_hg.setVisibility(View.GONE);
                         ll_empower.setVisibility(View.VISIBLE);
                         ll_device_connect_state.setVisibility(View.GONE);
-                        tv_empower_time.setText("授权时间:");
+                        tv_empower_time.setText(getString(R.string.authorized_time));
                         break;
                     case 21:
                         if (mSmaManager.getNameAndAddress()[0].equals("")) {
-                            tv_frag_device_name.setText("未连接");
+                            tv_frag_device_name.setText(getString(R.string.unconnected));
                             ll_unbind_device.setVisibility(View.GONE);
                         } else {
                             ll_unbind_device.setVisibility(View.VISIBLE);
@@ -338,7 +338,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                         break;
                     case 22:
                         if (mSmaManager.getNameAndAddress()[0].equals("")) {
-                            tv_frag_device_name.setText("未连接");
+                            tv_frag_device_name.setText(getString(R.string.unconnected));
                             ll_unbind_device.setVisibility(View.GONE);
                         } else {
                             ll_unbind_device.setVisibility(View.VISIBLE);
@@ -353,7 +353,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                         break;
                     case 23:
                         if (mSmaManager.getNameAndAddress()[0].equals("")) {
-                            tv_frag_device_name.setText("未连接");
+                            tv_frag_device_name.setText(getString(R.string.unconnected));
                             ll_unbind_device.setVisibility(View.GONE);
                         } else {
                             tv_frag_time.setText(msg.obj + " min");
@@ -456,7 +456,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
         ll_unbind_device = (LinearLayout) view_main.findViewById(R.id.ll_unbind_device);
 
         if (mSmaManager.getNameAndAddress()[0].equals("")) {
-            tv_frag_device_name.setText("未连接");
+            tv_frag_device_name.setText(getString(R.string.unconnected));
             ll_unbind_device.setVisibility(View.GONE);
         } else {
             tv_frag_device_name.setText(mSmaManager.getNameAndAddress()[0]);
@@ -611,7 +611,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                                 //确认解绑
                                 SmaManager.getInstance().unbind();
                                 ll_unbind_device.setVisibility(View.GONE);
-                                tv_frag_device_name.setText("未连接");
+                                tv_frag_device_name.setText(getString(R.string.unconnected));
                             }
                         });
                 break;
@@ -670,7 +670,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                         Log.i("smile", "查询成功，无数据返回");
                     }
                 } else {
-                    Log.i("smile", "错误码：" + e.getErrorCode() + "，错误描述：" + e.getMessage());
+                    Log.i("updateEmpowerTimes", "错误码：" + e.getErrorCode() + "，错误描述：" + e.getMessage());
                 }
             }
         });
@@ -705,7 +705,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                         Log.i("smile", "查询成功，无数据返回");
                     }
                 } else {
-                    Log.i("smile", "错误码：" + e.getErrorCode() + "，错误描述：" + e.getMessage());
+                    Log.i("updateEmpowerCounts", "错误码：" + e.getErrorCode() + "，错误描述：" + e.getMessage());
                 }
             }
         });
@@ -726,15 +726,15 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
             return;
         }
         if (tv_frag_device_ypcode.getText().equals(null) || tv_frag_device_ypcode.getText().equals("")) {
-            ToastUtil.showShortToast(context, "请选择授权时间!");
+            ToastUtil.showShortToast(context, getString(R.string.selector_authorized_time));
             return;
         }
         if (tv_frag_device_ypcode2.getText().equals(null) || tv_frag_device_ypcode2.getText().equals("")) {
-            ToastUtil.showShortToast(context, "请选择授权设备!");
+            ToastUtil.showShortToast(context, getString(R.string.selector_authorized_device));
             return;
         }
         if (!NetworkUtil.isNetworkAvailable(context)) {
-            ToastUtil.showShortToast(context, "网络连接异常!");
+            ToastUtil.showShortToast(context, getString(R.string.toast_yzm_2));
             return;
         }
         final String tn = code.substring(0, 5);
@@ -760,7 +760,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                                         public void done(BmobException e) {
                                             if (e == null) {
 //                                                Log.i("bmob", "更新成功");
-                                                ToastUtil.showShortToast(context, "恭喜授权成功");
+                                                ToastUtil.showShortToast(context, getString(R.string.congratulate_authorized_success));
                                                 mSmaManager.write(SmaManager.SET.EMPOWER_TIME, times);
                                             } else {
                                                 Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
@@ -778,7 +778,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                                         public void done(BmobException e) {
                                             if (e == null) {
 //                                                Log.i("bmob", "更新成功");
-                                                ToastUtil.showShortToast(context, "恭喜授权成功");
+                                                ToastUtil.showShortToast(context, getString(R.string.congratulate_authorized_success));
                                                 mSmaManager.write(SmaManager.SET.EMPOWER_TIME, times);
                                             } else {
                                                 Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
@@ -796,7 +796,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                                         public void done(BmobException e) {
                                             if (e == null) {
                                                 Log.i("bmob", "更新成功");
-                                                ToastUtil.showShortToast(context, "恭喜授权成功");
+                                                ToastUtil.showShortToast(context, getString(R.string.congratulate_authorized_success));
                                                 mSmaManager.write(SmaManager.SET.EMPOWER_TIME, times);
                                             } else {
                                                 Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
@@ -814,7 +814,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                                         public void done(BmobException e) {
                                             if (e == null) {
                                                 Log.i("bmob", "更新成功");
-                                                ToastUtil.showShortToast(context, "恭喜授权成功");
+                                                ToastUtil.showShortToast(context, getString(R.string.congratulate_authorized_success));
                                                 mSmaManager.write(SmaManager.SET.EMPOWER_TIME, times);
                                             } else {
                                                 Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
@@ -832,7 +832,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                                         public void done(BmobException e) {
                                             if (e == null) {
                                                 Log.i("bmob", "更新成功");
-                                                ToastUtil.showShortToast(context, "恭喜授权成功");
+                                                ToastUtil.showShortToast(context, getString(R.string.congratulate_authorized_success));
                                                 mSmaManager.write(SmaManager.SET.EMPOWER_TIME, times);
                                             } else {
                                                 Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
@@ -850,7 +850,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                                         public void done(BmobException e) {
                                             if (e == null) {
                                                 Log.i("bmob", "更新成功");
-                                                ToastUtil.showShortToast(context, "恭喜授权成功");
+                                                ToastUtil.showShortToast(context, getString(R.string.congratulate_authorized_success));
                                                 mSmaManager.write(SmaManager.SET.EMPOWER_TIME, times);
                                             } else {
                                                 Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
@@ -868,7 +868,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                                         public void done(BmobException e) {
                                             if (e == null) {
                                                 Log.i("bmob", "更新成功");
-                                                ToastUtil.showShortToast(context, "恭喜授权成功");
+                                                ToastUtil.showShortToast(context, getString(R.string.congratulate_authorized_success));
                                                 mSmaManager.write(SmaManager.SET.EMPOWER_TIME, times);
                                             } else {
                                                 Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
@@ -886,7 +886,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                                         public void done(BmobException e) {
                                             if (e == null) {
                                                 Log.i("bmob", "更新成功");
-                                                ToastUtil.showShortToast(context, "恭喜授权成功");
+                                                ToastUtil.showShortToast(context, getString(R.string.congratulate_authorized_success));
                                                 mSmaManager.write(SmaManager.SET.EMPOWER_TIME, times);
                                             } else {
                                                 Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
@@ -904,7 +904,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                                         public void done(BmobException e) {
                                             if (e == null) {
                                                 Log.i("bmob", "更新成功");
-                                                ToastUtil.showShortToast(context, "恭喜授权成功");
+                                                ToastUtil.showShortToast(context, getString(R.string.congratulate_authorized_success));
                                                 mSmaManager.write(SmaManager.SET.EMPOWER_TIME, times);
                                             } else {
                                                 Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
@@ -922,7 +922,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                                         public void done(BmobException e) {
                                             if (e == null) {
                                                 Log.i("bmob", "更新成功");
-                                                ToastUtil.showShortToast(context, "恭喜授权成功");
+                                                ToastUtil.showShortToast(context, getString(R.string.congratulate_authorized_success));
                                                 mSmaManager.write(SmaManager.SET.EMPOWER_TIME, times);
                                             } else {
                                                 Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
@@ -940,7 +940,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                                         public void done(BmobException e) {
                                             if (e == null) {
                                                 Log.i("bmob", "更新成功");
-                                                ToastUtil.showShortToast(context, "恭喜授权成功");
+                                                ToastUtil.showShortToast(context, getString(R.string.congratulate_authorized_success));
                                                 mSmaManager.write(SmaManager.SET.EMPOWER_TIME, times);
                                             } else {
                                                 Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
@@ -958,7 +958,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                                         public void done(BmobException e) {
                                             if (e == null) {
                                                 Log.i("bmob", "更新成功");
-                                                ToastUtil.showShortToast(context, "恭喜授权成功");
+                                                ToastUtil.showShortToast(context, getString(R.string.congratulate_authorized_success));
                                                 mSmaManager.write(SmaManager.SET.EMPOWER_TIME, times);
                                             } else {
                                                 Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
@@ -980,7 +980,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                                             public void done(BmobException e) {
                                                 if (e == null) {
                                                     Log.i("bmob", "更新成功");
-                                                    ToastUtil.showShortToast(context, "恭喜授权成功");
+                                                    ToastUtil.showShortToast(context, getString(R.string.congratulate_authorized_success));
                                                     mSmaManager.write(SmaManager.SET.EMPOWER_TIME, times);
                                                 } else {
                                                     Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
@@ -998,7 +998,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                                             public void done(BmobException e) {
                                                 if (e == null) {
                                                     Log.i("bmob", "更新成功");
-                                                    ToastUtil.showShortToast(context, "恭喜授权成功");
+                                                    ToastUtil.showShortToast(context, getString(R.string.congratulate_authorized_success));
                                                     mSmaManager.write(SmaManager.SET.EMPOWER_TIME, times);
                                                 } else {
                                                     Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
@@ -1016,7 +1016,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                                             public void done(BmobException e) {
                                                 if (e == null) {
                                                     Log.i("bmob", "更新成功");
-                                                    ToastUtil.showShortToast(context, "恭喜授权成功");
+                                                    ToastUtil.showShortToast(context, getString(R.string.congratulate_authorized_success));
                                                     mSmaManager.write(SmaManager.SET.EMPOWER_TIME, times);
                                                 } else {
                                                     Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
@@ -1034,7 +1034,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                                             public void done(BmobException e) {
                                                 if (e == null) {
                                                     Log.i("bmob", "更新成功");
-                                                    ToastUtil.showShortToast(context, "恭喜授权成功");
+                                                    ToastUtil.showShortToast(context, getString(R.string.congratulate_authorized_success));
                                                     mSmaManager.write(SmaManager.SET.EMPOWER_TIME, times);
                                                 } else {
                                                     Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
@@ -1052,7 +1052,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                                             public void done(BmobException e) {
                                                 if (e == null) {
                                                     Log.i("bmob", "更新成功");
-                                                    ToastUtil.showShortToast(context, "恭喜授权成功");
+                                                    ToastUtil.showShortToast(context, getString(R.string.congratulate_authorized_success));
                                                     mSmaManager.write(SmaManager.SET.EMPOWER_TIME, times);
                                                 } else {
                                                     Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
@@ -1070,7 +1070,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                                             public void done(BmobException e) {
                                                 if (e == null) {
                                                     Log.i("bmob", "更新成功");
-                                                    ToastUtil.showShortToast(context, "恭喜授权成功");
+                                                    ToastUtil.showShortToast(context, getString(R.string.congratulate_authorized_success));
                                                     mSmaManager.write(SmaManager.SET.EMPOWER_TIME, times);
                                                 } else {
                                                     Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
@@ -1088,7 +1088,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                                             public void done(BmobException e) {
                                                 if (e == null) {
                                                     Log.i("bmob", "更新成功");
-                                                    ToastUtil.showShortToast(context, "恭喜授权成功");
+                                                    ToastUtil.showShortToast(context, getString(R.string.congratulate_authorized_success));
                                                     mSmaManager.write(SmaManager.SET.EMPOWER_TIME, times);
                                                 } else {
                                                     Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
@@ -1106,7 +1106,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                                             public void done(BmobException e) {
                                                 if (e == null) {
                                                     Log.i("bmob", "更新成功");
-                                                    ToastUtil.showShortToast(context, "恭喜授权成功");
+                                                    ToastUtil.showShortToast(context, getString(R.string.congratulate_authorized_success));
                                                     mSmaManager.write(SmaManager.SET.EMPOWER_TIME, times);
                                                 } else {
                                                     Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
@@ -1124,7 +1124,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                                             public void done(BmobException e) {
                                                 if (e == null) {
                                                     Log.i("bmob", "更新成功");
-                                                    ToastUtil.showShortToast(context, "恭喜授权成功");
+                                                    ToastUtil.showShortToast(context, getString(R.string.congratulate_authorized_success));
                                                     mSmaManager.write(SmaManager.SET.EMPOWER_TIME, times);
                                                 } else {
                                                     Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
@@ -1142,7 +1142,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                                             public void done(BmobException e) {
                                                 if (e == null) {
                                                     Log.i("bmob", "更新成功");
-                                                    ToastUtil.showShortToast(context, "恭喜授权成功");
+                                                    ToastUtil.showShortToast(context, getString(R.string.congratulate_authorized_success));
                                                     mSmaManager.write(SmaManager.SET.EMPOWER_TIME, times);
                                                 } else {
                                                     Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
@@ -1160,7 +1160,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                                             public void done(BmobException e) {
                                                 if (e == null) {
                                                     Log.i("bmob", "更新成功");
-                                                    ToastUtil.showShortToast(context, "恭喜授权成功");
+                                                    ToastUtil.showShortToast(context, getString(R.string.congratulate_authorized_success));
                                                     mSmaManager.write(SmaManager.SET.EMPOWER_TIME, times);
                                                 } else {
                                                     Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
@@ -1178,7 +1178,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                                             public void done(BmobException e) {
                                                 if (e == null) {
                                                     Log.i("bmob", "更新成功");
-                                                    ToastUtil.showShortToast(context, "恭喜授权成功");
+                                                    ToastUtil.showShortToast(context, getString(R.string.congratulate_authorized_success));
                                                     mSmaManager.write(SmaManager.SET.EMPOWER_TIME, times);
                                                 } else {
                                                     Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
@@ -1189,7 +1189,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                                         break;
                                 }
                             } else {
-                                ToastUtil.showShortToast(context, "此授权码已被授权过,请使用新的授权码!");
+                                ToastUtil.showShortToast(context, getString(R.string.has_authorized));
                             }
                         }
                     } else {
@@ -1197,7 +1197,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                     }
 
                 } else {
-                    Log.i("smile", "错误码：" + e.getErrorCode() + "，错误描述：" + e.getMessage());
+                    Log.i("empower", "错误码：" + e.getErrorCode() + "，错误描述：" + e.getMessage());
                 }
             }
         });
@@ -1206,15 +1206,15 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
     private void checkBluetoothValid() {
         final BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
         if (adapter == null) {
-            AlertDialog dialog = new AlertDialog.Builder(context).setTitle("错误").setMessage("你的设备不具备蓝牙功能!").create();
+            AlertDialog dialog = new AlertDialog.Builder(context).setTitle(getString(R.string.error)).setMessage(getString(R.string.not_bluetooth_function)).create();
             dialog.show();
             return;
         }
 
         if (!adapter.isEnabled()) {
-            AlertDialog dialog = new AlertDialog.Builder(context).setTitle("提示")
-                    .setMessage("蓝牙设备未打开,请开启此功能后重试!")
-                    .setPositiveButton("确认", new DialogInterface.OnClickListener() {
+            AlertDialog dialog = new AlertDialog.Builder(context).setTitle(getString(R.string.prompt))
+                    .setMessage(getString(R.string.not_open_bluetooth))
+                    .setPositiveButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface arg0, int arg1) {
                             Intent mIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
@@ -1231,7 +1231,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
          */
     public void queryData() {
         if (!NetworkUtil.isNetworkAvailable(context)) {
-            ToastUtil.showShortToast(context, "网络连接异常!");
+            ToastUtil.showShortToast(context, getString(R.string.toast_yzm_2));
             return;
         }
         String phone = userRxPreferences.getString(Constants.LOGIN_EMAIL).get();
@@ -1321,17 +1321,14 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
         boolean is_cN = false;
         try {
             UTF_Str = new String(code.getBytes("ISO-8859-1"), "UTF-8");
-            System.out.println("这10是转了UTF-8的" + UTF_Str);
             is_cN = IsChineseOrNot.isChineseCharacter(UTF_Str);
             //防止有人特意使用乱码来生成二维码来判断的情况
             boolean b = IsChineseOrNot.isSpecialCharacter(code);
             if (b) {
                 is_cN = true;
             }
-            System.out.println("是为:" + is_cN);
             if (!is_cN) {
                 GB_Str = new String(code.getBytes("ISO-8859-1"), "GB2312");
-                System.out.println("这10是转了GB2312的" + GB_Str);
                 tv_frag_device_ypcode2.setText(GB_Str);
             } else {
                 UTF_Str = new String(code.getBytes("ISO-8859-1"), "UTF-8");
@@ -1348,16 +1345,16 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
     private void editname(final EditText et) {
         et.setFilters(new InputFilter[]{new InputFilter.LengthFilter(11)});
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("修改设备蓝牙名称");
+        builder.setTitle(getString(R.string.edit_bluetooth_name));
         builder.setIcon(android.R.drawable.ic_dialog_info);
         builder.setView(et);
-        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getString(R.string.sure), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 //按下确定键后的事件
 //                                    Toast.makeText(context, et.getText().toString(),Toast.LENGTH_LONG).show();
                 if (et.getText().toString().trim().equals("")) {
-                    ToastUtils.showShortSafe("蓝牙名称不能为空");
+                    ToastUtils.showShortSafe(getString(R.string.null_bluetooth_name));
                 } else {
                     final String str = et.getText().toString().trim();
                     sendToKernel(str);
@@ -1375,12 +1372,12 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                         }
                     }.start();
 
-                    ToastUtils.showShortSafe("修改成功!蓝牙设备正在重新连接,请耐心等待");
+                    ToastUtils.showShortSafe(getString(R.string.tip_rename_ble_device));
                     tv_frag_device_name.setText(et.getText().toString().trim());
                 }
             }
         });
-        builder.setNegativeButton("取消", null);
+        builder.setNegativeButton(getString(R.string.cancel), null);
         builder.create();
         builder.show();
     }

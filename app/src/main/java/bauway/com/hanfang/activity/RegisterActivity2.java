@@ -121,7 +121,7 @@ public class RegisterActivity2 extends BaseActivity {
         erificationCode.post(new Runnable() {
             @Override
             public void run() {
-                erificationCode.setText("已发送");
+                erificationCode.setText(getString(R.string.sent));
                 CountDownTimerUtils timer = new CountDownTimerUtils(erificationCode, 60000, 1000);
                 timer.start();
             }
@@ -156,12 +156,12 @@ public class RegisterActivity2 extends BaseActivity {
     //请求验证码
     private void requestVerificationCode() {
         if (!NetworkUtil.isNetworkAvailable(this)) {
-            ToastUtils.showShort("网络连接异常!");
+            ToastUtils.showShort(getString(R.string.toast_yzm_2));
             return;
         }
         String phone = et_phone_code.getText().toString().trim();
         if (TextUtils.isEmpty(phone)) {
-            ToastUtils.showShort("手机号码不能为空!");
+            ToastUtils.showShort(getString(R.string.plz_input_phone));
             return;
         }
         if (!MyUtil.isMobileNO(phone)){
@@ -182,80 +182,7 @@ public class RegisterActivity2 extends BaseActivity {
                 DialogUtil.hide();
             }
         });
-
     }
-
-
-//    private void register() {
-//        final String et_phone = et_phone_code.getText().toString().trim();
-//        if (TextUtils.isEmpty(et_phone)) {
-//            ToastUtils.showShort(R.string.plz_input_phone);
-//            return;
-//        }
-//        if (!MyUtil.isMobileNO(et_phone)){
-//            ToastUtils.showShort(R.string.plz_phone_format);
-//            return;
-//        }
-//        String register_code = et_register_code.getText().toString().trim();
-//        if (TextUtils.isEmpty(register_code) && !chekbox_agreement_myz.isChecked()) {
-//            ToastUtils.showShort(R.string.plz_input_yzm);
-//            return;
-//        }
-//        String pwd = mEtRegisterPwd.getText().toString().trim();
-//        if (TextUtils.isEmpty(pwd)) {
-//            ToastUtils.showShort(R.string.plz_input_pwd);
-//            return;
-//        }
-//        String pwdAgain = mEtRegisterPwdAgain.getText().toString().trim();
-//        if (TextUtils.isEmpty(pwdAgain)) {
-//            ToastUtils.showShort(R.string.plz_input_pwd_again);
-//            return;
-//        }
-//        if (!pwd.equals(pwdAgain)) {
-//            ToastUtils.showShort(R.string.pwd_input_diff);
-//            return;
-//        }
-//        if (!chekbox_agreement.isChecked()) {
-//            ToastUtils.showShort("请勾选服务条款");
-//            return;
-//        }
-//        DialogUtil.progressDialog(mContext, getString(R.string.register_now), false);
-//        mUser.setUsername(et_phone_code.getText().toString().trim());
-//        mUser.setMobilePhoneNumber(et_phone_code.getText().toString().trim());
-//        mUser.setPassword(mEtRegisterPwd.getText().toString().trim());
-//        mUser.setMobilePhoneNumberVerified(true);
-//        mUser.setApp_name(AppUtils.getAppName());
-//        mUser.setIsPerson(true);
-//        if (chekbox_agreement_myz.isChecked()) {
-//            mUser.setSMSBOOL(false);
-//        } else {
-//            mUser.setSMSBOOL(true);
-//        }
-//
-//        mUser.signOrLogin(register_code, new SaveListener<User>() {
-//            @Override
-//            public void done(User user, BmobException e) {
-//                if (e == null) {
-//                    // ToastUtils.showShort(R.string.register_success_plz_check_email);
-//                    ToastUtils.showShort(R.string.register_success_plz_check_phone);
-//                    userRxPreferences.getString(Constants.LOGIN_PHONE).set(et_phone_code.getText().toString().trim());
-//                    startActivity(new Intent(mContext, PerfectInfoActivity2.class));
-//                    RegisterActivity2.this.finish();
-//                } else {
-//                    Log.e(TAG, "done: " + e.getErrorCode() + ":" + e.getMessage());
-//                    if (203 == e.getErrorCode()) {
-//                        ToastUtils.showShort(R.string.phone_already_register);
-//                    } else if(207 == e.getErrorCode()) {
-//                        ToastUtils.showShort(R.string.code_error);
-//                    } else {
-//                        ToastUtils.showShort(R.string.register_failure);
-//                    }
-//                }
-//                DialogUtil.hide();
-//            }
-//        });
-//
-//    }
 
     private void register2() {
         final String et_phone = et_phone_code.getText().toString().trim();
@@ -287,7 +214,7 @@ public class RegisterActivity2 extends BaseActivity {
             return;
         }
         if (!chekbox_agreement.isChecked()) {
-            ToastUtils.showShort("请勾选服务条款");
+            ToastUtils.showShort(R.string.please_check_tos);
             return;
         }
         DialogUtil.progressDialog(mContext, getString(R.string.register_now), false);

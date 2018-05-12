@@ -395,7 +395,7 @@ public final class CaptureActivity extends BaseActivity implements SurfaceHolder
                     @Override
                     public void onError(Throwable e) {
                         Log.i("bmob", "失败：" + e.getMessage() + ",");
-                        ToastUtil.showShortToast(CaptureActivity.this, "产品码不存在或者过期");
+                        ToastUtil.showShortToast(CaptureActivity.this, getString(R.string.product_code_error));
                     }
 
                     @Override
@@ -439,7 +439,7 @@ public final class CaptureActivity extends BaseActivity implements SurfaceHolder
 
                     }else{
                         Log.i("smile", "查询成功，无数据");
-                        ToastUtil.showShortToast(CaptureActivity.this, "授权码无效");
+                        ToastUtil.showShortToast(CaptureActivity.this, getString(R.string.authorized_code_error));
                         Message message = new Message();
                         message.what = 16;
                         FragmentOrderTake.mHandler.sendMessage(message);
@@ -468,7 +468,7 @@ public final class CaptureActivity extends BaseActivity implements SurfaceHolder
 
                     }else{
                         Log.i("smile", "查询成功，无数据");
-                        ToastUtil.showShortToast(CaptureActivity.this, "授权码无效");
+                        ToastUtil.showShortToast(CaptureActivity.this, getString(R.string.authorized_code_error));
                         Message message = new Message();
                         message.what = 16;
                         FragmentOrderTake.mHandler.sendMessage(message);
@@ -495,7 +495,7 @@ public final class CaptureActivity extends BaseActivity implements SurfaceHolder
 
                     }else{
                         Log.i("smile", "查询成功，无数据");
-                        ToastUtil.showShortToast(CaptureActivity.this, "授权码无效");
+                        ToastUtil.showShortToast(CaptureActivity.this, getString(R.string.authorized_code_error));
                         Message message = new Message();
                         message.what = 16;
                         FragmentOrderTake.mHandler.sendMessage(message);
@@ -522,7 +522,7 @@ public final class CaptureActivity extends BaseActivity implements SurfaceHolder
 
                     }else{
                         Log.i("smile", "查询成功，无数据");
-                        ToastUtil.showShortToast(CaptureActivity.this, "授权码无效");
+                        ToastUtil.showShortToast(CaptureActivity.this, getString(R.string.authorized_code_error));
                         Message message = new Message();
                         message.what = 16;
                         FragmentOrderTake.mHandler.sendMessage(message);
@@ -549,7 +549,7 @@ public final class CaptureActivity extends BaseActivity implements SurfaceHolder
 
                     }else{
                         Log.i("smile", "查询成功，无数据");
-                        ToastUtil.showShortToast(CaptureActivity.this, "授权码无效");
+                        ToastUtil.showShortToast(CaptureActivity.this, getString(R.string.authorized_code_error));
                         Message message = new Message();
                         message.what = 16;
                         FragmentOrderTake.mHandler.sendMessage(message);
@@ -576,7 +576,7 @@ public final class CaptureActivity extends BaseActivity implements SurfaceHolder
 
                     }else{
                         Log.i("smile", "查询成功，无数据");
-                        ToastUtil.showShortToast(CaptureActivity.this, "授权码无效");
+                        ToastUtil.showShortToast(CaptureActivity.this, getString(R.string.authorized_code_error));
                         Message message = new Message();
                         message.what = 16;
                         FragmentOrderTake.mHandler.sendMessage(message);
@@ -603,7 +603,7 @@ public final class CaptureActivity extends BaseActivity implements SurfaceHolder
 
                     }else{
                         Log.i("smile", "查询成功，无数据");
-                        ToastUtil.showShortToast(CaptureActivity.this, "授权码无效");
+                        ToastUtil.showShortToast(CaptureActivity.this, getString(R.string.authorized_code_error));
                         Message message = new Message();
                         message.what = 16;
                         FragmentOrderTake.mHandler.sendMessage(message);
@@ -630,7 +630,7 @@ public final class CaptureActivity extends BaseActivity implements SurfaceHolder
 
                     }else{
                         Log.i("smile", "查询成功，无数据");
-                        ToastUtil.showShortToast(CaptureActivity.this, "授权码无效");
+                        ToastUtil.showShortToast(CaptureActivity.this, getString(R.string.authorized_code_error));
                         Message message = new Message();
                         message.what = 16;
                         FragmentOrderTake.mHandler.sendMessage(message);
@@ -657,7 +657,7 @@ public final class CaptureActivity extends BaseActivity implements SurfaceHolder
 
                     }else{
                         Log.i("smile", "查询成功，无数据");
-                        ToastUtil.showShortToast(CaptureActivity.this, "授权码无效");
+                        ToastUtil.showShortToast(CaptureActivity.this, getString(R.string.authorized_code_error));
                         Message message = new Message();
                         message.what = 16;
                         FragmentOrderTake.mHandler.sendMessage(message);
@@ -684,7 +684,7 @@ public final class CaptureActivity extends BaseActivity implements SurfaceHolder
 
                     }else{
                         Log.i("smile", "查询成功，无数据");
-                        ToastUtil.showShortToast(CaptureActivity.this, "授权码无效");
+                        ToastUtil.showShortToast(CaptureActivity.this, getString(R.string.authorized_code_error));
                         Message message = new Message();
                         message.what = 16;
                         FragmentOrderTake.mHandler.sendMessage(message);
@@ -711,7 +711,7 @@ public final class CaptureActivity extends BaseActivity implements SurfaceHolder
 
                     }else{
                         Log.i("smile", "查询成功，无数据");
-                        ToastUtil.showShortToast(CaptureActivity.this, "授权码无效");
+                        ToastUtil.showShortToast(CaptureActivity.this, getString(R.string.authorized_code_error));
                         Message message = new Message();
                         message.what = 16;
                         FragmentOrderTake.mHandler.sendMessage(message);
@@ -738,7 +738,7 @@ public final class CaptureActivity extends BaseActivity implements SurfaceHolder
 
                     }else{
                         Log.i("smile", "查询成功，无数据");
-                        ToastUtil.showShortToast(CaptureActivity.this, "授权码无效");
+                        ToastUtil.showShortToast(CaptureActivity.this, getString(R.string.authorized_code_error));
                         Message message = new Message();
                         message.what = 16;
                         FragmentOrderTake.mHandler.sendMessage(message);
@@ -765,7 +765,7 @@ public final class CaptureActivity extends BaseActivity implements SurfaceHolder
 
                     }else{
                         Log.i("smile", "查询成功，无数据");
-                        ToastUtil.showShortToast(CaptureActivity.this, "授权码无效");
+                        ToastUtil.showShortToast(CaptureActivity.this, getString(R.string.authorized_code_error));
                         Message message = new Message();
                         message.what = 16;
                         FragmentOrderTake.mHandler.sendMessage(message);
@@ -794,7 +794,7 @@ public final class CaptureActivity extends BaseActivity implements SurfaceHolder
 
                     }else{
                         Log.i("smile", "查询成功，无数据");
-                        ToastUtil.showShortToast(CaptureActivity.this, "授权码无效");
+                        ToastUtil.showShortToast(CaptureActivity.this, getString(R.string.authorized_code_error));
                         Message message = new Message();
                         message.what = 17;
                         FragmentOrderTake.mHandler.sendMessage(message);
@@ -985,7 +985,7 @@ public final class CaptureActivity extends BaseActivity implements SurfaceHolder
 
     private void validateCode(final String code) {
         if (inputCode.getText().toString().trim().equals("")) {
-            ToastUtil.showShortToast(CaptureActivity.this, "产品码不能为空");
+            ToastUtil.showShortToast(CaptureActivity.this, getString(R.string.product_code_null));
             return;
         }
         BmobQuery query = new BmobQuery("QRcode");
@@ -1009,12 +1009,12 @@ public final class CaptureActivity extends BaseActivity implements SurfaceHolder
                         FragmentOrderTake.mHandler.sendMessage(message);
                         finish();
                     } else {
-                        ToastUtil.showShortToast(CaptureActivity.this, "产品码不存在或者过期");
+                        ToastUtil.showShortToast(CaptureActivity.this, getString(R.string.product_code_error));
                     }
 
                 } else {
                     Log.i("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
-                    ToastUtil.showShortToast(CaptureActivity.this, "产品码不存在或者过期");
+                    ToastUtil.showShortToast(CaptureActivity.this, getString(R.string.product_code_error));
                 }
             }
         });

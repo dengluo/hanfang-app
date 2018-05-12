@@ -81,7 +81,7 @@ public class ValidateActivity extends BaseActivity {
         verification_code.post(new Runnable() {
             @Override
             public void run() {
-                verification_code.setText("已发送");
+                verification_code.setText(getString(R.string.sent));
                 CountDownTimerUtils timer = new CountDownTimerUtils(verification_code, 60000, 1000);
                 timer.start();
             }
@@ -115,11 +115,11 @@ public class ValidateActivity extends BaseActivity {
         }
         String phone = et_validate_email.getText().toString().trim();
         if (TextUtils.isEmpty(phone)) {
-            ToastUtils.showShort("手机号码不能为空!");
+            ToastUtils.showShort(R.string.plz_input_phone);
             return;
         }
         if (!phone.equals(mUser.getMobilePhoneNumber())) {
-            ToastUtils.showShort("手机号码输入错误!");
+            ToastUtils.showShort(R.string.plz_phone_format);
             return;
         }
         BmobSMS.requestSMSCode(phone, "register", new QueryListener<Integer>() {
@@ -131,7 +131,7 @@ public class ValidateActivity extends BaseActivity {
                     myListener.setupdateUIVericationCode();
                 } else {
 //                    toast("errorCode = "+ex.getErrorCode()+",errorMsg = "+ex.getLocalizedMessage());
-                    ToastUtils.showShort("必须是有效的手机号码");
+                    ToastUtils.showShort(R.string.plz_phone_format);
                 }
             }
         });
@@ -146,11 +146,11 @@ public class ValidateActivity extends BaseActivity {
             return;
         }
         if (TextUtils.isEmpty(phone)) {
-            ToastUtils.showShort("手机号码不能为空!");
+            ToastUtils.showShort(R.string.plz_input_phone);
             return;
         }
         if (!phone.equals(mUser.getMobilePhoneNumber())) {
-            ToastUtils.showShort("手机号码输入错误!");
+            ToastUtils.showShort(R.string.plz_phone_format);
             return;
         }
         if (TextUtils.isEmpty(validate_code)) {
@@ -179,7 +179,7 @@ public class ValidateActivity extends BaseActivity {
                     });
                 } else {
 //                    toast("验证失败：code ="+ex.getErrorCode()+",msg = "+ex.getLocalizedMessage());
-                    ToastUtils.showShort("短信验证失败");
+                    ToastUtils.showShort(R.string.sms_validation_failure);
                 }
             }
         });

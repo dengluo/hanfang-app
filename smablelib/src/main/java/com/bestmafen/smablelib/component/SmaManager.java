@@ -70,7 +70,7 @@ public class SmaManager {
         public static final byte TIME_PER_LOOP      = 0x17;
         public static final byte PUFF_PER_LOOP      = 0x19;
         public static final byte TEMPERATURE        = 0x1C;
-        public static final byte EMPOWER_TIME        = 0x20;//授权时间
+        public static final byte EMPOWER_TIME        = 0x29;//授权时间
 
         //public static final byte VIBRATION_SWITCH = 0x21;
         //public static final byte STOP = 0x25;
@@ -92,7 +92,7 @@ public class SmaManager {
         public static final byte DEVICE_NAME   = 0x5D;//接收蓝牙设备名称
         public static final byte VOLTAGE       = 0x1F;
 //        public static final byte PUFF          = 0x20;
-        public static final byte ETIME          = 0x20;//接收授权使用时间
+        public static final byte ETIME          = 0x29;//接收授权使用时间
         public static final byte ECOUNT          = 0x2A;//接收授权使用次数
         public static final byte SMOKE_COUNT   = 0x23;
         public static final byte BEING_DORMANT = 0x1A;

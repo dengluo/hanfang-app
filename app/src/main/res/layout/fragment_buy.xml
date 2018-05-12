@@ -124,7 +124,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dp10"
-                        android:text="设备:"
+                        android:text="@string/device"
                         android:textColor="@color/text_color_2"
                         android:textSize="14dp" />
 
@@ -133,7 +133,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:text="未连接"
+                        android:text="@string/no_connected"
                         android:textColor="@color/text_color_2"
                         android:textSize="14dp" />
 
@@ -176,7 +176,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dp10"
-                        android:text="授权时间:"
+                        android:text="@string/authorized_time"
                         android:textColor="@color/text_color_2"
                         android:textSize="14dp" />
 
@@ -229,7 +229,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dp10"
-                        android:text="授权设备:"
+                        android:text="@string/authorized_device"
                         android:textColor="@color/text_color_2"
                         android:textSize="14dp" />
 
@@ -279,7 +279,7 @@
                     android:layout_marginLeft="@dimen/dp10"
                     android:background="@drawable/shape_circle_edt_input"
                     android:padding="@dimen/dp_10"
-                    android:text="授权"
+                    android:text="@string/authorized"
                     android:textColor="@drawable/tab_menu_text"
                     android:textSize="16dp" />
             </LinearLayout>
@@ -315,7 +315,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/dp10"
-                            android:text="红光"
+                            android:text="@string/red_light"
                             android:textColor="@color/text_color_2"
                             android:textSize="14dp" />
 
