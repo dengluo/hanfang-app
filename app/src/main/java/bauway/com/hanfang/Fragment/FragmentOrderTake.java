@@ -51,22 +51,11 @@ import bauway.com.hanfang.R;
 import bauway.com.hanfang.activity.DeviceListActivity;
 import bauway.com.hanfang.activity.ValidateActivity;
 import bauway.com.hanfang.adapter.MyFragmentPagerAdapter;
-import bauway.com.hanfang.bean.A0001;
-import bauway.com.hanfang.bean.B0001;
 import bauway.com.hanfang.bean.Device_SN;
-import bauway.com.hanfang.bean.IIa01;
-import bauway.com.hanfang.bean.IIb01;
-import bauway.com.hanfang.bean.Ia001;
-import bauway.com.hanfang.bean.Ib001;
-import bauway.com.hanfang.bean.Iva01;
-import bauway.com.hanfang.bean.Ivb01;
-import bauway.com.hanfang.bean.QRcode;
-import bauway.com.hanfang.bean.T0001;
-import bauway.com.hanfang.bean.V0001;
-import bauway.com.hanfang.bean.VI001;
 import bauway.com.hanfang.interfaces.DialogCallback;
 import bauway.com.hanfang.util.DateUtils;
 import bauway.com.hanfang.util.DialogUtil;
+import bauway.com.hanfang.util.MyUtil;
 import bauway.com.hanfang.util.NetworkUtil;
 import bauway.com.hanfang.util.ToastUtil;
 import bauway.com.hanfang.zxing.activity.CaptureActivity;
@@ -113,6 +102,8 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
     public RxSharedPreferences userRxPreferences;
 
     int num = 0;
+    int tempcount = 0;//设备返回的使用次数
+    int temptime = 0;//设备返回的使用时间
     String devicename = "";
     private Boolean isok = true;//是否没有验证,并且已经过期
 
@@ -192,6 +183,30 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                         ll_device_connect_state.setVisibility(View.GONE);
                         tv_empower_time.setText(getString(R.string.authorized_time));
                         break;
+                    case 111:
+                        parseDate(msg.obj.toString());
+                        ll_empower_device.setVisibility(View.VISIBLE);
+                        ll_home_hg.setVisibility(View.GONE);
+                        ll_empower.setVisibility(View.VISIBLE);
+                        ll_device_connect_state.setVisibility(View.GONE);
+                        tv_empower_time.setText(getString(R.string.authorized_time));
+                        break;
+                    case 112:
+                        parseDate(msg.obj.toString());
+                        ll_empower_device.setVisibility(View.VISIBLE);
+                        ll_home_hg.setVisibility(View.GONE);
+                        ll_empower.setVisibility(View.VISIBLE);
+                        ll_device_connect_state.setVisibility(View.GONE);
+                        tv_empower_time.setText(getString(R.string.authorized_time));
+                        break;
+                    case 113:
+                        parseDate(msg.obj.toString());
+                        ll_empower_device.setVisibility(View.VISIBLE);
+                        ll_home_hg.setVisibility(View.GONE);
+                        ll_empower.setVisibility(View.VISIBLE);
+                        ll_device_connect_state.setVisibility(View.GONE);
+                        tv_empower_time.setText(getString(R.string.authorized_time));
+                        break;
                     case 11:
                         SharedPreferences sharedPreferencesWendu1 = context.getSharedPreferences(
                                 "MWENDU", Activity.MODE_PRIVATE);
@@ -250,7 +265,6 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
 
                         break;
                     case 14:
-                        Log.e("14", "14");
                         mSmaManager.connect(true);
                         mSmaManager.isConnected = true;
 //                        mSmaManager.mEaseConnector.connect(true);
@@ -269,10 +283,8 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                         mSmaManager.setNameAndAddress(deviceName, deviceAddress);
                         mSmaManager.mEaseConnector.setAddress(deviceAddress);
 //                        mSmaManager.write(SmaManager.SET.GET_PRODUCT);
-
                         break;
                     case 15:
-                        Log.e("15", "15");
                         if (mSmaManager.getNameAndAddress()[0].equals("")) {
                             tv_frag_device_name.setText(getString(R.string.unconnected));
                             ll_unbind_device.setVisibility(View.GONE);
@@ -281,7 +293,6 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                             ll_unbind_device.setVisibility(View.VISIBLE);
                         }
                         break;
-
                     case 16:
                         ll_empower_device.setVisibility(View.VISIBLE);
                         ll_home_hg.setVisibility(View.GONE);
@@ -299,7 +310,13 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                         tv_empower_time.setText(getString(R.string.authorized_time));
                         break;
                     case 18:
-                        parseDate2(msg.obj.toString().substring(msg.obj.toString().length() - 12, msg.obj.toString().length()));
+                        String str = "";
+                        if (msg.obj.toString().length() > 12) {
+                            str = msg.obj.toString().substring(msg.obj.toString().length() - 12, msg.obj.toString().length());
+                        } else {
+                            str = msg.obj.toString();
+                        }
+                        parseDate2(str);
                         ll_empower_device.setVisibility(View.VISIBLE);
                         ll_home_hg.setVisibility(View.GONE);
                         ll_empower.setVisibility(View.VISIBLE);
@@ -333,7 +350,6 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                             } else if (msg.obj.equals("6")) {
                                 tv_frag_wendu.setText("六 档");
                             }
-
                         }
                         break;
                     case 22:
@@ -361,10 +377,13 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                         }
                         break;
                     case 24:
-                        updateEmpowerTimes(tv_frag_device_ypcode2.getText().toString(), msg.arg1);
+                        ToastUtil.showShortToast(context, getString(R.string.congratulate_authorized_success));
+                        temptime = msg.arg1;
+                        updateEmpower(tv_frag_device_ypcode2.getText().toString());
                         break;
                     case 25:
-                        updateEmpowerCounts(tv_frag_device_ypcode2.getText().toString(), msg.arg1);
+                        tempcount = msg.arg1;
+                        updateEmpower(tv_frag_device_ypcode2.getText().toString());
                         break;
                 }
             }
@@ -381,11 +400,11 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
 
     private void sendToKernel(final String str) {
         if (mSmaManager.isConnected) {
-            Log.e("fas", "fas");
+            Log.e("str.length()=", str.length()+"||");
             if (str.length() < 6) {
                 mSmaManager.write2(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME2, str.substring(0, str.length()).getBytes());
             } else {
-                mSmaManager.write2(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME2, str.substring(0, 6).getBytes());
+                mSmaManager.write2(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME2, str.substring(0, 6).toString().getBytes());
             }
 
             new Thread() {
@@ -434,7 +453,6 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                         checkbox_dengguang.setChecked(false);
                         return;
                     }
-//                    ToastUtil.showShortToast(context, "close");
                     mSmaManager.write(SmaManager.SET.DISABLE_GOAL_LIGHT);
                 }
             }
@@ -464,42 +482,41 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
         }
 
         tv_frag_device_name.setOnClickListener(this);
-        if (mSmaManager.getNameAndAddress()[0].equals("")) {
-            tv_frag_device_ypcode.setText("");
-            tv_frag_device_ypcode2.setText("");
-        } else {
-            SharedPreferences mSpScan = context.getSharedPreferences(
-                    "SCAN", Activity.MODE_PRIVATE);
-            String scanResult1 = mSpScan.getString("scanResult1", "未输入");
-            String UTF_Str = "";
-            String GB_Str = "";
-            boolean is_cN = false;
-            try {
-                System.out.println("------------" + scanResult1);
-                UTF_Str = new String(scanResult1.getBytes("ISO-8859-1"), "UTF-8");
-                System.out.println("这是转了UTF-8的" + UTF_Str);
-                is_cN = IsChineseOrNot.isChineseCharacter(UTF_Str);
-                //防止有人特意使用乱码来生成二维码来判断的情况
-                boolean b = IsChineseOrNot.isSpecialCharacter(scanResult1);
-                if (b) {
-                    is_cN = true;
-                }
-                System.out.println("是为:" + is_cN);
-                if (!is_cN) {
-                    GB_Str = new String(scanResult1.getBytes("ISO-8859-1"), "GB2312");
-                    System.out.println("这是转了GB2312的" + GB_Str);
-                    tv_frag_device_ypcode2.setText(GB_Str);
-                    tv_frag_device_ypcode.setText(GB_Str);
-                } else {
-                    tv_frag_device_ypcode2.setText(UTF_Str);
-                    tv_frag_device_ypcode.setText(UTF_Str);
-                }
-            } catch (UnsupportedEncodingException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-//            tv_frag_device_ypcode.setText(GB_Str);
-        }
+//        if (mSmaManager.getNameAndAddress()[0].equals("")) {
+//            tv_frag_device_ypcode.setText("");
+//            tv_frag_device_ypcode2.setText("");
+//        } else {
+//            SharedPreferences mSpScan = context.getSharedPreferences(
+//                    "SCAN", Activity.MODE_PRIVATE);
+//            String scanResult1 = mSpScan.getString("scanResult1", "未输入");
+//            String UTF_Str = "";
+//            String GB_Str = "";
+//            boolean is_cN = false;
+//            try {
+//                System.out.println("------------" + scanResult1);
+//                UTF_Str = new String(scanResult1.getBytes("ISO-8859-1"), "UTF-8");
+//                System.out.println("这是转了UTF-8的" + UTF_Str);
+//                is_cN = IsChineseOrNot.isChineseCharacter(UTF_Str);
+//                //防止有人特意使用乱码来生成二维码来判断的情况
+//                boolean b = IsChineseOrNot.isSpecialCharacter(scanResult1);
+//                if (b) {
+//                    is_cN = true;
+//                }
+//                System.out.println("是为:" + is_cN);
+//                if (!is_cN) {
+//                    GB_Str = new String(scanResult1.getBytes("ISO-8859-1"), "GB2312");
+//                    System.out.println("这是转了GB2312的" + GB_Str);
+//                    tv_frag_device_ypcode2.setText(GB_Str);
+//                    tv_frag_device_ypcode.setText(GB_Str);
+//                } else {
+//                    tv_frag_device_ypcode2.setText(scanResult1);
+//                    tv_frag_device_ypcode.setText(scanResult1);
+//                }
+//            } catch (UnsupportedEncodingException e) {
+//                // TODO Auto-generated catch block
+//                e.printStackTrace();
+//            }
+//        }
         iv_device_drug_codesss = (ImageView) view_main.findViewById(R.id.iv_device_drug_codesss);
         iv_device_drug_codesss2 = (ImageView) view_main.findViewById(R.id.iv_device_drug_codesss2);
         iv_device_bluetooth = (ImageView) view_main.findViewById(R.id.iv_device_bluetooth);
@@ -563,8 +580,6 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_frag_device_name:
-                Log.e("11**", mSmaManager.isConnected + "");
-                Log.e("22**", mSmaManager.getNameAndAddress()[0] + "");
                 if (!mSmaManager.isConnected) {
                     ToastUtils.showShortSafe(R.string.device_not_connected);
                     return;
@@ -577,8 +592,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                 editname(et);
                 break;
             case R.id.empower:
-                Log.e("empower**", "empower");
-                empower(tv_frag_device_ypcode.getText().toString(),tv_frag_device_ypcode2.getText().toString());
+                empower(tv_frag_device_ypcode.getText().toString(), tv_frag_device_ypcode2.getText().toString());
                 break;
             case R.id.iv_device_drug_codesss:
                 if (isok) {
@@ -641,44 +655,8 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
         }
     }
 
-    //更新设备码表使用时间
-    private void updateEmpowerTimes(String sn, final int tm) {
-        final String bql = "select * from Device_SN where SN = '" + sn + "'";
-        Log.i("updateEmpowerTimes==", sn + "==" + tm);
-        new BmobQuery<Device_SN>().doSQLQuery(bql, new SQLQueryListener<Device_SN>() {
-
-            @Override
-            public void done(BmobQueryResult<Device_SN> result, BmobException e) {
-                if (e == null) {
-                    List<Device_SN> list = (List<Device_SN>) result.getResults();
-                    final int times = list.get(0).getLast_time();
-                    if (list.size() > 0) {
-                        Device_SN v1 = new Device_SN();
-                        v1.setLast_time(tm);
-                        v1.update(list.get(0).getObjectId(), new UpdateListener() {
-
-                            @Override
-                            public void done(BmobException e) {
-                                if (e == null) {
-                                    Log.i("bmob", "更新成功");
-                                } else {
-                                    Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
-                                }
-                            }
-
-                        });
-                    } else {
-                        Log.i("smile", "查询成功，无数据返回");
-                    }
-                } else {
-                    Log.i("updateEmpowerTimes", "错误码：" + e.getErrorCode() + "，错误描述：" + e.getMessage());
-                }
-            }
-        });
-    }
-
-    //更新设备码表使用次数
-    private void updateEmpowerCounts(String sn, final int ct) {
+    //更新设备码表
+    private void updateEmpower(String sn) {
         final String bql = "select * from Device_SN where SN = '" + sn + "'";
         new BmobQuery<Device_SN>().doSQLQuery(bql, new SQLQueryListener<Device_SN>() {
 
@@ -686,18 +664,24 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
             public void done(BmobQueryResult<Device_SN> result, BmobException e) {
                 if (e == null) {
                     List<Device_SN> list = (List<Device_SN>) result.getResults();
-                    final int count = list.get(0).getLast_time();
+                    final int times = list.get(0).getLast_time();//使用时间
+                    final int count = list.get(0).getTimes();//使用次数
+                    final int addtime = list.get(0).getAddtime();//累计授权时间
+                    final int difftime = addtime - times;
+                    Log.i("count", count + "");
                     if (list.size() > 0) {
                         Device_SN v1 = new Device_SN();
-                        v1.setTimes(ct);
+                        v1.setAddtime(addtime);
+                        v1.setTimes(tempcount + count);
+                        v1.setLast_time(temptime + times);
                         v1.update(list.get(0).getObjectId(), new UpdateListener() {
 
                             @Override
                             public void done(BmobException e) {
                                 if (e == null) {
-                                    Log.i("bmob", "更新成功");
+                                    Log.i("updateEmpowerCounts", "更新成功");
                                 } else {
-                                    Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
+                                    Log.i("updateEmpowerCounts", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
                                 }
                             }
 
@@ -713,7 +697,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
     }
 
     //授权
-    private void empower(String code, final String sn) {
+    private void empower(final String code, final String sn) {
         if (!mSmaManager.isConnected) {
             ToastUtils.showShortSafe(R.string.device_not_connected);
             return;
@@ -730,6 +714,10 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
             ToastUtil.showShortToast(context, getString(R.string.selector_authorized_time));
             return;
         }
+        if (tv_frag_device_ypcode.getText().equals("3MIN") && tv_frag_device_ypcode.getText().equals("1H") && tv_frag_device_ypcode.getText().equals("45H") && tv_frag_device_ypcode.getText().equals("90H") && tv_frag_device_ypcode.getText().equals("180H")) {
+            ToastUtil.showShortToast(context, getString(R.string.authorized_time_error));
+            return;
+        }
         if (tv_frag_device_ypcode2.getText().equals(null) || tv_frag_device_ypcode2.getText().equals("")) {
             ToastUtil.showShortToast(context, getString(R.string.selector_authorized_device));
             return;
@@ -739,467 +727,70 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
             return;
         }
 
-        final String tn = code.substring(0, 5);
-        final String bql = "select * from " + tn + " where code = '" + code + "'";
-        new BmobQuery<QRcode>().doSQLQuery(bql, new SQLQueryListener<QRcode>() {
-
-            @Override
-            public void done(BmobQueryResult<QRcode> result, BmobException e) {
-                if (e == null) {
-                    final List<QRcode> list = (List<QRcode>) result.getResults();
-                    Log.i("getTwice", "" + list.get(0).getTwice());
-                    Log.i("getObjectId", "" + list.get(0).getObjectId());
-                    final String times = list.get(0).getTimes();
-                    if (list.size() > 0) {
-                        if (list.get(0).getTwice()) {
-                            switch (tn) {
-                                case "V0001":
-                                    V0001 v1 = new V0001();
-                                    v1.setTwice(false);
-                                    v1.update(list.get(0).getObjectId(), new UpdateListener() {
-
-                                        @Override
-                                        public void done(BmobException e) {
-                                            if (e == null) {
-//                                                Log.i("bmob", "更新成功");
-                                                empower2(sn);
-                                            } else {
-                                                Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
-                                            }
-                                        }
-
-                                    });
-                                    break;
-                                case "IIa01":
-                                    IIa01 v2 = new IIa01();
-                                    v2.setTwice(false);
-                                    v2.update(list.get(0).getObjectId(), new UpdateListener() {
-
-                                        @Override
-                                        public void done(BmobException e) {
-                                            if (e == null) {
-//                                                Log.i("bmob", "更新成功");
-                                                empower2(sn);
-                                            } else {
-                                                Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
-                                            }
-                                        }
-
-                                    });
-                                    break;
-                                case "Iva01":
-                                    Iva01 v3 = new Iva01();
-                                    v3.setTwice(false);
-                                    v3.update(list.get(0).getObjectId(), new UpdateListener() {
-
-                                        @Override
-                                        public void done(BmobException e) {
-                                            if (e == null) {
-                                                Log.i("bmob", "更新成功");
-                                                empower2(sn);
-                                            } else {
-                                                Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
-                                            }
-                                        }
-
-                                    });
-                                    break;
-                                case "Ivb01":
-                                    Ivb01 v4 = new Ivb01();
-                                    v4.setTwice(false);
-                                    v4.update(list.get(0).getObjectId(), new UpdateListener() {
-
-                                        @Override
-                                        public void done(BmobException e) {
-                                            if (e == null) {
-                                                Log.i("bmob", "更新成功");
-                                                empower2(sn);
-                                            } else {
-                                                Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
-                                            }
-                                        }
-
-                                    });
-                                    break;
-                                case "IIb01":
-                                    IIb01 v5 = new IIb01();
-                                    v5.setTwice(false);
-                                    v5.update(list.get(0).getObjectId(), new UpdateListener() {
-
-                                        @Override
-                                        public void done(BmobException e) {
-                                            if (e == null) {
-                                                Log.i("bmob", "更新成功");
-                                                empower2(sn);
-                                            } else {
-                                                Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
-                                            }
-                                        }
-
-                                    });
-                                    break;
-                                case "B0001":
-                                    B0001 v6 = new B0001();
-                                    v6.setTwice(false);
-                                    v6.update(list.get(0).getObjectId(), new UpdateListener() {
-
-                                        @Override
-                                        public void done(BmobException e) {
-                                            if (e == null) {
-                                                Log.i("bmob", "更新成功");
-                                                empower2(sn);
-                                            } else {
-                                                Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
-                                            }
-                                        }
-
-                                    });
-                                    break;
-                                case "T0001":
-                                    T0001 v7 = new T0001();
-                                    v7.setTwice(false);
-                                    v7.update(list.get(0).getObjectId(), new UpdateListener() {
-
-                                        @Override
-                                        public void done(BmobException e) {
-                                            if (e == null) {
-                                                Log.i("bmob", "更新成功");
-                                                empower2(sn);
-                                            } else {
-                                                Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
-                                            }
-                                        }
-
-                                    });
-                                    break;
-                                case "A0001":
-                                    A0001 v8 = new A0001();
-                                    v8.setTwice(false);
-                                    v8.update(list.get(0).getObjectId(), new UpdateListener() {
-
-                                        @Override
-                                        public void done(BmobException e) {
-                                            if (e == null) {
-                                                Log.i("bmob", "更新成功");
-                                                empower2(sn);
-                                            } else {
-                                                Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
-                                            }
-                                        }
-
-                                    });
-                                    break;
-                                case "VI001":
-                                    VI001 v9 = new VI001();
-                                    v9.setTwice(false);
-                                    v9.update(list.get(0).getObjectId(), new UpdateListener() {
-
-                                        @Override
-                                        public void done(BmobException e) {
-                                            if (e == null) {
-                                                Log.i("bmob", "更新成功");
-                                                empower2(sn);
-                                            } else {
-                                                Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
-                                            }
-                                        }
-
-                                    });
-                                    break;
-                                case "Ib001":
-                                    Ib001 v10 = new Ib001();
-                                    v10.setTwice(false);
-                                    v10.update(list.get(0).getObjectId(), new UpdateListener() {
-
-                                        @Override
-                                        public void done(BmobException e) {
-                                            if (e == null) {
-                                                Log.i("bmob", "更新成功");
-                                                empower2(sn);
-                                            } else {
-                                                Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
-                                            }
-                                        }
-
-                                    });
-                                    break;
-                                case "Ia001":
-                                    Ia001 v11 = new Ia001();
-                                    v11.setTwice(false);
-                                    v11.update(list.get(0).getObjectId(), new UpdateListener() {
-
-                                        @Override
-                                        public void done(BmobException e) {
-                                            if (e == null) {
-                                                Log.i("bmob", "更新成功");
-                                                empower2(sn);
-                                            } else {
-                                                Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
-                                            }
-                                        }
-
-                                    });
-                                    break;
-                                default:
-                                    V0001 v12 = new V0001();
-                                    v12.setTwice(false);
-                                    v12.update(list.get(0).getObjectId(), new UpdateListener() {
-
-                                        @Override
-                                        public void done(BmobException e) {
-                                            if (e == null) {
-                                                Log.i("bmob", "更新成功");
-                                                empower2(sn);
-                                            } else {
-                                                Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
-                                            }
-                                        }
-
-                                    });
-                                    break;
-                            }
-                        } else {
-                            if (list.get(0).getAccredit()) {
-                                switch (tn) {
-                                    case "V0001":
-                                        V0001 v1 = new V0001();
-                                        v1.setAccredit(false);
-                                        v1.update(list.get(0).getObjectId(), new UpdateListener() {
-
-                                            @Override
-                                            public void done(BmobException e) {
-                                                if (e == null) {
-                                                    Log.i("bmob", "更新成功");
-                                                    empower2(sn);
-                                                } else {
-                                                    Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
-                                                }
-                                            }
-
-                                        });
-                                        break;
-                                    case "IIa01":
-                                        IIa01 v2 = new IIa01();
-                                        v2.setAccredit(false);
-                                        v2.update(list.get(0).getObjectId(), new UpdateListener() {
-
-                                            @Override
-                                            public void done(BmobException e) {
-                                                if (e == null) {
-                                                    Log.i("bmob", "更新成功");
-                                                    empower2(sn);
-                                                } else {
-                                                    Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
-                                                }
-                                            }
-
-                                        });
-                                        break;
-                                    case "Iva01":
-                                        Iva01 v3 = new Iva01();
-                                        v3.setAccredit(false);
-                                        v3.update(list.get(0).getObjectId(), new UpdateListener() {
-
-                                            @Override
-                                            public void done(BmobException e) {
-                                                if (e == null) {
-                                                    Log.i("bmob", "更新成功");
-                                                    empower2(sn);
-                                                } else {
-                                                    Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
-                                                }
-                                            }
-
-                                        });
-                                        break;
-                                    case "Ivb01":
-                                        Ivb01 v4 = new Ivb01();
-                                        v4.setAccredit(false);
-                                        v4.update(list.get(0).getObjectId(), new UpdateListener() {
-
-                                            @Override
-                                            public void done(BmobException e) {
-                                                if (e == null) {
-                                                    Log.i("bmob", "更新成功");
-                                                    empower2(sn);
-                                                } else {
-                                                    Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
-                                                }
-                                            }
-
-                                        });
-                                        break;
-                                    case "IIb01":
-                                        IIb01 v5 = new IIb01();
-                                        v5.setAccredit(false);
-                                        v5.update(list.get(0).getObjectId(), new UpdateListener() {
-
-                                            @Override
-                                            public void done(BmobException e) {
-                                                if (e == null) {
-                                                    Log.i("bmob", "更新成功");
-                                                    empower2(sn);
-                                                } else {
-                                                    Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
-                                                }
-                                            }
-
-                                        });
-                                        break;
-                                    case "B0001":
-                                        B0001 v6 = new B0001();
-                                        v6.setAccredit(false);
-                                        v6.update(list.get(0).getObjectId(), new UpdateListener() {
-
-                                            @Override
-                                            public void done(BmobException e) {
-                                                if (e == null) {
-                                                    Log.i("bmob", "更新成功");
-                                                    empower2(sn);
-                                                } else {
-                                                    Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
-                                                }
-                                            }
-
-                                        });
-                                        break;
-                                    case "T0001":
-                                        T0001 v7 = new T0001();
-                                        v7.setAccredit(false);
-                                        v7.update(list.get(0).getObjectId(), new UpdateListener() {
-
-                                            @Override
-                                            public void done(BmobException e) {
-                                                if (e == null) {
-                                                    Log.i("bmob", "更新成功");
-                                                    empower2(sn);
-                                                } else {
-                                                    Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
-                                                }
-                                            }
-
-                                        });
-                                        break;
-                                    case "A0001":
-                                        A0001 v8 = new A0001();
-                                        v8.setAccredit(false);
-                                        v8.update(list.get(0).getObjectId(), new UpdateListener() {
-
-                                            @Override
-                                            public void done(BmobException e) {
-                                                if (e == null) {
-                                                    Log.i("bmob", "更新成功");
-                                                    empower2(sn);
-                                                } else {
-                                                    Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
-                                                }
-                                            }
-
-                                        });
-                                        break;
-                                    case "VI001":
-                                        VI001 v9 = new VI001();
-                                        v9.setAccredit(false);
-                                        v9.update(list.get(0).getObjectId(), new UpdateListener() {
-
-                                            @Override
-                                            public void done(BmobException e) {
-                                                if (e == null) {
-                                                    Log.i("bmob", "更新成功");
-                                                    empower2(sn);
-                                                } else {
-                                                    Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
-                                                }
-                                            }
-
-                                        });
-                                        break;
-                                    case "Ib001":
-                                        Ib001 v10 = new Ib001();
-                                        v10.setAccredit(false);
-                                        v10.update(list.get(0).getObjectId(), new UpdateListener() {
-
-                                            @Override
-                                            public void done(BmobException e) {
-                                                if (e == null) {
-                                                    Log.i("bmob", "更新成功");
-                                                    empower2(sn);
-                                                } else {
-                                                    Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
-                                                }
-                                            }
-
-                                        });
-                                        break;
-                                    case "Ia001":
-                                        Ia001 v11 = new Ia001();
-                                        v11.setAccredit(false);
-                                        v11.update(list.get(0).getObjectId(), new UpdateListener() {
-
-                                            @Override
-                                            public void done(BmobException e) {
-                                                if (e == null) {
-                                                    Log.i("bmob", "更新成功");
-                                                    empower2(sn);
-                                                } else {
-                                                    Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
-                                                }
-                                            }
-
-                                        });
-                                        break;
-                                    default:
-                                        V0001 v12 = new V0001();
-                                        v12.setAccredit(false);
-                                        v12.update(list.get(0).getObjectId(), new UpdateListener() {
-
-                                            @Override
-                                            public void done(BmobException e) {
-                                                if (e == null) {
-                                                    Log.i("bmob", "更新成功");
-                                                    empower2(sn);
-                                                } else {
-                                                    Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
-                                                }
-                                            }
-
-                                        });
-                                        break;
-                                }
-                            } else {
-                                ToastUtil.showShortToast(context, getString(R.string.has_authorized));
-                            }
-                        }
-                    } else {
-                        Log.i("smile", "查询成功，无数据");
-                    }
-
-                } else {
-                    Log.i("empower", "错误码：" + e.getErrorCode() + "，错误描述：" + e.getMessage());
-                }
-            }
-        });
-
-    }
-
-    private void empower2(String sn){
         final String sql = "select * from Device_SN where SN = '" + sn + "'";
         new BmobQuery<Device_SN>().doSQLQuery(sql, new SQLQueryListener<Device_SN>() {
 
             @Override
             public void done(BmobQueryResult<Device_SN> result, BmobException e) {
                 if (e == null) {
-                    final List<Device_SN> list = (List<Device_SN>) result.getResults();
-                    final int times = list.get(0).getLast_time();
-                    final int count = list.get(0).getTimes();
+                    List<Device_SN> list = (List<Device_SN>) result.getResults();
+                    final int times = list.get(0).getLast_time();//使用时间
+                    final int count = list.get(0).getTimes();//使用次数
+                    final int addtime = list.get(0).getAddtime();//累计授权时间
+                    final int difftime = addtime - times;
+                    if (difftime > 21600) {
+                        ToastUtil.showShortToast(context, getString(R.string.authorized_time_passed));
+                        return;
+                    }
                     if (list.size() > 0) {
-                        ToastUtil.showShortToast(context, getString(R.string.congratulate_authorized_success));
-                        mSmaManager.write(SmaManager.SET.EMPOWER_TIME, times+"");
-                        mSmaManager.write(SmaManager.SET.EMPOWER_COUNT, count+"");
-                    }else {
+                        Device_SN sn = new Device_SN();
+                        String code2 = "";
+                        if(code.equals("3MIN")){
+                            code2 = 3 + "";
+                        }else {
+                            code2 = code.substring(0, code.length() - 1);
+                        }
+                        int code3 = Integer.parseInt(code2);
+                        Log.i("code3", code3 * 60 + "");
+                        Log.i("getObjectId", list.get(0).getObjectId() + "");
+                        Log.i("addtime", addtime + "");
+                        Log.i("tempcount", tempcount + "");
+                        Log.i("temptime", temptime + "");
+                        sn.setAddtime(code3 * 60 + addtime);
+                        sn.setTimes(tempcount + count);
+                        sn.setLast_time(temptime + times);
+                        sn.update(list.get(0).getObjectId(), new UpdateListener() {
+
+                            @Override
+                            public void done(BmobException e) {
+                                if (e == null) {
+                                    Log.i("bmob", "更新成功");
+                                } else {
+                                    Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
+                                }
+                            }
+
+                        });
+                        Log.i("tv_frag_device_ypcode", "=="+tv_frag_device_ypcode.getText().toString());
+                        if (tv_frag_device_ypcode.getText().toString().equals("1H")){
+                            mSmaManager.write(SmaManager.SET.EMPOWER_TIME, 60 + "");
+                        }else if(tv_frag_device_ypcode.getText().toString().equals("3MIN")){
+                            mSmaManager.write(SmaManager.SET.EMPOWER_TIME, 3 + "");
+                        }else if(tv_frag_device_ypcode.getText().toString().equals("45H")){
+                            mSmaManager.write(SmaManager.SET.EMPOWER_TIME, 45*60 + "");
+                        }else if(tv_frag_device_ypcode.getText().toString().equals("90H")){
+                            mSmaManager.write(SmaManager.SET.EMPOWER_TIME, 60*90 + "");
+                        }else if(tv_frag_device_ypcode.getText().toString().equals("180H")){
+                            mSmaManager.write(SmaManager.SET.EMPOWER_TIME, 60*180 + "");
+                        } else {
+                            ToastUtils.showShortSafe(getString(R.string.authorized_time_error));
+                        }
+
+                        mSmaManager.write(SmaManager.SET.EMPOWER_COUNT, count + "");
+                    } else {
                         Log.i("smile", "查询成功，无数据");
                     }
-                }else {
+                } else {
                     Log.i("empower", "错误码：" + e.getErrorCode() + "，错误描述：" + e.getMessage());
                 }
             }
@@ -1295,17 +886,14 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
         boolean is_cN = false;
         try {
             UTF_Str = new String(code.getBytes("ISO-8859-1"), "UTF-8");
-            System.out.println("这10是转了UTF-8的" + UTF_Str);
             is_cN = IsChineseOrNot.isChineseCharacter(UTF_Str);
             //防止有人特意使用乱码来生成二维码来判断的情况
             boolean b = IsChineseOrNot.isSpecialCharacter(code);
             if (b) {
                 is_cN = true;
             }
-            System.out.println("是为:" + is_cN);
             if (!is_cN) {
                 GB_Str = new String(code.getBytes("ISO-8859-1"), "GB2312");
-                System.out.println("这10是转了GB2312的" + GB_Str);
                 tv_frag_device_ypcode.setText(GB_Str);
             } else {
                 UTF_Str = new String(code.getBytes("ISO-8859-1"), "UTF-8");
@@ -1349,15 +937,18 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
         et.setFilters(new InputFilter[]{new InputFilter.LengthFilter(11)});
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(getString(R.string.edit_bluetooth_name));
+        builder.setMessage(getString(R.string.change_bluetooth_name_message));
         builder.setIcon(android.R.drawable.ic_dialog_info);
         builder.setView(et);
         builder.setPositiveButton(getString(R.string.sure), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 //按下确定键后的事件
-//                                    Toast.makeText(context, et.getText().toString(),Toast.LENGTH_LONG).show();
+
                 if (et.getText().toString().trim().equals("")) {
                     ToastUtils.showShortSafe(getString(R.string.null_bluetooth_name));
+                } else if (!MyUtil.isLetterDigit(et.getText().toString())){
+                    ToastUtils.showShortSafe(getString(R.string.bluetooth_name_format));
                 } else {
                     final String str = et.getText().toString().trim();
                     sendToKernel(str);
@@ -1374,8 +965,13 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                             }
                         }
                     }.start();
+                    if (mSmaManager.getNameAndAddress()[0].equals("")) {
+                        ToastUtils.showShortSafe(R.string.tip_rename_ble_device_fail);
+//                        return;
+                    }else{
+                        ToastUtils.showShortSafe(getString(R.string.tip_rename_ble_device));
+                    }
 
-                    ToastUtils.showShortSafe(getString(R.string.tip_rename_ble_device));
                     tv_frag_device_name.setText(et.getText().toString().trim());
                 }
             }

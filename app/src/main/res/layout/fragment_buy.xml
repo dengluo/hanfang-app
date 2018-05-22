@@ -98,6 +98,10 @@
 
         </LinearLayout>
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -264,8 +268,8 @@
             <LinearLayout
                 android:id="@+id/ll_empower"
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:layout_marginBottom="2dp"
+                android:layout_height="56dp"
+                android:layout_marginBottom="5dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:background="@drawable/shape_circle_edt_input"
@@ -387,6 +391,8 @@
             </LinearLayout>
 
         </LinearLayout>
+
+        </ScrollView>
 
     </LinearLayout>
 </LinearLayout>

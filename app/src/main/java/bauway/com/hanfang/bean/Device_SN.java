@@ -10,6 +10,7 @@ public class Device_SN extends BmobObject {
     private String SN;
     private int last_time;
     private int times;
+    private int addtime;
 
     public Device_SN() {
         this.setTableName("Device_SN");
@@ -41,5 +42,13 @@ public class Device_SN extends BmobObject {
 
     public void setTimes(int times) {
         this.times = times;
+    }
+
+    public int getAddtime() {
+        return addtime;
+    }
+
+    public void setAddtime(int addtime) {
+        this.addtime = addtime;
     }
 }

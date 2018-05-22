@@ -35,7 +35,7 @@ public class DecodeFormatManager {
 
     static {
         PRODUCT_FORMATS = EnumSet.of(BarcodeFormat.UPC_A, BarcodeFormat.UPC_E, BarcodeFormat.EAN_13,
-                BarcodeFormat.EAN_8, BarcodeFormat.RSS_14, BarcodeFormat.RSS_EXPANDED);
+                BarcodeFormat.EAN_8, BarcodeFormat.RSS_14, BarcodeFormat.RSS_EXPANDED, BarcodeFormat.CODE_128);
         INDUSTRIAL_FORMATS = EnumSet.of(BarcodeFormat.CODE_39, BarcodeFormat.CODE_93, BarcodeFormat
                 .CODE_128, BarcodeFormat.ITF, BarcodeFormat.CODABAR);
         ONE_D_FORMATS = EnumSet.copyOf(PRODUCT_FORMATS);

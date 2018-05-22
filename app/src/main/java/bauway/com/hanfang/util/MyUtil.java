@@ -874,4 +874,40 @@ public class MyUtil {
         else
             return mobiles.matches(telRegex);
     }
+
+    /**
+     * 获取字符串的长度
+     *
+     * @param s
+     * @return
+     */
+    public static int getlen(String s) {
+        return s.length();
+    }
+
+    /**
+     * 判断字符串只有字母和数字
+     *
+     * @param str
+     * @return
+     */
+    public static boolean isLetterDigit(String str) {
+        String regex = "^[a-z0-9A-Z]+$";
+        return str.matches(regex);
+    }
+
+    /**
+     * 判断字符串中是否至少有2个数字
+     *
+     * @param s
+     * @return
+     */
+    public static boolean FindNumCount(String s) {
+        Matcher match = Pattern.compile("\\d").matcher(s);
+        int count = 0;
+        while (match.find())
+            count++;
+        return count >= 2;
+    }
+
 }
