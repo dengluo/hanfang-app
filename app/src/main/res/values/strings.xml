@@ -303,7 +303,7 @@ A:修改设备名后,设备会断开重连,这个过程需要大概1~20秒时间
     <string name="not_open_bluetooth">蓝牙设备未打开,请开启此功能后重试</string>
     <string name="edit_bluetooth_name">修改设备蓝牙名称</string>
     <string name="null_bluetooth_name">蓝牙名称不能为空</string>
-    <string name="change_bluetooth_name_message">名称长度不超过11位,由字母和数字组成</string>
+    <string name="change_bluetooth_name_message">名称长度不小于2位,不超过11位,由字母和数字组成</string>
     <string name="bluetooth_name_format">请检查蓝牙名称格式</string>
     <string name="product_code_error">产品码不存在或者过期</string>
     <string name="product_code_null">产品码不能为空</string>

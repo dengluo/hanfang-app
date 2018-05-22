@@ -400,30 +400,148 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
 
     private void sendToKernel(final String str) {
         if (mSmaManager.isConnected) {
-            Log.e("str.length()=", str.length()+"||");
-            if (str.length() < 6) {
-                mSmaManager.write2(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME2, str.substring(0, str.length()).getBytes());
-            } else {
-                mSmaManager.write2(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME2, str.substring(0, 6).toString().getBytes());
-            }
-
-            new Thread() {
-                @Override
-                public void run() {
-                    super.run();
-                    try {
-                        Thread.sleep(200);//休眠200毫秒
-                        if (str.length() > 6) {
-                            Log.e("substring22=", str.substring(6, str.length()));
-                            mSmaManager.write2(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME2, str.substring(6, str.length()).getBytes());
-                        } else {
-                            mSmaManager.write2(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME2, "0x00".getBytes());
+//            Log.e("str.length()=", str.length()+"||");
+            if (str.length() == 2) {
+                mSmaManager.write2(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME2, (str+"   ").getBytes());
+                new Thread() {
+                    @Override
+                    public void run() {
+                        super.run();
+                        try {
+                            Thread.sleep(200);//休眠200毫秒
+                            mSmaManager.write2(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME2, ("      ").getBytes());
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
                         }
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
                     }
-                }
-            }.start();
+                }.start();
+            }else if (str.length() == 3) {
+                mSmaManager.write2(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME2, (str+"  ").getBytes());
+                new Thread() {
+                    @Override
+                    public void run() {
+                        super.run();
+                        try {
+                            Thread.sleep(200);//休眠200毫秒
+                            mSmaManager.write(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME2,(" ").getBytes());
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }.start();
+            }else if (str.length() == 4) {
+                mSmaManager.write2(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME2, (str+" ").getBytes());
+                new Thread() {
+                    @Override
+                    public void run() {
+                        super.run();
+                        try {
+                            Thread.sleep(200);//休眠200毫秒
+                            mSmaManager.write2(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME2, " ".getBytes());
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }.start();
+            }else if (str.length() == 5) {
+                mSmaManager.write2(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME2, (str).getBytes());
+                new Thread() {
+                    @Override
+                    public void run() {
+                        super.run();
+                        try {
+                            Thread.sleep(200);//休眠200毫秒
+                            mSmaManager.write2(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME2, " ".getBytes());
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }.start();
+            }else if (str.length() == 6) {
+                mSmaManager.write2(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME2, str.substring(0, 6).getBytes());
+                new Thread() {
+                    @Override
+                    public void run() {
+                        super.run();
+                        try {
+                            Thread.sleep(200);//休眠200毫秒
+                            mSmaManager.write2(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME2, str.substring(6, str.length()).getBytes());
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }.start();
+            }else if (str.length() == 7) {
+                mSmaManager.write2(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME2, str.substring(0, 6).getBytes());
+                new Thread() {
+                    @Override
+                    public void run() {
+                        super.run();
+                        try {
+                            Thread.sleep(200);//休眠200毫秒
+                            mSmaManager.write2(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME2, str.substring(6, str.length()).getBytes());
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }.start();
+            }else if (str.length() == 8) {
+                mSmaManager.write2(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME2, str.substring(0, 6).getBytes());
+                new Thread() {
+                    @Override
+                    public void run() {
+                        super.run();
+                        try {
+                            Thread.sleep(200);//休眠200毫秒
+                            mSmaManager.write2(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME2, str.substring(6, str.length()).getBytes());
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }.start();
+            }else if (str.length() == 9) {
+                mSmaManager.write2(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME2, str.substring(0, 6).getBytes());
+                new Thread() {
+                    @Override
+                    public void run() {
+                        super.run();
+                        try {
+                            Thread.sleep(200);//休眠200毫秒
+                            mSmaManager.write2(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME2, str.substring(6, str.length()).getBytes());
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }.start();
+            }else if (str.length() == 10) {
+                mSmaManager.write2(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME2, str.substring(0, 6).getBytes());
+                new Thread() {
+                    @Override
+                    public void run() {
+                        super.run();
+                        try {
+                            Thread.sleep(200);//休眠200毫秒
+                            mSmaManager.write2(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME2, str.substring(6, str.length()).getBytes());
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }.start();
+            }else if (str.length() == 11) {
+                mSmaManager.write2(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME2, str.substring(0, 6).getBytes());
+                new Thread() {
+                    @Override
+                    public void run() {
+                        super.run();
+                        try {
+                            Thread.sleep(200);//休眠200毫秒
+                            mSmaManager.write2(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME2, str.substring(6, str.length()).getBytes());
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }.start();
+            }
         }
     }
 
@@ -949,23 +1067,25 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                     ToastUtils.showShortSafe(getString(R.string.null_bluetooth_name));
                 } else if (!MyUtil.isLetterDigit(et.getText().toString())){
                     ToastUtils.showShortSafe(getString(R.string.bluetooth_name_format));
+                }  else if (MyUtil.getlen(et.getText().toString())==1){
+                    ToastUtils.showShortSafe(getString(R.string.bluetooth_name_format));
                 } else {
                     final String str = et.getText().toString().trim();
                     sendToKernel(str);
-                    new Thread() {
-                        @Override
-                        public void run() {
-                            super.run();
-                            try {
-                                Thread.sleep(200);//休眠200毫秒
-                                mSmaManager.write1(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME, str.getBytes());
-//                                Toast.makeText(context,R.string.tip_rename_ble_device,Toast.LENGTH_LONG).show();
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }.start();
-                    if (mSmaManager.getNameAndAddress()[0].equals("")) {
+//                    new Thread() {
+//                        @Override
+//                        public void run() {
+//                            super.run();
+//                            try {
+//                                Thread.sleep(200);//休眠200毫秒
+//                                mSmaManager.write1(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME, str.getBytes());
+////                                Toast.makeText(context,R.string.tip_rename_ble_device,Toast.LENGTH_LONG).show();
+//                            } catch (InterruptedException e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+//                    }.start();
+                    if (mSmaManager.getNameAndAddress()[0].equals("") || !mSmaManager.isConnected) {
                         ToastUtils.showShortSafe(R.string.tip_rename_ble_device_fail);
 //                        return;
                     }else{
