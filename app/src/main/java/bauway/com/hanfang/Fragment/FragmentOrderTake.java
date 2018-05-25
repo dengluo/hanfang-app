@@ -323,6 +323,14 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                         ll_device_connect_state.setVisibility(View.GONE);
                         tv_empower_time.setText(getString(R.string.authorized_time));
                         break;
+                    case 119:
+                        ll_empower_device.setVisibility(View.VISIBLE);
+                        ll_home_hg.setVisibility(View.GONE);
+                        ll_empower.setVisibility(View.VISIBLE);
+                        ll_device_connect_state.setVisibility(View.GONE);
+                        tv_frag_device_ypcode.setText("");
+                        tv_empower_time.setText(getString(R.string.authorized_time));
+                        break;
                     case 20:
                         parseDate(msg.obj.toString());
                         ll_empower_device.setVisibility(View.VISIBLE);

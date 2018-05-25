@@ -158,8 +158,10 @@
     <string name="bar_code">条形码：%1$s</string>
     <string name="decode_null">未发现二维码/条形码</string>
     <string name="Alignment_code">对准二维码/条形码</string>
-    <string name="scan_code_open">扫描产品码开启使用</string>
-    <string name="manual_input_code">或者输入产品码</string>
+    <string name="scan_code_open">扫描授权时间码开启使用</string>
+    <string name="manual_input_code">或者输入授权时间码</string>
+    <string name="scan_code_open2">扫描主机上的二维码开启使用</string>
+    <string name="manual_input_code2">或者输入授权设备码</string>
     <string name="camera_error">相机错误</string>
     <!--生成二维码-->
     <string name="scan_code">扫码</string>
@@ -307,9 +309,9 @@ A:修改设备名后,设备会断开重连,这个过程需要大概1~20秒时间
     <string name="bluetooth_name_format">请检查蓝牙名称格式</string>
     <string name="product_code_error">产品码不存在或者过期</string>
     <string name="product_code_null">产品码不能为空</string>
-    <string name="authorized_code_error">授权码无效</string>
+    <string name="authorized_code_error">授权时间码无效</string>
     <string name="product_code_short">产品码太短,请重新确认</string>
-    <string name="device_code_error">设备码无效</string>
+    <string name="device_code_error">授权设备码无效</string>
     <string name="yzm">验证码</string>
     <string name="device">设备:</string>
     <string name="no_connected">未连接</string>

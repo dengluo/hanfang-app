@@ -118,6 +118,10 @@ public final class CaptureActivity extends BaseActivity implements SurfaceHolder
     EditText inputCode;
     @BindView(R.id.bt_submit_yaopin_code)
     Button submitCode;
+    @BindView(R.id.tv_capture_empower_code)
+    TextView tv_capture_empower_code;
+    @BindView(R.id.tv_capture_empower_code_input)
+    TextView tv_capture_empower_code_input;
 
     private Rect mCropRect = null;
     private boolean isHasSurface = false;
@@ -163,7 +167,13 @@ public final class CaptureActivity extends BaseActivity implements SurfaceHolder
 
     @Override
     protected void initView() {
-
+        if (getIntent().getStringExtra("shebei").equals("device1")) {
+            tv_capture_empower_code.setText(getResources().getText(R.string.scan_code_open));
+            tv_capture_empower_code_input.setText(getResources().getText(R.string.manual_input_code));
+        }else {
+            tv_capture_empower_code.setText(getResources().getText(R.string.scan_code_open2));
+            tv_capture_empower_code_input.setText(getResources().getText(R.string.manual_input_code2));
+        }
     }
 
     @Override
@@ -1022,7 +1032,8 @@ public final class CaptureActivity extends BaseActivity implements SurfaceHolder
                                 message.what = 112;
                             }else {
 //                                SelectData1(code);
-                                message.what = 112;
+                                SelectData1(code);
+                                message.what = 119;
                             }
 
                         } else {
