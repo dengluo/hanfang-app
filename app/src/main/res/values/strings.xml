@@ -119,6 +119,7 @@
     <string name="code_error">验证码错误</string>
     <string name="plz_input_email">请输入邮箱</string>
     <string name="plz_input_pwd">请输入密码</string>
+    <string name="tip_black_list">您这个号码已被限制登录</string>
     <string name="plz_input_oldpwd">请输入旧密码</string>
     <string name="plz_input_newpwd">请输入新密码</string>
     <string name="plz_error_oldpwd">旧密码输入错误</string>

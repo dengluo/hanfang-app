@@ -15,6 +15,7 @@ public class User extends BmobUser {
     private Boolean isPerson;
     private Boolean SMSBOOL;
     private String [] info;
+    private Boolean blacklist;
 
     public String getApp_msg() {
         return app_msg;
@@ -54,5 +55,13 @@ public class User extends BmobUser {
 
     public void setSMSBOOL(Boolean SMSBOOL) {
         this.SMSBOOL = SMSBOOL;
+    }
+
+    public Boolean getBlacklist() {
+        return blacklist;
+    }
+
+    public void setBlacklist(Boolean blacklist) {
+        this.blacklist = blacklist;
     }
 }

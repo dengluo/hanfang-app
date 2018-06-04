@@ -148,7 +148,7 @@
                 android:layout_alignParentLeft="true"
                 android:background="@drawable/selector_radio_return"
                 android:gravity="left|center_vertical"
-                android:padding="@dimen/dp5"/>
+                android:padding="@dimen/dp5" />
 
             <TextView
                 style="@style/action_title"
@@ -158,8 +158,8 @@
                 android:id="@+id/action_album"
                 style="@style/action_tv"
                 android:layout_alignParentRight="true"
-                android:visibility="gone"
-                android:text="@string/album" />
+                android:text="@string/album"
+                android:visibility="gone" />
 
         </RelativeLayout>
 

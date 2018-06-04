@@ -16,6 +16,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.List;
+
 import bauway.com.hanfang.App.Constants;
 import bauway.com.hanfang.util.NetworkUtil;
 import bauway.com.hanfang.util.ToastUtil;
@@ -25,9 +27,12 @@ import bauway.com.hanfang.bean.User;
 import bauway.com.hanfang.util.DialogUtil;
 import bauway.com.hanfang.util.PreferencesUtils;
 import butterknife.BindView;
+import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobQueryResult;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.LogInListener;
+import cn.bmob.v3.listener.SQLQueryListener;
 
 public class LoginActivity2 extends BaseActivity implements View.OnClickListener, View.OnKeyListener {
     private static final String TAG = "Login2Activity";
@@ -45,6 +50,8 @@ public class LoginActivity2 extends BaseActivity implements View.OnClickListener
     @BindView(R.id.image_pwd)
     ImageView imagePwd;
     private boolean isopen = true;//用来标记密码是否可见
+    Context context;
+    private User mUser;
 
     @Override
     protected int getLayoutRes() {
@@ -68,11 +75,14 @@ public class LoginActivity2 extends BaseActivity implements View.OnClickListener
 
     @Override
     protected void initData() {
+        mUser = getUserEntity();
+        context = LoginActivity2.this;
         String phone = userRxPreferences.getString(Constants.LOGIN_PHONE).get();
         Log.i("bmob", "phone：" + phone);
         if (!TextUtils.isEmpty(phone)) {
             username.setText(phone);
         }
+
     }
 
     @Override
@@ -128,8 +138,32 @@ public class LoginActivity2 extends BaseActivity implements View.OnClickListener
             ToastUtil.showShortToast(this, getString(R.string.plz_input_pwd));
             return;
         }
-        DialogUtil.progressDialog(LoginActivity2.this, getString(R.string.login_now), false);
+        final String bql = "select blacklist from _User where username = '" + email + "'";
+        new BmobQuery<User>().doSQLQuery(bql, new SQLQueryListener<User>() {
 
+            @Override
+            public void done(BmobQueryResult<User> result, BmobException e) {
+                if (e == null) {
+                    List<User> list = (List<User>) result.getResults();
+                    final Boolean blacklist = list.get(0).getBlacklist();//
+                    Log.e("blacklist", blacklist + "");
+                    if (blacklist) {
+                        ToastUtil.showShortToast(context, getString(R.string.tip_black_list));
+                        return;
+                    } else {
+                        myLogin(email, pwd);
+                    }
+                } else {
+                    Log.i("updateEmpowerCounts", "错误码：" + e.getErrorCode() + "，错误描述：" + e.getMessage());
+                    myLogin(email, pwd);
+                }
+            }
+        });
+    }
+
+    private void myLogin(final String email, final String pwd) {
+        DialogUtil.progressDialog(LoginActivity2.this, getString(R.string.login_now), false);
+//
         BmobUser.loginByAccount(email, pwd, new LogInListener<User>() {
             @Override
             public void done(User user, BmobException e) {
@@ -137,7 +171,7 @@ public class LoginActivity2 extends BaseActivity implements View.OnClickListener
 //                    Log.e(TAG, userRxPreferences.getString(Constants.LOGIN_EMAIL).get()+"//"+userRxPreferences.getString(Constants.LOGIN_PHONE).get());
                     userRxPreferences.getString(Constants.LOGIN_EMAIL).set(email);
                     userRxPreferences.getString(Constants.LOGIN_PWD).set(pwd);
-                    Log.e("getSessionToken",user.getSessionToken());
+                    Log.e("getSessionToken", user.getSessionToken());
                     userRxPreferences.getString(Constants.SessionToken).set(user.getSessionToken());
                     PreferencesUtils.putEntity(LoginActivity2.this, user);
                     startActivity(new Intent(LoginActivity2.this, MainActivity2.class));
