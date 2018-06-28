@@ -11,6 +11,7 @@ public class Device_SN extends BmobObject {
     private int last_time;
     private int times;
     private int addtime;
+    private String bluetoothAddress;
 
     public Device_SN() {
         this.setTableName("Device_SN");
@@ -50,5 +51,13 @@ public class Device_SN extends BmobObject {
 
     public void setAddtime(int addtime) {
         this.addtime = addtime;
+    }
+
+    public String getBluetoothAddress() {
+        return bluetoothAddress;
+    }
+
+    public void setBluetoothAddress(String bluetoothAddress) {
+        this.bluetoothAddress = bluetoothAddress;
     }
 }

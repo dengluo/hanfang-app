@@ -106,6 +106,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
     int temptime = 0;//设备返回的使用时间
     String devicename = "";
     private Boolean isok = true;//是否没有验证,并且已经过期
+    private Boolean allowBind = false;//是否允许绑定
 
     public static Handler mHandler;//接受MyFragment1发送过来的消息
     String getProduct = "";
@@ -270,6 +271,8 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
 //                        mSmaManager.mEaseConnector.connect(true);
                         String deviceName = msg.obj.toString().substring(0, msg.obj.toString().indexOf("=="));
                         String deviceAddress = msg.obj.toString().substring(msg.obj.toString().indexOf("==") + 2, msg.obj.toString().length());
+                        Log.e("deviceAddress==", deviceAddress);
+                        Log.e("deviceAddress2==", mSmaManager.mEaseConnector.mAddress);
                         if (!TextUtils.isEmpty(deviceAddress))
                             mSmaManager.mEaseConnector.setAddress(deviceAddress).connect(true);
 
@@ -410,7 +413,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
         if (mSmaManager.isConnected) {
 //            Log.e("str.length()=", str.length()+"||");
             if (str.length() == 2) {
-                mSmaManager.write2(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME2, (str+"   ").getBytes());
+                mSmaManager.write2(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME2, (str + "   ").getBytes());
                 new Thread() {
                     @Override
                     public void run() {
@@ -423,22 +426,22 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                         }
                     }
                 }.start();
-            }else if (str.length() == 3) {
-                mSmaManager.write2(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME2, (str+"  ").getBytes());
+            } else if (str.length() == 3) {
+                mSmaManager.write2(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME2, (str + "  ").getBytes());
                 new Thread() {
                     @Override
                     public void run() {
                         super.run();
                         try {
                             Thread.sleep(200);//休眠200毫秒
-                            mSmaManager.write(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME2,(" ").getBytes());
+                            mSmaManager.write(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME2, (" ").getBytes());
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
                     }
                 }.start();
-            }else if (str.length() == 4) {
-                mSmaManager.write2(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME2, (str+" ").getBytes());
+            } else if (str.length() == 4) {
+                mSmaManager.write2(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME2, (str + " ").getBytes());
                 new Thread() {
                     @Override
                     public void run() {
@@ -451,7 +454,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                         }
                     }
                 }.start();
-            }else if (str.length() == 5) {
+            } else if (str.length() == 5) {
                 mSmaManager.write2(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME2, (str).getBytes());
                 new Thread() {
                     @Override
@@ -465,7 +468,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                         }
                     }
                 }.start();
-            }else if (str.length() == 6) {
+            } else if (str.length() == 6) {
                 mSmaManager.write2(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME2, str.substring(0, 6).getBytes());
                 new Thread() {
                     @Override
@@ -479,7 +482,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                         }
                     }
                 }.start();
-            }else if (str.length() == 7) {
+            } else if (str.length() == 7) {
                 mSmaManager.write2(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME2, str.substring(0, 6).getBytes());
                 new Thread() {
                     @Override
@@ -493,7 +496,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                         }
                     }
                 }.start();
-            }else if (str.length() == 8) {
+            } else if (str.length() == 8) {
                 mSmaManager.write2(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME2, str.substring(0, 6).getBytes());
                 new Thread() {
                     @Override
@@ -507,7 +510,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                         }
                     }
                 }.start();
-            }else if (str.length() == 9) {
+            } else if (str.length() == 9) {
                 mSmaManager.write2(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME2, str.substring(0, 6).getBytes());
                 new Thread() {
                     @Override
@@ -521,7 +524,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                         }
                     }
                 }.start();
-            }else if (str.length() == 10) {
+            } else if (str.length() == 10) {
                 mSmaManager.write2(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME2, str.substring(0, 6).getBytes());
                 new Thread() {
                     @Override
@@ -535,7 +538,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                         }
                     }
                 }.start();
-            }else if (str.length() == 11) {
+            } else if (str.length() == 11) {
                 mSmaManager.write2(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME2, str.substring(0, 6).getBytes());
                 new Thread() {
                     @Override
@@ -718,7 +721,11 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                 editname(et);
                 break;
             case R.id.empower:
-                empower(tv_frag_device_ypcode.getText().toString(), tv_frag_device_ypcode2.getText().toString());
+                if (MyUtil.isFastClick()) {
+                    ToastUtils.showShortSafe(R.string.too_frequent_operation);
+                } else {
+                    empower(tv_frag_device_ypcode.getText().toString(), tv_frag_device_ypcode2.getText().toString());
+                }
                 break;
             case R.id.iv_device_drug_codesss:
                 if (isok) {
@@ -800,6 +807,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                         v1.setAddtime(addtime);
                         v1.setTimes(tempcount + count);
                         v1.setLast_time(temptime + times);
+                        v1.setBluetoothAddress(mSmaManager.mEaseConnector.mAddress + "");
                         v1.update(list.get(0).getObjectId(), new UpdateListener() {
 
                             @Override
@@ -853,38 +861,76 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
             return;
         }
 
+        onetoone(mSmaManager.mEaseConnector.mAddress);
+
         final String sql = "select * from Device_SN where SN = '" + sn + "'";
         new BmobQuery<Device_SN>().doSQLQuery(sql, new SQLQueryListener<Device_SN>() {
 
             @Override
             public void done(BmobQueryResult<Device_SN> result, BmobException e) {
                 if (e == null) {
-                    List<Device_SN> list = (List<Device_SN>) result.getResults();
+                    List<Device_SN> list = result.getResults();
                     final int times = list.get(0).getLast_time();//使用时间
                     final int count = list.get(0).getTimes();//使用次数
                     final int addtime = list.get(0).getAddtime();//累计授权时间
                     final int difftime = addtime - times;
+                    String bluetoothAddress = list.get(0).getBluetoothAddress();//蓝牙地址
+                    Log.e("bluetoothAddress==", bluetoothAddress + "");
+                    Log.e("bluetoothAddress22==", mSmaManager.mEaseConnector.mAddress + "");
+                    Log.e("allowBind==", allowBind + "");
+
+                    if (bluetoothAddress == null || bluetoothAddress.trim().equals("")){
+                        if (allowBind == false) {
+                            Log.i("test", "0044");
+                            ToastUtil.showShortToast(context, getString(R.string.mismatch_device_code));
+                            return;
+                        }
+                    }else{
+                        if (!bluetoothAddress.toString().trim().equals(mSmaManager.mEaseConnector.mAddress.toString().trim())) {
+                            Log.i("test", "005");
+                            if (allowBind == false) {
+                                Log.i("test", "004");
+                                ToastUtil.showShortToast(context, getString(R.string.mismatch_device_code));
+                                return;
+                            }
+                        }
+                    }
+
                     if (difftime > 21600) {
                         ToastUtil.showShortToast(context, getString(R.string.authorized_time_passed));
                         return;
                     }
+
+//                    if (bluetoothAddress != null){
+//                        if (!bluetoothAddress.toString().trim().equals(mSmaManager.mEaseConnector.mAddress.toString().trim())){
+//                            Log.i("test", "005");
+//                            if (allowBind == false){
+//                                Log.i("test", "004");
+//                                ToastUtil.showShortToast(context, getString(R.string.mismatch_device_code));
+//                                return;
+//                            }
+//                        }
+//                    }
+
                     if (list.size() > 0) {
                         Device_SN sn = new Device_SN();
                         String code2 = "";
-                        if(code.equals("3MIN")){
+                        if (code.equals("3MIN")) {
                             code2 = 3 + "";
-                        }else {
+                        } else {
                             code2 = code.substring(0, code.length() - 1);
                         }
                         int code3 = Integer.parseInt(code2);
-                        Log.i("code3", code3 * 60 + "");
-                        Log.i("getObjectId", list.get(0).getObjectId() + "");
-                        Log.i("addtime", addtime + "");
-                        Log.i("tempcount", tempcount + "");
-                        Log.i("temptime", temptime + "");
+//                        Log.i("code3", code3 * 60 + "");
+//                        Log.i("getObjectId", list.get(0).getObjectId() + "");
+//                        Log.i("addtime", addtime + "");
+//                        Log.i("tempcount", tempcount + "");
+//                        Log.i("temptime", temptime + "");
+//                        Log.i("BluetoothAddress", mSmaManager.getNameAndAddress()[0] + "");
                         sn.setAddtime(code3 * 60 + addtime);
                         sn.setTimes(tempcount + count);
                         sn.setLast_time(temptime + times);
+                        sn.setBluetoothAddress(mSmaManager.mEaseConnector.mAddress + "");
                         sn.update(list.get(0).getObjectId(), new UpdateListener() {
 
                             @Override
@@ -897,17 +943,17 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                             }
 
                         });
-                        Log.i("tv_frag_device_ypcode", "=="+tv_frag_device_ypcode.getText().toString());
-                        if (tv_frag_device_ypcode.getText().toString().equals("1H")){
+//                        Log.i("tv_frag_device_ypcode", "=="+tv_frag_device_ypcode.getText().toString());
+                        if (tv_frag_device_ypcode.getText().toString().equals("1H")) {
                             mSmaManager.write(SmaManager.SET.EMPOWER_TIME, 60 + "");
-                        }else if(tv_frag_device_ypcode.getText().toString().equals("3MIN")){
+                        } else if (tv_frag_device_ypcode.getText().toString().equals("3MIN")) {
                             mSmaManager.write(SmaManager.SET.EMPOWER_TIME, 3 + "");
-                        }else if(tv_frag_device_ypcode.getText().toString().equals("45H")){
-                            mSmaManager.write(SmaManager.SET.EMPOWER_TIME, 45*60 + "");
-                        }else if(tv_frag_device_ypcode.getText().toString().equals("90H")){
-                            mSmaManager.write(SmaManager.SET.EMPOWER_TIME, 60*90 + "");
-                        }else if(tv_frag_device_ypcode.getText().toString().equals("180H")){
-                            mSmaManager.write(SmaManager.SET.EMPOWER_TIME, 60*180 + "");
+                        } else if (tv_frag_device_ypcode.getText().toString().equals("45H")) {
+                            mSmaManager.write(SmaManager.SET.EMPOWER_TIME, 45 * 60 + "");
+                        } else if (tv_frag_device_ypcode.getText().toString().equals("90H")) {
+                            mSmaManager.write(SmaManager.SET.EMPOWER_TIME, 60 * 90 + "");
+                        } else if (tv_frag_device_ypcode.getText().toString().equals("180H")) {
+                            mSmaManager.write(SmaManager.SET.EMPOWER_TIME, 60 * 180 + "");
                         } else {
                             ToastUtils.showShortSafe(getString(R.string.authorized_time_error));
                         }
@@ -944,6 +990,40 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                     .create();
             dialog.show();
         }
+    }
+
+
+    private void onetoone(String ba) {
+        final String sql = "select * from Device_SN where bluetoothAddress = '" + ba + "'";
+        new BmobQuery<Device_SN>().doSQLQuery(sql, new SQLQueryListener<Device_SN>() {
+
+            @Override
+            public void done(BmobQueryResult<Device_SN> result, BmobException e) {
+                if (e == null) {
+                    List<Device_SN> list = result.getResults();
+                    Log.i("list.size()", list.size() + "");
+                    String bluetoothAddress = list.get(0).getBluetoothAddress();//蓝牙地址
+                    Log.e("~bluetoothAddress==", bluetoothAddress + "");
+                    Log.e("~bluetoothAddress22==", mSmaManager.mEaseConnector.mAddress + "");
+
+                    if (list.size() > 0) {
+                        if (!bluetoothAddress.toString().trim().equals(mSmaManager.mEaseConnector.mAddress.toString().trim())) {
+                            Log.i("test", "005");
+                            allowBind = false;
+                            ToastUtil.showShortToast(context, getString(R.string.mismatch_device_code));
+                            return;
+                        }
+                    } else {
+                        allowBind = true;
+                        Log.i("onetoone", "查询成功，无数据");
+                    }
+
+                } else {
+                    allowBind = false;
+                    Log.i("onetoone", "错误码：" + e.getErrorCode() + "，错误描述：" + e.getMessage());
+                }
+            }
+        });
     }
 
     /*
@@ -1073,9 +1153,9 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
 
                 if (et.getText().toString().trim().equals("")) {
                     ToastUtils.showShortSafe(getString(R.string.null_bluetooth_name));
-                } else if (!MyUtil.isLetterDigit(et.getText().toString())){
+                } else if (!MyUtil.isLetterDigit(et.getText().toString())) {
                     ToastUtils.showShortSafe(getString(R.string.bluetooth_name_format));
-                }  else if (MyUtil.getlen(et.getText().toString())==1){
+                } else if (MyUtil.getlen(et.getText().toString()) == 1) {
                     ToastUtils.showShortSafe(getString(R.string.bluetooth_name_format));
                 } else {
                     final String str = et.getText().toString().trim();
@@ -1096,7 +1176,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                     if (mSmaManager.getNameAndAddress()[0].equals("") || !mSmaManager.isConnected) {
                         ToastUtils.showShortSafe(R.string.tip_rename_ble_device_fail);
 //                        return;
-                    }else{
+                    } else {
                         ToastUtils.showShortSafe(getString(R.string.tip_rename_ble_device));
                     }
 

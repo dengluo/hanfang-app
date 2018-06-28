@@ -319,5 +319,7 @@ A:修改设备名后,设备会断开重连,这个过程需要大概1~20秒时间
     <string name="authorized_device">授权设备:</string>
     <string name="authorized">授权</string>
     <string name="red_light">红光</string>
+    <string name="too_frequent_operation">操作太频繁,请稍后再试</string>
+    <string name="mismatch_device_code">授权设备码与设备不匹配,请检查授权设备码是否正确</string>
 
 </resources>
