@@ -100,14 +100,13 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
     public static final int PAGE_TWO = 1;
     public static final int PAGE_THREE = 2;
     public RxSharedPreferences userRxPreferences;
+    String sn;
 
     int num = 0;
     int tempcount = 0;//设备返回的使用次数
     int temptime = 0;//设备返回的使用时间
     String devicename = "";
     private Boolean isok = true;//是否没有验证,并且已经过期
-    private Boolean allowBind = false;//是否允许绑定
-
     public static Handler mHandler;//接受MyFragment1发送过来的消息
     String getProduct = "";
 
@@ -861,109 +860,211 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
             return;
         }
 
-        onetoone(mSmaManager.mEaseConnector.mAddress);
-
         final String sql = "select * from Device_SN where SN = '" + sn + "'";
         new BmobQuery<Device_SN>().doSQLQuery(sql, new SQLQueryListener<Device_SN>() {
 
             @Override
             public void done(BmobQueryResult<Device_SN> result, BmobException e) {
                 if (e == null) {
-                    List<Device_SN> list = result.getResults();
+                    final List<Device_SN> list = result.getResults();
                     final int times = list.get(0).getLast_time();//使用时间
                     final int count = list.get(0).getTimes();//使用次数
                     final int addtime = list.get(0).getAddtime();//累计授权时间
                     final int difftime = addtime - times;
-                    String bluetoothAddress = list.get(0).getBluetoothAddress();//蓝牙地址
-                    Log.e("bluetoothAddress==", bluetoothAddress + "");
+                    final String bluetoothAddress = list.get(0).getBluetoothAddress();//蓝牙地址
+                    final String sn2 = list.get(0).getSN();//设备授权码
+                    Log.e("bluetoothAddress==", bluetoothAddress);
                     Log.e("bluetoothAddress22==", mSmaManager.mEaseConnector.mAddress + "");
-                    Log.e("allowBind==", allowBind + "");
-
-                    if (bluetoothAddress == null || bluetoothAddress.trim().equals("")){
-                        if (allowBind == false) {
-                            Log.i("test", "0044");
-                            ToastUtil.showShortToast(context, getString(R.string.mismatch_device_code));
-                            return;
-                        }
-                    }else{
-                        if (!bluetoothAddress.toString().trim().equals(mSmaManager.mEaseConnector.mAddress.toString().trim())) {
-                            Log.i("test", "005");
-                            if (allowBind == false) {
-                                Log.i("test", "004");
-                                ToastUtil.showShortToast(context, getString(R.string.mismatch_device_code));
-                                return;
-                            }
-                        }
-                    }
-
-                    if (difftime > 21600) {
-                        ToastUtil.showShortToast(context, getString(R.string.authorized_time_passed));
-                        return;
-                    }
-
-//                    if (bluetoothAddress != null){
-//                        if (!bluetoothAddress.toString().trim().equals(mSmaManager.mEaseConnector.mAddress.toString().trim())){
-//                            Log.i("test", "005");
-//                            if (allowBind == false){
-//                                Log.i("test", "004");
-//                                ToastUtil.showShortToast(context, getString(R.string.mismatch_device_code));
-//                                return;
-//                            }
-//                        }
-//                    }
+                    Log.e("sn==", sn + "");
+                    Log.e("sn==2", sn2 + "");
 
                     if (list.size() > 0) {
-                        Device_SN sn = new Device_SN();
-                        String code2 = "";
-                        if (code.equals("3MIN")) {
-                            code2 = 3 + "";
-                        } else {
-                            code2 = code.substring(0, code.length() - 1);
-                        }
-                        int code3 = Integer.parseInt(code2);
-//                        Log.i("code3", code3 * 60 + "");
-//                        Log.i("getObjectId", list.get(0).getObjectId() + "");
-//                        Log.i("addtime", addtime + "");
-//                        Log.i("tempcount", tempcount + "");
-//                        Log.i("temptime", temptime + "");
-//                        Log.i("BluetoothAddress", mSmaManager.getNameAndAddress()[0] + "");
-                        sn.setAddtime(code3 * 60 + addtime);
-                        sn.setTimes(tempcount + count);
-                        sn.setLast_time(temptime + times);
-                        sn.setBluetoothAddress(mSmaManager.mEaseConnector.mAddress + "");
-                        sn.update(list.get(0).getObjectId(), new UpdateListener() {
+
+
+                        final String sql2 = "select * from Device_SN where bluetoothAddress = '" + mSmaManager.mEaseConnector.mAddress + "'";
+                        new BmobQuery<Device_SN>().doSQLQuery(sql2, new SQLQueryListener<Device_SN>() {
 
                             @Override
-                            public void done(BmobException e) {
+                            public void done(BmobQueryResult<Device_SN> result, BmobException e) {
                                 if (e == null) {
-                                    Log.i("bmob", "更新成功");
+                                    List<Device_SN> list2 = result.getResults();
+                                    Log.i("list2.size()", list2.size() + "");
+//                                    String bluetoothAddress = list2.get(0).getBluetoothAddress();//蓝牙地址
+
+                                    if (list2.size() > 0) {
+                                        if (!mSmaManager.mEaseConnector.mAddress.equals(bluetoothAddress)) {
+                                            Log.e("test2323", "1112");
+                                            ToastUtil.showShortToast(context, getString(R.string.mismatch_device_code));
+                                        } else {
+                                            if (difftime > 21600) {
+                                                ToastUtil.showShortToast(context, getString(R.string.authorized_time_passed));
+                                                return;
+                                            }
+
+                                            Device_SN sn = new Device_SN();
+                                            String code2 = "";
+                                            if (code.equals("3MIN")) {
+                                                code2 = 3 + "";
+                                            } else {
+                                                code2 = code.substring(0, code.length() - 1);
+                                            }
+                                            int code3 = Integer.parseInt(code2);
+                                            sn.setAddtime(code3 * 60 + addtime);
+                                            sn.setTimes(tempcount + count);
+                                            sn.setLast_time(temptime + times);
+                                            sn.setBluetoothAddress(mSmaManager.mEaseConnector.mAddress + "");
+                                            sn.update(list2.get(0).getObjectId(), new UpdateListener() {
+
+                                                @Override
+                                                public void done(BmobException e) {
+                                                    if (e == null) {
+                                                        Log.i("bmob", "更新成功");
+                                                    } else {
+                                                        Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
+                                                    }
+                                                }
+
+                                            });
+//                        Log.i("tv_frag_device_ypcode", "=="+tv_frag_device_ypcode.getText().toString());
+                                            if (tv_frag_device_ypcode.getText().toString().equals("1H")) {
+                                                mSmaManager.write(SmaManager.SET.EMPOWER_TIME, 60 + "");
+                                            } else if (tv_frag_device_ypcode.getText().toString().equals("3MIN")) {
+                                                mSmaManager.write(SmaManager.SET.EMPOWER_TIME, 3 + "");
+                                            } else if (tv_frag_device_ypcode.getText().toString().equals("45H")) {
+                                                mSmaManager.write(SmaManager.SET.EMPOWER_TIME, 45 * 60 + "");
+                                            } else if (tv_frag_device_ypcode.getText().toString().equals("90H")) {
+                                                mSmaManager.write(SmaManager.SET.EMPOWER_TIME, 60 * 90 + "");
+                                            } else if (tv_frag_device_ypcode.getText().toString().equals("180H")) {
+                                                mSmaManager.write(SmaManager.SET.EMPOWER_TIME, 60 * 180 + "");
+                                            } else {
+                                                ToastUtils.showShortSafe(getString(R.string.authorized_time_error));
+                                            }
+
+                                            mSmaManager.write(SmaManager.SET.EMPOWER_COUNT, count + "");
+                                        }
+                                    } else {
+                                        if (!sn2.equals(tv_frag_device_ypcode2.getText().toString())) {
+                                            Log.e("danny", "777");
+                                            ToastUtil.showShortToast(context, getString(R.string.mismatch_device_code));
+                                            return;
+                                        }
+                                        Log.e("bluetoothAddress==", bluetoothAddress + "");
+                                        Log.e("danny", "7772" + (bluetoothAddress == null) + (bluetoothAddress == ""));
+                                        if (bluetoothAddress != null && bluetoothAddress != "") {
+                                            Log.e("danny", "888");
+                                            if (!mSmaManager.mEaseConnector.mAddress.equals(bluetoothAddress)) {
+                                                Log.e("danny", "999");
+                                                ToastUtil.showShortToast(context, getString(R.string.mismatch_device_code));
+                                                return;
+                                            }
+                                        } else {
+                                            Log.e("test", "testttt");
+                                            if (difftime > 21600) {
+                                                ToastUtil.showShortToast(context, getString(R.string.authorized_time_passed));
+                                                return;
+                                            }
+
+                                            Device_SN sn = new Device_SN();
+                                            String code2 = "";
+                                            if (code.equals("3MIN")) {
+                                                code2 = 3 + "";
+                                            } else {
+                                                code2 = code.substring(0, code.length() - 1);
+                                            }
+                                            int code3 = Integer.parseInt(code2);
+                                            sn.setAddtime(code3 * 60 + addtime);
+                                            sn.setTimes(tempcount + count);
+                                            sn.setLast_time(temptime + times);
+                                            sn.setBluetoothAddress(mSmaManager.mEaseConnector.mAddress + "");
+                                            sn.update(list2.get(0).getObjectId(), new UpdateListener() {
+
+                                                @Override
+                                                public void done(BmobException e) {
+                                                    if (e == null) {
+                                                        Log.i("bmob", "更新成功");
+                                                    } else {
+                                                        Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
+                                                    }
+                                                }
+
+                                            });
+//                        Log.i("tv_frag_device_ypcode", "=="+tv_frag_device_ypcode.getText().toString());
+                                            if (tv_frag_device_ypcode.getText().toString().equals("1H")) {
+                                                mSmaManager.write(SmaManager.SET.EMPOWER_TIME, 60 + "");
+                                            } else if (tv_frag_device_ypcode.getText().toString().equals("3MIN")) {
+                                                mSmaManager.write(SmaManager.SET.EMPOWER_TIME, 3 + "");
+                                            } else if (tv_frag_device_ypcode.getText().toString().equals("45H")) {
+                                                mSmaManager.write(SmaManager.SET.EMPOWER_TIME, 45 * 60 + "");
+                                            } else if (tv_frag_device_ypcode.getText().toString().equals("90H")) {
+                                                mSmaManager.write(SmaManager.SET.EMPOWER_TIME, 60 * 90 + "");
+                                            } else if (tv_frag_device_ypcode.getText().toString().equals("180H")) {
+                                                mSmaManager.write(SmaManager.SET.EMPOWER_TIME, 60 * 180 + "");
+                                            } else {
+                                                ToastUtils.showShortSafe(getString(R.string.authorized_time_error));
+                                            }
+
+                                            mSmaManager.write(SmaManager.SET.EMPOWER_COUNT, count + "");
+                                        }
+
+
+                                    }
+
                                 } else {
-                                    Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
+                                    Log.i("onetoone", "错误码：" + e.getErrorCode() + "，错误描述：" + e.getMessage());
+                                    if (difftime > 21600) {
+                                        ToastUtil.showShortToast(context, getString(R.string.authorized_time_passed));
+                                        return;
+                                    }
+
+                                    Device_SN sn = new Device_SN();
+                                    String code2 = "";
+                                    if (code.equals("3MIN")) {
+                                        code2 = 3 + "";
+                                    } else {
+                                        code2 = code.substring(0, code.length() - 1);
+                                    }
+                                    int code3 = Integer.parseInt(code2);
+                                    sn.setAddtime(code3 * 60 + addtime);
+                                    sn.setTimes(tempcount + count);
+                                    sn.setLast_time(temptime + times);
+                                    sn.setBluetoothAddress(mSmaManager.mEaseConnector.mAddress + "");
+                                    sn.update(list.get(0).getObjectId(), new UpdateListener() {
+
+                                        @Override
+                                        public void done(BmobException e) {
+                                            if (e == null) {
+                                                Log.i("bmob", "更新成功");
+                                            } else {
+                                                Log.i("bmob", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
+                                            }
+                                        }
+
+                                    });
+//                        Log.i("tv_frag_device_ypcode", "=="+tv_frag_device_ypcode.getText().toString());
+                                    if (tv_frag_device_ypcode.getText().toString().equals("1H")) {
+                                        mSmaManager.write(SmaManager.SET.EMPOWER_TIME, 60 + "");
+                                    } else if (tv_frag_device_ypcode.getText().toString().equals("3MIN")) {
+                                        mSmaManager.write(SmaManager.SET.EMPOWER_TIME, 3 + "");
+                                    } else if (tv_frag_device_ypcode.getText().toString().equals("45H")) {
+                                        mSmaManager.write(SmaManager.SET.EMPOWER_TIME, 45 * 60 + "");
+                                    } else if (tv_frag_device_ypcode.getText().toString().equals("90H")) {
+                                        mSmaManager.write(SmaManager.SET.EMPOWER_TIME, 60 * 90 + "");
+                                    } else if (tv_frag_device_ypcode.getText().toString().equals("180H")) {
+                                        mSmaManager.write(SmaManager.SET.EMPOWER_TIME, 60 * 180 + "");
+                                    } else {
+                                        ToastUtils.showShortSafe(getString(R.string.authorized_time_error));
+                                    }
+
+                                    mSmaManager.write(SmaManager.SET.EMPOWER_COUNT, count + "");
                                 }
                             }
-
                         });
-//                        Log.i("tv_frag_device_ypcode", "=="+tv_frag_device_ypcode.getText().toString());
-                        if (tv_frag_device_ypcode.getText().toString().equals("1H")) {
-                            mSmaManager.write(SmaManager.SET.EMPOWER_TIME, 60 + "");
-                        } else if (tv_frag_device_ypcode.getText().toString().equals("3MIN")) {
-                            mSmaManager.write(SmaManager.SET.EMPOWER_TIME, 3 + "");
-                        } else if (tv_frag_device_ypcode.getText().toString().equals("45H")) {
-                            mSmaManager.write(SmaManager.SET.EMPOWER_TIME, 45 * 60 + "");
-                        } else if (tv_frag_device_ypcode.getText().toString().equals("90H")) {
-                            mSmaManager.write(SmaManager.SET.EMPOWER_TIME, 60 * 90 + "");
-                        } else if (tv_frag_device_ypcode.getText().toString().equals("180H")) {
-                            mSmaManager.write(SmaManager.SET.EMPOWER_TIME, 60 * 180 + "");
-                        } else {
-                            ToastUtils.showShortSafe(getString(R.string.authorized_time_error));
-                        }
-
-                        mSmaManager.write(SmaManager.SET.EMPOWER_COUNT, count + "");
                     } else {
                         Log.i("smile", "查询成功，无数据");
                     }
                 } else {
                     Log.i("empower", "错误码：" + e.getErrorCode() + "，错误描述：" + e.getMessage());
+                    ToastUtil.showShortToast(context, getString(R.string.mismatch_device_code));
                 }
             }
         });
@@ -990,40 +1091,6 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                     .create();
             dialog.show();
         }
-    }
-
-
-    private void onetoone(String ba) {
-        final String sql = "select * from Device_SN where bluetoothAddress = '" + ba + "'";
-        new BmobQuery<Device_SN>().doSQLQuery(sql, new SQLQueryListener<Device_SN>() {
-
-            @Override
-            public void done(BmobQueryResult<Device_SN> result, BmobException e) {
-                if (e == null) {
-                    List<Device_SN> list = result.getResults();
-                    Log.i("list.size()", list.size() + "");
-                    String bluetoothAddress = list.get(0).getBluetoothAddress();//蓝牙地址
-                    Log.e("~bluetoothAddress==", bluetoothAddress + "");
-                    Log.e("~bluetoothAddress22==", mSmaManager.mEaseConnector.mAddress + "");
-
-                    if (list.size() > 0) {
-                        if (!bluetoothAddress.toString().trim().equals(mSmaManager.mEaseConnector.mAddress.toString().trim())) {
-                            Log.i("test", "005");
-                            allowBind = false;
-                            ToastUtil.showShortToast(context, getString(R.string.mismatch_device_code));
-                            return;
-                        }
-                    } else {
-                        allowBind = true;
-                        Log.i("onetoone", "查询成功，无数据");
-                    }
-
-                } else {
-                    allowBind = false;
-                    Log.i("onetoone", "错误码：" + e.getErrorCode() + "，错误描述：" + e.getMessage());
-                }
-            }
-        });
     }
 
     /*

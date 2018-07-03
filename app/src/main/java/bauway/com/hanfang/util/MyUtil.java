@@ -910,7 +910,7 @@ public class MyUtil {
         return count >= 2;
     }
 
-    private static final int MIN_DELAY_TIME= 3000;  // 两次点击间隔不能少于1000ms
+    private static final int MIN_DELAY_TIME= 5000;  // 两次点击间隔不能少于5000ms
     private static long lastClickTime;
     public static boolean isFastClick() {
         boolean flag = true;
