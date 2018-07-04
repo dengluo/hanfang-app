@@ -1064,7 +1064,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                     }
                 } else {
                     Log.i("empower", "错误码：" + e.getErrorCode() + "，错误描述：" + e.getMessage());
-                    ToastUtil.showShortToast(context, getString(R.string.mismatch_device_code));
+                    ToastUtil.showShortToast(context, getString(R.string.authorized_data_exception));
                 }
             }
         });
