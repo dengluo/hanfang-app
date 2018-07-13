@@ -212,7 +212,6 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                                 "MWENDU", Activity.MODE_PRIVATE);
                         String mwendu1 = sharedPreferencesWendu1.getString("mwendu1", "六");
                         tv_frag_wendu.setText(mwendu1 + " 档");
-                        Log.e("mSmaManager==name==", mSmaManager.getNameAndAddress().toString() + "||" + mSmaManager.getNameAndAddress()[0]);
                         if (!mSmaManager.isConnected) {
                             ToastUtils.showShortSafe(R.string.device_not_connected);
                             return;
@@ -270,8 +269,6 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
 //                        mSmaManager.mEaseConnector.connect(true);
                         String deviceName = msg.obj.toString().substring(0, msg.obj.toString().indexOf("=="));
                         String deviceAddress = msg.obj.toString().substring(msg.obj.toString().indexOf("==") + 2, msg.obj.toString().length());
-                        Log.e("deviceAddress==", deviceAddress);
-                        Log.e("deviceAddress2==", mSmaManager.mEaseConnector.mAddress);
                         if (!TextUtils.isEmpty(deviceAddress))
                             mSmaManager.mEaseConnector.setAddress(deviceAddress).connect(true);
 
@@ -410,7 +407,6 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
 
     private void sendToKernel(final String str) {
         if (mSmaManager.isConnected) {
-//            Log.e("str.length()=", str.length()+"||");
             if (str.length() == 2) {
                 mSmaManager.write2(SmaManager.SET.EDIT_DEVICE_BLUETOOTH_NAME2, (str + "   ").getBytes());
                 new Thread() {
@@ -704,6 +700,9 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
         });
     }
 
+    private long prelongTim = 0;//定义上一次单击的时间
+    private long curTime = 0;//定义上第二次单击的时间
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -720,11 +719,26 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                 editname(et);
                 break;
             case R.id.empower:
-                if (MyUtil.isFastClick()) {
-                    ToastUtils.showShortSafe(R.string.too_frequent_operation);
-                } else {
+//                if (MyUtil.isFastClick()) {
+//                    ToastUtils.showShortSafe(R.string.too_frequent_operation);
+//                } else {
+//                    empower(tv_frag_device_ypcode.getText().toString(), tv_frag_device_ypcode2.getText().toString());
+//                }
+                if (prelongTim == 0) {//第一次单击时间
+                    prelongTim = (new Date()).getTime();
                     empower(tv_frag_device_ypcode.getText().toString(), tv_frag_device_ypcode2.getText().toString());
+                } else {
+                    curTime = (new Date()).getTime();//本地单击的时间
+                    Log.e("onclick", "点击的时间" + (curTime - prelongTim));
+                    if ((curTime - prelongTim) < 5000) {
+                        ToastUtils.showShortSafe(R.string.too_frequent_operation);
+                        return;
+                    }else{
+                        prelongTim = curTime; //当前点击时间变为上次时间
+                        empower(tv_frag_device_ypcode.getText().toString(), tv_frag_device_ypcode2.getText().toString());
+                    }
                 }
+
                 break;
             case R.id.iv_device_drug_codesss:
                 if (isok) {
@@ -873,10 +887,6 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                     final int difftime = addtime - times;
                     final String bluetoothAddress = list.get(0).getBluetoothAddress();//蓝牙地址
                     final String sn2 = list.get(0).getSN();//设备授权码
-                    Log.e("bluetoothAddress==", bluetoothAddress);
-                    Log.e("bluetoothAddress22==", mSmaManager.mEaseConnector.mAddress + "");
-                    Log.e("sn==", sn + "");
-                    Log.e("sn==2", sn2 + "");
 
                     if (list.size() > 0) {
 
@@ -893,7 +903,6 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
 
                                     if (list2.size() > 0) {
                                         if (!mSmaManager.mEaseConnector.mAddress.equals(bluetoothAddress)) {
-                                            Log.e("test2323", "1112");
                                             ToastUtil.showShortToast(context, getString(R.string.mismatch_device_code));
                                         } else {
                                             if (difftime > 21600) {
@@ -948,8 +957,6 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                                             ToastUtil.showShortToast(context, getString(R.string.mismatch_device_code));
                                             return;
                                         }
-                                        Log.e("bluetoothAddress==", bluetoothAddress + "");
-                                        Log.e("danny", "7772" + (bluetoothAddress == null) + (bluetoothAddress == ""));
                                         if (bluetoothAddress != null && bluetoothAddress != "") {
                                             Log.e("danny", "888");
                                             if (!mSmaManager.mEaseConnector.mAddress.equals(bluetoothAddress)) {
