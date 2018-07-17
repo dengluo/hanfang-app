@@ -159,6 +159,9 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                     case 9:
                         ll_hongguang.setVisibility(View.GONE);
                         break;
+                    case 99:
+                        updateDanny();
+                        break;
                     case 100:
                         parseDate(msg.obj.toString());
                         ll_empower_device.setVisibility(View.GONE);
@@ -738,7 +741,8 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                         empower(tv_frag_device_ypcode.getText().toString(), tv_frag_device_ypcode2.getText().toString());
                     }
                 }
-
+//                updateDanny();
+//                mHandler.sendEmptyMessage(99);
                 break;
             case R.id.iv_device_drug_codesss:
                 if (isok) {
@@ -799,6 +803,47 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                 mSmaManager.write(SmaManager.SET.PLAY_WORKE);
                 break;
         }
+    }
+
+    //批量更新一列bluetoothAddress
+    private void updateDanny() {
+
+        final String bql = "select * from Device_SN where bluetoothAddress = null";
+        new BmobQuery<Device_SN>().doSQLQuery(bql, new SQLQueryListener<Device_SN>() {
+
+            @Override
+            public void done(BmobQueryResult<Device_SN> result, BmobException e) {
+                if (e == null) {
+                    List<Device_SN> list = (List<Device_SN>) result.getResults();
+                    Log.e("bluetoothAddress---",list.size()+"");
+                    final int times = list.get(0).getLast_time();//使用时间
+                    final int count = list.get(0).getTimes();//使用次数
+                    final int addtime = list.get(0).getAddtime();//累计授权时间
+                    final int difftime = addtime - times;
+                    Log.i("count", count + "");
+                    if (list.size() > 0) {
+                        Device_SN v1 = new Device_SN();
+                        v1.setBluetoothAddress("");
+                        v1.update(list.get(0).getObjectId(), new UpdateListener() {
+
+                            @Override
+                            public void done(BmobException e) {
+                                if (e == null) {
+                                    Log.i("updateEmpowerCounts", "更新成功");
+                                } else {
+                                    Log.i("updateEmpowerCounts", "更新失败：" + e.getMessage() + "," + e.getErrorCode());
+                                }
+                            }
+
+                        });
+                    } else {
+                        Log.i("smile", "查询成功，无数据返回");
+                    }
+                } else {
+                    Log.i("updateEmpowerCounts", "错误码：" + e.getErrorCode() + "，错误描述：" + e.getMessage());
+                }
+            }
+        });
     }
 
     //更新设备码表
