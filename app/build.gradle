@@ -60,11 +60,14 @@ android {
 
 dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
+    //noinspection GradleDynamicVersion
     api 'com.android.support:appcompat-v7:27+'
+    //noinspection GradleDynamicVersion
     api 'com.android.support:support-v4:27+'
+    //noinspection GradleDynamicVersion
     api 'com.android.support:design:27+'
-    api 'com.android.support:multidex:1.0.1'
-    api 'com.android.support.constraint:constraint-layout:1.0.2'
+    api 'com.android.support:multidex:1.0.3'
+    api 'com.android.support.constraint:constraint-layout:1.1.2'
     api project(':smablelib')
     //bmob-sdk：Bmob的android sdk包，包含了Bmob的数据存储、文件等服务，以下是最新的bmob-sdk:
     api 'cn.bmob.android:bmob-sdk:3.6.0'
