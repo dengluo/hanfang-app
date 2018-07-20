@@ -48,6 +48,7 @@ import java.util.List;
 import bauway.com.hanfang.App.Constants;
 import bauway.com.hanfang.BuildConfig;
 import bauway.com.hanfang.R;
+import bauway.com.hanfang.View.WaitDialog;
 import bauway.com.hanfang.activity.DeviceListActivity;
 import bauway.com.hanfang.activity.ValidateActivity;
 import bauway.com.hanfang.adapter.MyFragmentPagerAdapter;
@@ -88,6 +89,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
     private ViewPager vpager;
     private CheckBox checkbox_dengguang;
     private TextView empower;
+    private Boolean btok = false;//蓝牙地址是否没被绑定
 
     private MyFragmentPagerAdapter mAdapter;
     private SmaManager mSmaManager;
@@ -312,13 +314,17 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                         tv_empower_time.setText(getString(R.string.authorized_time));
                         break;
                     case 18:
+                        Log.e("ffffzzz",tv_frag_device_ypcode2.getText().toString());
                         String str = "";
                         if (msg.obj.toString().length() > 12) {
                             str = msg.obj.toString().substring(msg.obj.toString().length() - 12, msg.obj.toString().length());
                         } else {
                             str = msg.obj.toString();
                         }
+                        Log.e("eeeee",str);
                         parseDate2(str);
+                        Log.e("ffff",tv_frag_device_ypcode2.getText().toString());
+                        tv_frag_device_ypcode2.setText(str);
                         ll_empower_device.setVisibility(View.VISIBLE);
                         ll_home_hg.setVisibility(View.GONE);
                         ll_empower.setVisibility(View.VISIBLE);
@@ -727,20 +733,34 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
 //                } else {
 //                    empower(tv_frag_device_ypcode.getText().toString(), tv_frag_device_ypcode2.getText().toString());
 //                }
-                if (prelongTim == 0) {//第一次单击时间
-                    prelongTim = (new Date()).getTime();
-                    empower(tv_frag_device_ypcode.getText().toString(), tv_frag_device_ypcode2.getText().toString());
-                } else {
-                    curTime = (new Date()).getTime();//本地单击的时间
-                    Log.e("onclick", "点击的时间" + (curTime - prelongTim));
-                    if ((curTime - prelongTim) < 5000) {
-                        ToastUtils.showShortSafe(R.string.too_frequent_operation);
-                        return;
-                    }else{
-                        prelongTim = curTime; //当前点击时间变为上次时间
-                        empower(tv_frag_device_ypcode.getText().toString(), tv_frag_device_ypcode2.getText().toString());
+
+                final WaitDialog waitDialog = new WaitDialog(context);
+                waitDialog.setContent("正在加载...");
+                waitDialog.show();
+
+                new Handler(new Handler.Callback() {
+                    //处理接收到的消息的方法
+                    @Override
+                    public boolean handleMessage(Message arg0) {
+                        //实现页面跳转
+                        if (prelongTim == 0) {//第一次单击时间
+                            prelongTim = (new Date()).getTime();
+                            empower(tv_frag_device_ypcode.getText().toString(), tv_frag_device_ypcode2.getText().toString());
+                        } else {
+                            curTime = (new Date()).getTime();//本地单击的时间
+                            Log.e("onclick", "点击的时间" + (curTime - prelongTim));
+                            if ((curTime - prelongTim) < 5000) {
+                                ToastUtils.showShortSafe(R.string.too_frequent_operation);
+                            }else{
+                                prelongTim = curTime; //当前点击时间变为上次时间
+                                empower(tv_frag_device_ypcode.getText().toString(), tv_frag_device_ypcode2.getText().toString());
+                            }
+                        }
+                        waitDialog.dismiss();
+                        return false;
                     }
-                }
+                }).sendEmptyMessageDelayed(0, 1500); //表示延时三秒进行任务的执行
+
 //                updateDanny();
 //                mHandler.sendEmptyMessage(99);
                 break;
@@ -934,7 +954,10 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                     final String sn2 = list.get(0).getSN();//设备授权码
 
                     if (list.size() > 0) {
-
+                        if (!sn2.equals(tv_frag_device_ypcode2.getText().toString())) {
+                            ToastUtil.showShortToast(context, getString(R.string.mismatch_device_code));
+                            return;
+                        }
 
                         final String sql2 = "select * from Device_SN where bluetoothAddress = '" + mSmaManager.mEaseConnector.mAddress + "'";
                         new BmobQuery<Device_SN>().doSQLQuery(sql2, new SQLQueryListener<Device_SN>() {
@@ -943,13 +966,19 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                             public void done(BmobQueryResult<Device_SN> result, BmobException e) {
                                 if (e == null) {
                                     List<Device_SN> list2 = result.getResults();
+                                    String sn3 = list.get(0).getSN();//设备授权码
                                     Log.i("list2.size()", list2.size() + "");
 //                                    String bluetoothAddress = list2.get(0).getBluetoothAddress();//蓝牙地址
 
                                     if (list2.size() > 0) {
                                         if (!mSmaManager.mEaseConnector.mAddress.equals(bluetoothAddress)) {
                                             ToastUtil.showShortToast(context, getString(R.string.mismatch_device_code));
+                                            return;
                                         } else {
+                                            if (!sn3.equals(tv_frag_device_ypcode2.getText().toString())) {
+                                                ToastUtil.showShortToast(context, getString(R.string.mismatch_device_code));
+                                                return;
+                                            }
                                             if (difftime > 21600) {
                                                 ToastUtil.showShortToast(context, getString(R.string.authorized_time_passed));
                                                 return;
@@ -997,7 +1026,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                                             mSmaManager.write(SmaManager.SET.EMPOWER_COUNT, count + "");
                                         }
                                     } else {
-                                        if (!sn2.equals(tv_frag_device_ypcode2.getText().toString())) {
+                                        if (!sn3.equals(tv_frag_device_ypcode2.getText().toString())) {
                                             Log.e("danny", "777");
                                             ToastUtil.showShortToast(context, getString(R.string.mismatch_device_code));
                                             return;
@@ -1011,6 +1040,10 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                                             }
                                         } else {
                                             Log.e("test", "testttt");
+                                            if (!sn2.equals(tv_frag_device_ypcode2.getText().toString())) {
+                                                ToastUtil.showShortToast(context, getString(R.string.mismatch_device_code));
+                                                return;
+                                            }
                                             if (difftime > 21600) {
                                                 ToastUtil.showShortToast(context, getString(R.string.authorized_time_passed));
                                                 return;
@@ -1063,6 +1096,10 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
 
                                 } else {
                                     Log.i("onetoone", "错误码：" + e.getErrorCode() + "，错误描述：" + e.getMessage());
+                                    if (!sn2.equals(tv_frag_device_ypcode2.getText().toString())) {
+                                        ToastUtil.showShortToast(context, getString(R.string.mismatch_device_code));
+                                        return;
+                                    }
                                     if (difftime > 21600) {
                                         ToastUtil.showShortToast(context, getString(R.string.authorized_time_passed));
                                         return;
@@ -1113,6 +1150,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                         });
                     } else {
                         Log.i("smile", "查询成功，无数据");
+                        ToastUtil.showShortToast(context, getString(R.string.device_code_error));
                     }
                 } else {
                     Log.i("empower", "错误码：" + e.getErrorCode() + "，错误描述：" + e.getMessage());

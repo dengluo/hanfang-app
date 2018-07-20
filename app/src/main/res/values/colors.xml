@@ -155,6 +155,7 @@
     <color name="text_gray">#8D7A71</color>
     <color name="div_white">#E5E5E5</color>
     <color name="text_yellow">#FFC800</color>
+    <color name="gray_pressed">#ffb5b5b6</color>
 
 
 </resources>
