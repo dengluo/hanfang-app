@@ -1062,7 +1062,7 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                                                 ToastUtil.showShortToast(context, getString(R.string.mismatch_device_code));
                                                 return;
                                             }
-                                            if (difftime > 21600) {
+                                            if (difftime >= 21600) {
                                                 ToastUtil.showShortToast(context, getString(R.string.authorized_time_passed));
                                                 return;
                                             }

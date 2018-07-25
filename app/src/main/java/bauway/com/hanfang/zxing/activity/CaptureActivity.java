@@ -15,9 +15,11 @@
  */
 package bauway.com.hanfang.zxing.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.net.Uri;
@@ -28,6 +30,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -262,6 +266,8 @@ public final class CaptureActivity extends BaseActivity implements SurfaceHolder
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         isHasSurface = false;
+        cameraManager.stopPreview();
+        cameraManager.closeDriver();
     }
 
     @Override
@@ -834,7 +840,16 @@ public final class CaptureActivity extends BaseActivity implements SurfaceHolder
             return;
         }
         try {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+                    == PackageManager.PERMISSION_GRANTED) {
+                Log.i("TEST","Granted");
+                //init(barcodeScannerView, getIntent(), null);
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.CAMERA}, 1);//1 can be another integer
+            }
             cameraManager.openDriver(surfaceHolder);
+            cameraManager.startPreview();
             // Creating the handler starts the preview, which can also throw a
             // RuntimeException.
             if (handler == null) {
@@ -850,6 +865,7 @@ public final class CaptureActivity extends BaseActivity implements SurfaceHolder
             // java.?lang.?RuntimeException: Fail to connect to camera service
             Log.w(LOG_TAG, "Unexpected error initializing camera", e);
             displayFrameworkBugMessageAndExit();
+            return;
         }
     }
 
