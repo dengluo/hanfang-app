@@ -17,6 +17,7 @@ import android.view.WindowManager;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bestmafen.easeblelib.util.EaseUtils;
 import com.bestmafen.smablelib.component.SimpleSmaCallback;
@@ -64,6 +65,7 @@ public class MainActivity2 extends BaseActivity implements View.OnClickListener 
     String strDevice1 = "";
     private SharedPreferences sharedPreferences;
     private SmaCallback mSmaCallback;
+    private long exitTime = 0;
 
 
     @Override
@@ -383,8 +385,18 @@ public class MainActivity2 extends BaseActivity implements View.OnClickListener 
      * 重写返回键
      */
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            myApplication.exit();
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            if ((System.currentTimeMillis() - exitTime) > 2000) {
+                Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                exitTime = System.currentTimeMillis();
+            } else {
+//                finish();
+//                System.exit(0);
+                Intent intent = new Intent(Intent.ACTION_MAIN);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addCategory(Intent.CATEGORY_HOME);
+                startActivity(intent);
+            }
             return true;
         }
         return super.onKeyDown(keyCode, event);

@@ -1,1 +1,1 @@
-include ':app', ':easeblelib', ':smablelib', ':wheelview'
+include ':app', ':easeblelib', ':smablelib', ':wheelview', ':libzxing'

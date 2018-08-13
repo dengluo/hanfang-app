@@ -15,6 +15,7 @@
  */
 package com.wx.wheelview.widget;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -83,6 +84,7 @@ public class WheelView<T> extends ListView implements IWheelView<T> {
 
     private OnWheelItemClickListener<T> mOnWheelItemClickListener;
 
+    @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {

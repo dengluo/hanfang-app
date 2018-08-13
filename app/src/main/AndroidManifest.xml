@@ -4,6 +4,7 @@
     package="bauway.com.hanfang">
 
     <!--允许联网 -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.INTERNET" />
     <!--获取GSM（2g）、WCDMA（联通3g）等网络状态的信息  -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -30,6 +31,8 @@
 
     <uses-permission android:name="android.permission.FLASHLIGHT" />
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+    <uses-permission-sdk-23 android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission-sdk-23 android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
         android:name=".MyApplication"
@@ -76,10 +79,6 @@
         <activity android:name=".activity.AgreementActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".activity.RegisterActivity2"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".activity.DisplayScanResultActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".zxing.activity.CaptureActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".activity.MyDialogActivitySingle"
             android:screenOrientation="portrait"/>
