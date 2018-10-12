@@ -86,6 +86,8 @@ public class SmaManager {
     }
 
     public static final class BACK {
+        public static final byte HOPES      =0x02;
+        public static final byte HOPEM      =0x03;
         public static final byte TIME       = 0x04;
         public static final byte WENDU    = 0x05;
         public static final byte FENGSU   = 0x06;
@@ -415,6 +417,20 @@ public class SmaManager {
                 value = Float.parseFloat(sb.toString()) + 0.0f;
                 for (SmaCallback bc : mSmaCallbacks) {
                     bc.onReadChargeCount((int) value);
+                }
+                break;
+
+            case BACK.HOPES:
+//                value = Float.parseFloat(sb.toString()) + 0.0f;
+                for (SmaCallback bc : mSmaCallbacks) {
+                    bc.onReadHopes("5D".getBytes());
+                }
+                break;
+
+            case BACK.HOPEM:
+//                value = Float.parseFloat(sb.toString()) + 0.0f;
+                for (SmaCallback bc : mSmaCallbacks) {
+                    bc.onReadHopem("5D".getBytes());
                 }
                 break;
         }

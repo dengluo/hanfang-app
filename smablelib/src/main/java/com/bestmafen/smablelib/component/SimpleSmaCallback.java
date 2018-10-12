@@ -103,4 +103,14 @@ public class SimpleSmaCallback implements SmaCallback {
     public void onReadChargeCount(int count) {
 
     }
+
+    @Override
+    public void onReadHopes(byte[] data) {
+
+    }
+
+    @Override
+    public void onReadHopem(byte[] data) {
+
+    }
 }

@@ -107,4 +107,8 @@ public interface SmaCallback {
 
     void onReadChargeCount(int count);
 
+    void onReadHopes(byte[] data);
+
+    void onReadHopem(byte[] data);
+
 }
