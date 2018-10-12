@@ -421,16 +421,26 @@ public class SmaManager {
                 break;
 
             case BACK.HOPES:
-//                value = Float.parseFloat(sb.toString()) + 0.0f;
-                for (SmaCallback bc : mSmaCallbacks) {
-                    bc.onReadHopes("5D".getBytes());
+                try {
+                    String str = new String("5D".getBytes(), "Utf-8").trim();
+                    Log.e("sb.toString()==",str);
+                    for (SmaCallback bc : mSmaCallbacks) {
+                        bc.onReadHopes(sb.toString().getBytes());
+                    }
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
                 }
                 break;
 
             case BACK.HOPEM:
-//                value = Float.parseFloat(sb.toString()) + 0.0f;
-                for (SmaCallback bc : mSmaCallbacks) {
-                    bc.onReadHopem("5D".getBytes());
+                try {
+                    String str = new String("5D".getBytes(), "Utf-8").trim();
+                    Log.e("sb.toString()==",str);
+                    for (SmaCallback bc : mSmaCallbacks) {
+                        bc.onReadHopem(sb.toString().getBytes());
+                    }
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
                 }
                 break;
         }

@@ -392,6 +392,22 @@ public class FragmentOrderTake extends Fragment implements View.OnClickListener 
                         tempcount = msg.arg1;
                         updateEmpower(tv_frag_device_ypcode2.getText().toString());
                         break;
+                    case 26:
+                        if (mSmaManager.getNameAndAddress()[0].equals("")) {
+                            tv_frag_device_name.setText(getString(R.string.unconnected));
+                            ll_unbind_device.setVisibility(View.GONE);
+                        } else {
+                            ToastUtils.showShortSafe("接收设备发来的hopes");
+                        }
+                        break;
+                    case 27:
+                        if (mSmaManager.getNameAndAddress()[0].equals("")) {
+                            tv_frag_device_name.setText(getString(R.string.unconnected));
+                            ll_unbind_device.setVisibility(View.GONE);
+                        } else {
+                            ToastUtils.showShortSafe("接收设备发来的hopem");
+                        }
+                        break;
                 }
             }
         };

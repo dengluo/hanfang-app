@@ -285,6 +285,37 @@ public class MainActivity2 extends BaseActivity implements View.OnClickListener 
                 });
             }
 
+            @Override
+            public void onReadHopes(final byte[] date) {
+                runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        //传递消息,接收设备发来的"hopes"
+                        Message message = new Message();
+                        message.what = 26;
+                        message.obj = date;
+                        FragmentOrderTake.mHandler.sendMessage(message);
+                    }
+                });
+            }
+
+            @Override
+            public void onReadHopem(final byte[] date) {
+                runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        //传递消息,接收设备发来的"hopem"
+                        Message message = new Message();
+                        message.what = 27;
+                        message.obj = date;
+                        FragmentOrderTake.mHandler.sendMessage(message);
+
+                    }
+                });
+            }
+
         });
 
     }
